@@ -58,6 +58,7 @@ Dự án được đặc tả cực kỳ chi tiết từ Database đến API. To
 3. `03-system-architecture.md` - Sơ đồ Hệ thống, Event-driven & Caching.
 4. `04-api-documentation.md` - Chuẩn giao tiếp RESTful API & Error handling.
 5. `05-development-guidelines.md` - Bộ quy chuẩn Code, PSR-12, Git Flow & Security.
+6. `06-frontend-architecture.md` - Kiến trúc Frontend Vue 3 & Cơ chế Audio Player.
 
 ---
 
