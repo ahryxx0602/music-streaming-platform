@@ -610,6 +610,18 @@ Quản lý banner quảng cáo / giới thiệu trên trang chủ (Home/Explore)
 - Quản lý độc quyền bởi Admin.
 - API lấy danh sách Banner (`GET /guest/banners`) chỉ lấy các banner có `is_active = true` và sắp xếp theo `order`.
 
+---
+
+## 4.20 Spatie Permission Tables (RBAC)
+
+Quản lý quyền động (Dynamic Roles & Permissions) dành riêng cho module Admin (ví dụ: tạo Sub-Admin, Moderator). Sử dụng schema chuẩn của thư viện `spatie/laravel-permission`:
+
+- `roles`: Bảng lưu trữ tên role (VD: `Content Moderator`, `Finance`).
+- `permissions`: Bảng lưu trữ tên quyền (VD: `approve song`, `ban user`).
+- `model_has_roles`: Bảng trung gian liên kết User (chỉ Admin) với Role.
+- `role_has_permissions`: Bảng trung gian liên kết Role với Permissions.
+- `model_has_permissions`: Bảng trung gian gán quyền trực tiếp cho User.
+
 # 5. Relationship Summary
 
 ```

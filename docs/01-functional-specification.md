@@ -168,6 +168,8 @@ Các chức năng chưa triển khai trong Phase 1:
 | Listening History        | Lưu lịch sử nghe                                              | Listener         | Cập nhật sau mỗi phiên phát hợp lệ                    |
 | Lyrics Sync              | Đồng bộ lời bài hát theo thời gian                            | All              | File LRC hợp lệ                                       |
 | Playlist Sharing         | Chia sẻ playlist công khai                                    | Listener         | Playlist phải Public                                  |
+| Manage Admin Roles | Phân quyền động, tạo Role con (Moderator, Finance) trong Admin | Admin | Dành riêng cho Super Admin phân quyền cho nhân viên |
+| Delegate Permissions | Gán các quyền (Approve Song, Ban User...) cho từng Role | Admin | Sử dụng RBAC nội bộ Admin Panel |
 
 ---
 

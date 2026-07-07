@@ -369,7 +369,9 @@ Role:
 - Guest
 - Listener
 - Artist
-- Admin
+- Admin (Base Role cho trang quản trị)
+
+> **Lưu ý dành riêng cho Admin:** Base Role `Admin` (được lưu tại bảng `users`) sẽ được tích hợp với thư viện `spatie/laravel-permission` để cấu hình phân quyền động (Dynamic RBAC) bên trong Admin Dashboard. Từ đó, "Super Admin" có thể chủ động tạo ra các Role con (như `Moderator`, `Finance`) và gán các Quyền (Permissions) cụ thể cho nhân viên mà không cần sửa code.
 
 Middleware:
 
