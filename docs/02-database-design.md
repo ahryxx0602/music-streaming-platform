@@ -429,6 +429,26 @@ Lưu danh sách nghệ sĩ mà người dùng theo dõi để nhận thông báo
 
 ---
 
+## 4.1.1 [DB-artist_invitations]
+Lưu trữ các mã mời (Token) do Admin phát hành để cấp quyền đăng ký tài khoản Artist cho đối tác. Đảm bảo tính độc quyền (Invite-Only).
+
+| Column | Type | Attributes | Constraints / Description |
+| :--- | :--- | :--- | :--- |
+| id | bigint | Primary Key | |
+| email | string(255) | Nullable | Email dự kiến gửi lời mời (Tùy chọn) |
+| token | string(64) | Unique, Index | Mã băm (hash) gửi qua URL |
+| expires_at | timestamp | Not Null | Hạn sử dụng của link |
+| used_at | timestamp | Nullable | Thời điểm nghệ sĩ đăng ký thành công |
+| created_by | bigint | FK | Tham chiếu `users.id` (Admin tạo link) |
+| created_at | timestamp | | |
+| updated_at | timestamp | | |
+
+### Business Rule
+- Mỗi `token` chỉ được sử dụng thành công đúng 1 lần (khi dùng xong sẽ cập nhật `used_at`).
+- Nếu quá hạn `expires_at`, link đăng ký sẽ tự động vô hiệu hóa.
+
+---
+
 ## 4.13 [DB-listening_histories]
 
 Lưu lịch sử nghe nhạc và hỗ trợ Resume Listening.
