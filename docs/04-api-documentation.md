@@ -80,8 +80,9 @@ Hệ thống tuân thủ chặt chẽ các mã lỗi HTTP tiêu chuẩn để Cl
 | **401 Unauthorized** | Chưa xác thực | Token hết hạn, không hợp lệ hoặc không được gửi kèm. |
 | **403 Forbidden** | Không có quyền | Token hợp lệ nhưng Role không có quyền truy cập (VD: Listener gọi API của Artist). |
 | **404 Not Found** | Không tìm thấy | Resource không tồn tại (Bài hát bị xóa, User không tồn tại). |
+| **409 Conflict** | Xung đột phiên | Phát hiện truy cập trùng lặp từ thiết bị khác (Session Concurrency). |
 | **422 Unprocessable** | Lỗi Validate | Dữ liệu gửi lên không thỏa mãn quy tắc kiểm tra (Form Validation). |
-| **429 Too Many Req**| Vượt giới hạn | Bị chặn do gọi API quá số lần cho phép (Rate Limit / Anti-cheat). |
+| **429 Too Many Req**| Vượt giới hạn | Bị chặn do gọi API quá số lần cho phép (Rate Limit). |
 | **500 Server Error** | Lỗi hệ thống | Lỗi phát sinh từ phía Backend hoặc Database. |
 
 ---

@@ -99,6 +99,7 @@ Bắt buộc áp dụng định dạng: `<type>(<scope>): <subject>`
 3. **Cross-Site Scripting (XSS):** Nếu hệ thống Comment đi vào hoạt động, backend phải strip tags hoặc frontend sử dụng template interpolation chuẩn (tránh dùng `v-html` không kiểm soát).
 4. **Rate Limit:** Tương ứng với Tài liệu 04, bắt buộc gán Middleware `throttle` cho các Router chịu tải.
 5. **Authorization / Policy:** Trước khi thực thi thao tác Cập nhật / Xóa, Backend phải gọi Policy kiểm tra xem `user_id` hiện tại có phải là chủ sở hữu không. (VD: Artist A không được phép xóa bài hát của Artist B).
+6. **Session Concurrency:** Để thực thi quy định chống chia sẻ tài khoản (1 thiết bị/1 thời điểm), khi đăng nhập thành công phải gọi `Auth::logoutOtherDevices(request('password'))` để hủy các session cũ.
 
 ---
 
@@ -110,3 +111,11 @@ Bắt buộc áp dụng định dạng: `<type>(<scope>): <subject>`
   - Luồng Upload bài hát (Mock MinIO Disk và Queue).
   - Luồng Streaming và Rate Limiting.
   - Logic phân quyền bảo mật (Thử dùng Account Listener để xóa bài hát).
+
+---
+
+## 7. Background Jobs & Queue (Laravel Horizon)
+
+Để xử lý các luồng dữ liệu ngốn tài nguyên (Media processing, Gửi hàng loạt Email), quy định bắt buộc phải đưa vào Queue và sử dụng **Laravel Horizon** (Redis driver) để monitor:
+- Phân tách tối thiểu 2 Queue: `high_priority` (như Notifications, Emails) và `media_processing` (cho FFmpeg Encode Audio).
+- Số lượng Queue Worker phải thiết lập linh hoạt để tránh tình trạng FFmpeg chiếm dụng Worker, làm nghẽn luồng Notification của toàn bộ hệ thống.

@@ -417,6 +417,10 @@ preview/
 avatars/
 ```
 
+**Cấu hình bắt buộc cho MinIO:**
+- **CORS (Cross-Origin Resource Sharing):** Phải cấu hình bucket chỉ cho phép Origin từ Domain của Frontend truy cập (ngăn chặn nhúng link nhạc sang web lậu).
+- **Byte-Range Requests:** Bắt buộc bật HTTP Header `Accept-Ranges: bytes` trên MinIO để trình duyệt có thể stream từng đoạn (chunk) và cho phép user tua (seek) mượt mà thay vì phải tải toàn bộ file MP3 dung lượng lớn.
+
 ---
 
 ## 8.3 Upload Workflow

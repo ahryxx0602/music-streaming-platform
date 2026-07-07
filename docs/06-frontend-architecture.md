@@ -84,7 +84,7 @@ Pinia sẽ là bộ não điều khiển Player.
 
 ### 3.3 Cơ chế Tracking (Anti-Cheat) ở Frontend
 Khi bài hát bắt đầu phát (`audio.play()`), Frontend sẽ sinh ra một chuỗi `session_id` (UUID).
-Đoạn code sẽ theo dõi thời gian phát thực tế (không tính thời gian pause hoặc tua). Khi thời gian nghe thực tế đạt `>= 30 giây`, Frontend sẽ gọi API:
+Đoạn code sẽ theo dõi thời gian phát thực tế liên tục (Continuous playback - không tính thời gian pause và việc tua/scrubbing sẽ làm reset bộ đếm). Khi thời gian nghe thực tế liên tục đạt `>= 30 giây`, Frontend sẽ gọi API:
 `POST /api/v1/listener/stream/track/{id}` kèm payload `session_id`.
 
 ### 3.4 Quản lý Signed URL hết hạn (Expired Audio Source)

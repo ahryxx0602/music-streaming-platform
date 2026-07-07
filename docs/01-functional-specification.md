@@ -230,6 +230,10 @@ Chỉ Playlist có trạng thái `Public` mới được phép Favorite.
 
 **Giới hạn thiết bị:** Một tài khoản Listener chỉ được phép có tối đa 1 phiên stream nhạc tại một thời điểm (Ngăn chặn chia sẻ tài khoản). Phát nhạc ở thiết bị mới sẽ ngắt phiên stream ở thiết bị cũ.
 
+**BR15**
+
+**Tiêu chuẩn Stream hợp lệ (Anti-cheat 30s):** Thời gian nghe `30 giây` phải là **thời gian nghe thực tế liên tục (Continuous playback)**. Việc user tua đi tua lại (scrubbing) một đoạn nhạc 5 giây nhiều lần sẽ không được cộng dồn (Not Accumulated) để tính là 1 lượt stream, nhằm chặn thủ thuật gian lận tiền bản quyền.
+
 ---
 
 # 8. Business Workflows
@@ -240,6 +244,7 @@ Chỉ Playlist có trạng thái `Public` mới được phép Favorite.
 | --------------- | --------- |
 | Song Approved   | Artist    |
 | Song Rejected   | Artist    |
+| Song Processing Failed | Artist |
 | New Release     | Followers |
 | New Follower    | Artist    |
 
