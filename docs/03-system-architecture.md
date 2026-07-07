@@ -822,3 +822,35 @@ Phase 3
 - Load Balancing
 - Kubernetes
 - Distributed Cache
+
+# 21. Luồng xử lý Streaming và Anti-cheat [FLOW-STREAM-01]
+
+# 1. Pre-conditions
+- User đang đăng nhập với role `Listener` hoặc `Artist`.
+- Bài hát (Song) ở trạng thái `Approved`.
+
+# 2. Luồng thực thi
+
+```mermaid
+sequenceDiagram
+    actor U as Listener
+    participant UI as Frontend
+    participant API as API Server
+    participant DB as Database
+    
+    U->>UI: Bấm Play bài hát
+    UI->>API: Gọi API sinh Audio URL
+    API-->>UI: Trả về Signed URL
+    UI->>U: Bắt đầu phát nhạc
+    
+    note over U,UI: Nghe liên tục >= 30s
+    UI->>API: POST /listener/stream/track/{id} (API-LST-04)
+    API->>API: RULE-STREAM-01 (Check Anti-cheat)
+    
+    alt Gian lận (Cheat Detected)
+        API-->>UI: 429 Too Many Requests (ERR-429-RATE)
+    else Hợp lệ
+        API->>DB: Insert vào `[DB-streams]`
+        API-->>UI: 201 Created
+    end
+```

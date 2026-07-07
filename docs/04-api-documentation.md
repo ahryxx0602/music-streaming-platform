@@ -97,13 +97,13 @@ Các API dành cho người dùng chưa đăng nhập (Khách vãng lai). Prefix
 
 | Endpoint | Method | Description |
 |---|---|---|
-| `/guest/auth/register` | POST | Đăng ký tài khoản Listener mới |
-| `/guest/auth/login` | POST | Đăng nhập và nhận Token |
-| `/guest/songs/trending` | GET | Lấy danh sách bài hát thịnh hành |
-| `/guest/songs/{id}` | GET | Xem chi tiết bài hát (metadata) |
-| `/guest/genres` | GET | Lấy danh sách thể loại (Cached) |
-| `/guest/banners` | GET | Lấy danh sách Banner trang chủ |
-| `/guest/search` | GET | Tìm kiếm tổng hợp (Song, Artist, Album) |
+| `/guest/auth/register` | POST | [API-GUEST-01] Đăng ký tài khoản Listener mới |
+| `/guest/auth/login` | POST | [API-GUEST-02] Đăng nhập và nhận Token |
+| `/guest/songs/trending` | GET | [API-GUEST-03] Lấy danh sách bài hát thịnh hành |
+| `/guest/songs/{id}` | GET | [API-GUEST-04] Xem chi tiết bài hát (metadata) |
+| `/guest/genres` | GET | [API-GUEST-05] Lấy danh sách thể loại (Cached) |
+| `/guest/banners` | GET | [API-GUEST-06] Lấy danh sách Banner trang chủ |
+| `/guest/search` | GET | [API-GUEST-07] Tìm kiếm tổng hợp (Song, Artist, Album) |
 
 ---
 
@@ -114,17 +114,17 @@ Các API dành riêng cho người dùng đã đăng nhập với vai trò Liste
 
 | Endpoint | Method | Description |
 |---|---|---|
-| `/listener/auth/me` | GET | Lấy thông tin tài khoản cá nhân |
-| `/listener/auth/logout`| POST | Đăng xuất |
-| `/listener/stream/url/{id}` | GET | Sinh URL nghe nhạc (Signed URL cho MinIO) |
-| `/listener/stream/track/{id}`| POST | Ghi nhận lượt nghe hợp lệ (Sau khi nghe >= 30s) |
-| `/listener/library/favorites`| GET | Danh sách bài hát/album/artist yêu thích |
-| `/listener/library/toggle` | POST | Like/Unlike bài hát, album, artist |
-| `/listener/library/history` | GET | Lịch sử nghe nhạc (Resume listening) |
-| `/listener/playlists` | GET/POST| Lấy danh sách / Tạo Playlist mới |
-| `/listener/playlists/{id}` | GET | Chi tiết Playlist cá nhân |
-| `/listener/playlists/{id}/songs` | POST/DELETE | Thêm / Xóa bài hát khỏi Playlist |
-| `/listener/playlists/{id}/reorder`| PUT | Cập nhật vị trí (Reorder) các bài hát trong Playlist |
+| `/listener/auth/me` | GET | [API-LST-01] Lấy thông tin tài khoản cá nhân |
+| `/listener/auth/logout`| POST | [API-LST-02] Đăng xuất |
+| `/listener/stream/url/{id}` | GET | [API-LST-03] Sinh URL nghe nhạc (Signed URL cho MinIO) |
+| `/listener/stream/track/{id}`| POST | [API-LST-04] Ghi nhận lượt nghe hợp lệ (Sau khi nghe >= 30s) |
+| `/listener/library/favorites`| GET | [API-LST-05] Danh sách bài hát/album/artist yêu thích |
+| `/listener/library/toggle` | POST | [API-LST-06] Like/Unlike bài hát, album, artist |
+| `/listener/library/history` | GET | [API-LST-07] Lịch sử nghe nhạc (Resume listening) |
+| `/listener/playlists` | GET/POST| [API-LST-08] Lấy danh sách / Tạo Playlist mới |
+| `/listener/playlists/{id}` | GET | [API-LST-09] Chi tiết Playlist cá nhân |
+| `/listener/playlists/{id}/songs` | POST/DELETE | [API-LST-10] Thêm / Xóa bài hát khỏi Playlist |
+| `/listener/playlists/{id}/reorder`| PUT | [API-LST-11] Cập nhật vị trí (Reorder) các bài hát trong Playlist |
 
 **Cơ chế Track Stream (Listener):**
 1. Gọi `GET /listener/stream/url/{id}` để lấy `audio_url`.
@@ -145,14 +145,14 @@ Các API dành riêng cho không gian làm việc của Nghệ sĩ (Artist Works
 
 | Endpoint | Method | Description |
 |---|---|---|
-| `/artist/auth/me` | GET | Lấy thông tin Artist Profile |
-| `/artist/auth/logout`| POST | Đăng xuất |
-| `/artist/songs` | GET | Lấy danh sách bài hát của chính Artist |
-| `/artist/songs` | POST | Upload bài hát mới (`multipart/form-data`) |
-| `/artist/songs/{id}` | PUT | Cập nhật metadata bài hát |
-| `/artist/songs/{id}` | DELETE | Xóa mềm bài hát |
-| `/artist/albums` | GET/POST | Quản lý Album |
-| `/artist/analytics` | GET | Thống kê Dashboard (Tổng stream, follower, biểu đồ) |
+| `/artist/auth/me` | GET | [API-ART-01] Lấy thông tin Artist Profile |
+| `/artist/auth/logout`| POST | [API-ART-02] Đăng xuất |
+| `/artist/songs` | GET | [API-ART-03] Lấy danh sách bài hát của chính Artist |
+| `/artist/songs` | POST | [API-ART-04] Upload bài hát mới (`multipart/form-data`) |
+| `/artist/songs/{id}` | PUT | [API-ART-05] Cập nhật metadata bài hát |
+| `/artist/songs/{id}` | DELETE | [API-ART-06] Xóa mềm bài hát |
+| `/artist/albums` | GET/POST | [API-ART-07] Quản lý Album |
+| `/artist/analytics` | GET | [API-ART-08] Thống kê Dashboard (Tổng stream, follower, biểu đồ) |
 
 **Luồng Upload (POST `/artist/songs`):**
 - Trả về HTTP 201 Created và đẩy Job xử lý FFmpeg (cắt 30s preview) vào Queue `media_processing`. Trạng thái bài hát ban đầu là `Pending`.
@@ -166,23 +166,23 @@ Các API phục vụ quản trị hệ thống. Prefix: `/api/v1/admin`
 
 | Endpoint | Method | Description |
 |---|---|---|
-| `/admin/auth/login` | POST | Đăng nhập dành for Admin |
-| `/admin/dashboard` | GET | Thống kê tổng quan hệ thống (Tổng User, Stream, Artist) |
-| `/admin/users` | GET/PUT | Quản lý người dùng (Lấy danh sách / Ban / Unban) |
-| `/admin/artists` | GET | Lấy danh sách toàn bộ Artist |
-| `/admin/artists` | POST | Tạo mới trực tiếp tài khoản Artist (User + Artist Profile) |
-| `/admin/artists/{id}` | PUT/DELETE| Chỉnh sửa thông tin Artist (Stage name, Bio) / Khóa Artist |
-| `/admin/artists/{id}/verify`| POST | Xác minh Artist (Cấp tích xanh `is_verified` Official) |
-| `/admin/genres` | GET/POST/PUT/DELETE | Quản lý danh mục Thể loại nhạc (CRUD) |
-| `/admin/banners` | GET/POST/PUT/DELETE | Quản lý hệ thống Banner trang chủ (CRUD) |
-| `/admin/songs` | GET | Lấy danh sách toàn bộ bài hát trên hệ thống |
-| `/admin/songs/pending`| GET | Danh sách bài hát đang ở trạng thái `Pending` chờ duyệt |
-| `/admin/songs/{id}/approve`| POST | Phê duyệt bài hát (Public) |
-| `/admin/songs/{id}/reject` | POST | Từ chối bài hát |
-| `/admin/songs/{id}` | DELETE | Admin xóa (Soft delete) hoặc buộc ẩn bất kỳ bài hát nào |
-| `/admin/playlists/{id}`| DELETE | Xóa Playlist vi phạm tiêu chuẩn cộng đồng |
-| `/admin/comments/{id}` | DELETE | Xóa bình luận tiêu cực / spam |
-| `/admin/audit-logs` | GET | Xem nhật ký hoạt động (Audit Trail) của Admin/Artist |
+| `/admin/auth/login` | POST | [API-ADM-01] Đăng nhập dành for Admin |
+| `/admin/dashboard` | GET | [API-ADM-02] Thống kê tổng quan hệ thống (Tổng User, Stream, Artist) |
+| `/admin/users` | GET/PUT | [API-ADM-03] Quản lý người dùng (Lấy danh sách / Ban / Unban) |
+| `/admin/artists` | GET | [API-ADM-04] Lấy danh sách toàn bộ Artist |
+| `/admin/artists` | POST | [API-ADM-05] Tạo mới trực tiếp tài khoản Artist (User + Artist Profile) |
+| `/admin/artists/{id}` | PUT/DELETE| [API-ADM-06] Chỉnh sửa thông tin Artist (Stage name, Bio) / Khóa Artist |
+| `/admin/artists/{id}/verify`| POST | [API-ADM-07] Xác minh Artist (Cấp tích xanh `is_verified` Official) |
+| `/admin/genres` | GET/POST/PUT/DELETE | [API-ADM-08] Quản lý danh mục Thể loại nhạc (CRUD) |
+| `/admin/banners` | GET/POST/PUT/DELETE | [API-ADM-09] Quản lý hệ thống Banner trang chủ (CRUD) |
+| `/admin/songs` | GET | [API-ADM-10] Lấy danh sách toàn bộ bài hát trên hệ thống |
+| `/admin/songs/pending`| GET | [API-ADM-11] Danh sách bài hát đang ở trạng thái `Pending` chờ duyệt |
+| `/admin/songs/{id}/approve`| POST | [API-ADM-12] Phê duyệt bài hát (Public) |
+| `/admin/songs/{id}/reject` | POST | [API-ADM-13] Từ chối bài hát |
+| `/admin/songs/{id}` | DELETE | [API-ADM-14] Admin xóa (Soft delete) hoặc buộc ẩn bất kỳ bài hát nào |
+| `/admin/playlists/{id}`| DELETE | [API-ADM-15] Xóa Playlist vi phạm tiêu chuẩn cộng đồng |
+| `/admin/comments/{id}` | DELETE | [API-ADM-16] Xóa bình luận tiêu cực / spam |
+| `/admin/audit-logs` | GET | [API-ADM-17] Xem nhật ký hoạt động (Audit Trail) của Admin/Artist |
 
 ---
 
@@ -194,3 +194,35 @@ Các API phục vụ quản trị hệ thống. Prefix: `/api/v1/admin`
 - **Upload API (`POST /artist/songs`):** 10 requests / 10 phút / User.
 - **Track Stream API (`POST /songs/{id}/track-stream`):** 5 requests / 1 phút / User (Ngăn chặn dùng script bắn request cày view liên tục).
 - Khi vượt quá ngưỡng, hệ thống trả về mã lỗi HTTP `429 Too Many Requests`.
+
+
+## 5. Chi tiết [API-LST-04] Ghi nhận lượt nghe
+
+# 1. Endpoint & Method
+- **Method**: `POST`
+- **Endpoint**: `/api/v1/listener/stream/track/{id}`
+- **Auth**: Cookie Sanctum (Role: `Listener`, `Artist`)
+
+# 2. Request Payload (Body)
+| Field | Type | Required | Rule Validation |
+|||
+| `session_id` | string | Yes | UUID v4 |
+| `duration_listened`| integer | Yes | >= 30 |
+
+# 3. Logic xử lý
+- Validate payload.
+- Gọi `[RULE-STREAM-01]` để check điều kiện Anti-cheat.
+- Insert record vào `[DB-streams]`.
+
+# 4. Response Schema
+**201 Created**
+```json
+{
+  "status": "success",
+  "message": "Stream recorded"
+}
+```
+
+# 5. Exceptions
+- `429 Too Many Requests`: Vi phạm Rule Anti-cheat (Rate limit).
+- `404 Not Found`: Bài hát không tồn tại.

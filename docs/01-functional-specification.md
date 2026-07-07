@@ -156,83 +156,83 @@ Các chức năng chưa triển khai trong Phase 1:
 
 | Feature                  | Description                                                   | Actor            | Business Rule                                         |
 | ------------------------ | ------------------------------------------------------------- | ---------------- | ----------------------------------------------------- |
-| Resume Listening         | Tiếp tục phát từ vị trí gần nhất                              | Listener, Artist | Cập nhật Last Position                                |
-| Queue Persistence        | Queue không mất khi refresh                                   | Listener, Artist | Lưu Local Storage                                     |
-| Upload Song              | Upload audio + metadata + cover                               | Artist           | Validate file                                         |
-| Search Content           | Tìm kiếm Song, Artist, Album, Playlist                        | All              | BR04                                                  |
-| Like / Favorite Song | Thả tim bài hát để lưu vào thư viện yêu thích. | Listener | Một người dùng chỉ được Favorite một lần cho mỗi bài hát. |
-| Favorite Album | Lưu Album vào thư viện yêu thích. | Listener | Một người dùng chỉ được Favorite một lần cho mỗi Album. |
-| Favorite Artist | Lưu Artist vào danh sách yêu thích. | Listener | Một người dùng chỉ được Favorite một lần cho mỗi Artist. |
-| Favorite Playlist | Lưu Playlist Public vào thư viện. | Listener | Chỉ Playlist Public được phép Favorite. |
-| Follow Artist            | Theo dõi nghệ sĩ                                              | Listener         | Không follow chính mình                               |
-| Listening History        | Lưu lịch sử nghe                                              | Listener         | Cập nhật sau mỗi phiên phát hợp lệ                    |
-| Lyrics Sync              | Đồng bộ lời bài hát theo thời gian                            | All              | File LRC hợp lệ                                       |
-| Playlist Sharing         | Chia sẻ playlist công khai                                    | Listener         | Playlist phải Public                                  |
-| Manage Admin Roles | Phân quyền động, tạo Role con (Moderator, Finance) trong Admin | Admin | Dành riêng cho Super Admin phân quyền cho nhân viên |
-| Delegate Permissions | Gán các quyền (Approve Song, Ban User...) cho từng Role | Admin | Sử dụng RBAC nội bộ Admin Panel |
+| [FEAT-001] Resume Listening | Tiếp tục phát từ vị trí gần nhất                              | Listener, Artist | Cập nhật Last Position                                |
+| [FEAT-002] Queue Persistence | Queue không mất khi refresh                                   | Listener, Artist | Lưu Local Storage                                     |
+| [FEAT-003] Upload Song   | Upload audio + metadata + cover                               | Artist           | Validate file                                         |
+| [FEAT-004] Search Content | Tìm kiếm Song, Artist, Album, Playlist                        | All              | [RULE-004]                                                  |
+| [FEAT-005] Like / Favorite Song | Thả tim bài hát để lưu vào thư viện yêu thích. | Listener | Một người dùng chỉ được Favorite một lần cho mỗi bài hát. |
+| [FEAT-006] Favorite Album | Lưu Album vào thư viện yêu thích. | Listener | Một người dùng chỉ được Favorite một lần cho mỗi Album. |
+| [FEAT-007] Favorite Artist | Lưu Artist vào danh sách yêu thích. | Listener | Một người dùng chỉ được Favorite một lần cho mỗi Artist. |
+| [FEAT-008] Favorite Playlist | Lưu Playlist Public vào thư viện. | Listener | Chỉ Playlist Public được phép Favorite. |
+| [FEAT-009] Follow Artist | Theo dõi nghệ sĩ                                              | Listener         | Không follow chính mình                               |
+| [FEAT-010] Listening History | Lưu lịch sử nghe                                              | Listener         | Cập nhật sau mỗi phiên phát hợp lệ                    |
+| [FEAT-011] Lyrics Sync   | Đồng bộ lời bài hát theo thời gian                            | All              | File LRC hợp lệ                                       |
+| [FEAT-012] Playlist Sharing | Chia sẻ playlist công khai                                    | Listener         | Playlist phải Public                                  |
+| [FEAT-013] Manage Admin Roles | Phân quyền động, tạo Role con (Moderator, Finance) trong Admin | Admin | Dành riêng cho Super Admin phân quyền cho nhân viên |
+| [FEAT-014] Delegate Permissions | Gán các quyền (Approve Song, Ban User...) cho từng Role | Admin | Sử dụng RBAC nội bộ Admin Panel |
 
 ---
 
 ## 7. Business Rules
 
-**BR01** Một bài hát chỉ được Public khi:
+**[RULE-001]** Một bài hát chỉ được Public khi:
 
 * Status = Approved
 * Artist không bị khóa
 
-**BR02**
+**[RULE-002]**
 
 Album chỉ được Public khi có ít nhất **01 bài hát Approved**.
 
-**BR03**
+**[RULE-003]**
 
 Guest không được Like, Follow hoặc Clone Playlist.
 
-**BR04**
+**[RULE-004]**
 
 Chỉ Playlist Public mới xuất hiện trong kết quả Search.
 
-**BR05**
+**[RULE-005]**
 
 Artist bị khóa sẽ mất toàn bộ quyền Upload, Edit và Release.
 
-**BR06**
+**[RULE-006]**
 
 Song Rejected có thể chỉnh sửa và Submit lại.
 
-**BR07**
+**[RULE-007]**
 
 Song, Album và Playlist chỉ được Soft Delete.
 
-**BR08**
+**[RULE-008]**
 
 Một người dùng chỉ được Favorite một lần đối với mỗi Song.
 
-**BR09**
+**[RULE-009]**
 
 Một người dùng chỉ được Favorite một lần đối với mỗi Album.
 
-**BR10**
+**[RULE-010]**
 
 Một người dùng chỉ được Favorite một lần đối với mỗi Artist.
 
-**BR11**
+**[RULE-011]**
 
 Một người dùng chỉ được Favorite một lần đối với mỗi Playlist.
 
-**BR12**
+**[RULE-012]**
 
 Chỉ Playlist có trạng thái `Public` mới được phép Favorite.
 
-**BR13**
+**[RULE-013]**
 
 **Chống Cheat Stream:** Ghi nhận Stream phải đi qua Validate Anti-cheat (kiểm tra giới hạn số lượt stream từ cùng 1 Session/IP trong ngày).
 
-**BR14**
+**[RULE-014]**
 
 **Giới hạn thiết bị:** Một tài khoản Listener chỉ được phép có tối đa 1 phiên stream nhạc tại một thời điểm (Ngăn chặn chia sẻ tài khoản). Phát nhạc ở thiết bị mới sẽ ngắt phiên stream ở thiết bị cũ.
 
-**BR15**
+**[RULE-015]**
 
 **Tiêu chuẩn Stream hợp lệ (Anti-cheat 30s):** Thời gian nghe `30 giây` phải là **thời gian nghe thực tế liên tục (Continuous playback)**. Việc user tua đi tua lại (scrubbing) một đoạn nhạc 5 giây nhiều lần sẽ không được cộng dồn (Not Accumulated) để tính là 1 lượt stream, nhằm chặn thủ thuật gian lận tiền bản quyền.
 
@@ -430,3 +430,29 @@ Hệ thống ghi nhận Audit Log cho các thao tác quan trọng:
 * Realtime Listening Room
 * Multi-language
 * Smart Notification
+
+
+## 9. Cụm tính năng [FEAT-STREAMING]
+
+# Mục tiêu (Objective)
+Cho phép người dùng (Listener, Artist) nghe nhạc trên hệ thống một cách mượt mà, đồng thời ghi nhận chính xác lượt nghe (Stream) cho mục đích trả bản quyền và thống kê (Analytics) mà không bị gian lận (Anti-cheat).
+
+## Tính năng con
+- Lấy URL audio bảo mật (Signed URL).
+- Xử lý Play/Pause, Resume position.
+- Anti-cheat tracking.
+- Rate limiting.
+
+## 10. Quy tắc [RULE-STREAM-01]
+
+# 1. Decision Table: Điều kiện ghi nhận Stream
+
+| Điều kiện 1: Thời gian nghe | Điều kiện 2: Trùng Session/IP trong 1 phút | Kết quả thực thi |
+||---|
+| Dưới 30s | Bất kỳ | **Bỏ qua**, không tính là Stream. Trả về 200 OK (silent ignore). |
+| Lớn hơn hoặc bằng 30s | Có (Spam request) | **Block**, chặn và trả về lỗi HTTP `429 Too Many Requests`. |
+| Lớn hơn hoặc bằng 30s | Không trùng | **Hợp lệ**, Insert vào `DB-STREAMS`. |
+
+# 2. Ràng buộc bổ sung
+- Thời gian nghe 30s phải là **continuous playback** (nghe liên tục).
+- Hành động user tua bài hát (scrubbing) liên tục trong 1 đoạn ngắn không được phép cộng dồn (Not Accumulated) để đủ 30s. Client phải tính toán duration phát thực tế.
