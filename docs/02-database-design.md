@@ -461,11 +461,14 @@ Lưu lịch sử nghe nhạc và hỗ trợ Resume Listening.
 ---
 
 ## 4.14 [DB-streams]
+Lưu trữ lượt nghe (play) hợp lệ của bài hát để tính toán Analytics và Trả tiền bản quyền (Royalties).
+Bảng này sẽ phình to rất nhanh (hàng triệu bản ghi mỗi ngày). 
 
-Lưu các lượt nghe hợp lệ phục vụ Analytics.
+> **💡 Tối ưu hóa (Optimization): Table Partitioning**
+> Bảng này PHẢI áp dụng kỹ thuật **Database Partitioning theo thời gian** (Month/Year) ngay từ đầu để tránh nghẽn cổ chai (bottleneck) khi query thống kê. Các dữ liệu quá hạn (ví dụ > 3 năm) có thể được Archive ra Cold Storage hoặc xoá bớt.
 
-| Column | Type | Description |
-|---------|------|-------------|
+| Column | Type | Attributes | Constraints / Description |
+| :--- | :--- | :--- | :--- |
 | id | bigint | Primary Key |
 | user_id | FK | Người nghe |
 | song_id | FK | Bài hát |

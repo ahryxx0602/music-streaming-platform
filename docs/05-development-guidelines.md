@@ -19,7 +19,18 @@ Tài liệu này định nghĩa các tiêu chuẩn phát triển tinh gọn (Lea
 - **Database Column**: snake_case (VD: `cover_image`, `created_at`).
 - **API Response**: Bắt buộc tuân thủ JSend format thông qua `ApiResponseTrait`.
 
-### 2.2. Frontend (Vue 3 / JS)
+### 2.2. Vị trí lưu trữ Kiến trúc (Folder Structure Rules)
+Dự án áp dụng mô hình **Modular Monolith** kết hợp với thư mục Global.
+*   **Global (Dùng chung toàn hệ thống):**
+    *   `app/Enums/`: Lưu các Enum dùng chung (VD: `RoleEnum.php`).
+    *   `app/Traits/`: Lưu các Trait dùng chung (VD: `ApiResponseTrait.php`).
+    *   `app/Exceptions/`: Custom Exceptions hệ thống.
+    *   `app/Models/`: Model mặc định nếu không thuộc module nào (VD: `User.php`).
+*   **Modular (Nghiệp vụ chuyên biệt):**
+    *   Nằm tại `app/Modules/<Tên_Module>/`.
+    *   Mỗi Module có thể chứa: `Controllers`, `Services` (chứa Business Logic), `Repositories` (Truy vấn DB), `Events`, `Listeners`, `Observers` (Bắt sự kiện DB của Model), `Requests`, `Jobs`.
+
+### 2.3. Frontend (Vue 3 / JS)
 - **Component Vue**: PascalCase (VD: `GlobalPlayer.vue`, `SongCard.vue`).
 - **Biến / Hàm JS**: camelCase (VD: `handlePlay()`, `currentUser`).
 - **CSS Class (Tailwind)**: kebab-case (VD: `text-red-500`, `btn-primary`).

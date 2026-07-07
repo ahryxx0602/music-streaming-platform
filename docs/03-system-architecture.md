@@ -425,30 +425,27 @@ avatars/
 
 ---
 
-## 8.3 Upload Workflow
+## 8.3 Upload Workflow (Direct-to-MinIO Strategy)
+
+**Tối ưu hóa (Optimization):** Sử dụng cơ chế **Presigned URL Upload**. Frontend sẽ tải file trực tiếp lên MinIO, tránh việc đẩy file âm thanh dung lượng lớn qua Laravel API (gây ngốn RAM và thắt cổ chai băng thông Web Server).
 
 ```text
-Artist Upload
-
-↓
-
-Validation
-
-↓
-
-Virus Check (Future)
-
-↓
-
-Store File
-
-↓
-
-Database
-
-↓
-
-Return URL
+Artist (Frontend)
+       │
+       ▼
+1. Xin cấp phép Upload (Request Presigned URL)
+       │
+       ▼
+2. Laravel xác thực quyền (Validate Policy) & Cấp Presigned URL
+       │
+       ▼
+3. Frontend đẩy trực tiếp file lên MinIO (Direct Upload) bằng URL vừa nhận
+       │
+       ▼
+4. Frontend gọi API Laravel xác nhận Upload thành công (Webhook/Callback)
+       │
+       ▼
+5. Laravel lưu Database & Dispatch Job xử lý Media
 ```
 
 ---
@@ -617,32 +614,27 @@ Những dữ liệu này luôn được đọc trực tiếp từ Database hoặ
 
 # 11. Streaming Strategy
 
+**Chiến lược Signed URL với Buffer Time (Chống gián đoạn):**
+Vì file MP3 được bảo vệ trên MinIO và phát qua Signed URL có thời hạn (ví dụ: TTL = 1 tiếng), nếu URL hết hạn khi user đang nghe, việc phát nhạc sẽ vỡ (lỗi HTTP 403). 
+➔ **Giải pháp:** Frontend Player (Pinia Store) sẽ thiết lập một `Buffer Time` (Ví dụ: trigger gọi lại API xin cấp URL mới ở phút 55 thay vì đợi đến phút 60), đảm bảo nhạc phát liên tục không bị giật lag.
+
 ```text
-User
-
-↓
-
-Request Audio
-
-↓
-
-Permission Check
-
-↓
-
-Stream File
-
-↓
-
-30s / 50%
-
-↓
-
-Count Stream
-
-↓
-
-Analytics
+User (Frontend Player)
+       │
+       ▼
+1. Yêu cầu nghe nhạc `[API-STREAM-01]`
+       │
+       ▼
+2. Backend kiểm tra quyền (Premium/Free) & Sinh MinIO Signed URL (TTL 1h)
+       │
+       ▼
+3. Trình duyệt tải Audio stream trực tiếp từ MinIO
+       │
+       ▼
+(Phút 55: Trình duyệt tự động chạy ngầm renew Signed URL)
+       │
+       ▼
+4. Sau khi nghe >30s hoặc >50% thời lượng ➔ Ghi nhận Stream (Gọi API Analytics)
 ```
 
 ---
