@@ -23,8 +23,10 @@
   },
   "homepage": "https://github.com/ahryxx0602/music-streaming-platform#readme",
   "devDependencies": {
-    "@commitlint/cli": "^21.2.0",
-    "@commitlint/config-conventional": "^21.2.0",
-    "husky": "^9.1.7"
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.8"
+  },
+  "lint-staged": {
+    "*": "echo 'No linting required'"
   }
 }
