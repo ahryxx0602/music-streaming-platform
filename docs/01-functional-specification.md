@@ -122,9 +122,9 @@ Các chức năng chưa triển khai trong Phase 1:
 | Follow Artist            |   ❌   |     ✅    |     ✅    |        ✅        |
 | Comment                  |   ❌   |     ✅    |     ✅    |        ✅        |
 | Create Playlist          |   ❌   |     ✅    |     ✅    |        ✅        |
-| Upload Song              |   ❌   |     ❌    |     ✅    |        ❌        |
+| Upload Song              |   ❌   |     ❌    |     ✅    |        ✅        |
 | Artist Dashboard         |   ❌   |     ❌    |     ✅    |        ❌        |
-| View Artist Analytics    |   ❌   |     ❌    | Own Data | Via Admin Panel |
+| View Artist Analytics    |   ❌   |     ❌    | Own Data   | Via Admin Panel  |
 | Approve / Reject Song    |   ❌   |     ❌    |     ❌    |        ✅        |
 | Manage Users             |   ❌   |     ❌    |     ❌    |        ✅        |
 | Manage Banner            |   ❌   |     ❌    |     ❌    |        ✅        |
