@@ -1,16 +1,30 @@
 {
-    "$schema": "https://www.schemastore.org/package.json",
-    "private": true,
-    "type": "module",
-    "scripts": {
-        "build": "vite build",
-        "dev": "vite"
-    },
-    "devDependencies": {
-        "@tailwindcss/vite": "^4.0.0",
-        "concurrently": "^9.0.1",
-        "laravel-vite-plugin": "^3.1",
-        "tailwindcss": "^4.0.0",
-        "vite": "^8.0.0"
-    }
+  "name": "music-streaming-platform",
+  "version": "1.0.0",
+  "description": "Một ứng dụng Web Streaming Âm nhạc hiệu năng cao được xây dựng theo kiến trúc **Modular Monolith**. Nền tảng này đóng vai trò cầu nối giữa **Người nghe (Listeners)** và **Nghệ sĩ (Artists)** thông qua một hệ sinh thái âm nhạc bảo mật, mượt mà và dễ dàng mở rộng.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ahryxx0602/music-streaming-platform.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/ahryxx0602/music-streaming-platform/issues"
+  },
+  "homepage": "https://github.com/ahryxx0602/music-streaming-platform#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^21.2.0",
+    "@commitlint/config-conventional": "^21.2.0",
+    "husky": "^9.1.7"
+  }
 }
