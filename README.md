@@ -1,4 +1,4 @@
-# 🎵 Nền tảng Âm nhạc Trực tuyến (Audio Streaming Platform)
+# 🎵 Music Streaming Platform (Nền tảng Âm nhạc Trực tuyến)
 
 Một ứng dụng Web Streaming Âm nhạc hiệu năng cao được xây dựng theo kiến trúc **Modular Monolith**. Nền tảng này đóng vai trò cầu nối giữa **Người nghe (Listeners)** và **Nghệ sĩ (Artists)** thông qua một hệ sinh thái âm nhạc bảo mật, mượt mà và dễ dàng mở rộng.
 
@@ -17,19 +17,19 @@ Một ứng dụng Web Streaming Âm nhạc hiệu năng cao được xây dựn
 ## 🛠 Công nghệ sử dụng (Tech Stack)
 
 ### Backend
-- **Framework:** Laravel 13 (PHP 8.4)
+- **Framework:** Laravel 11.x (PHP 8.2+)
 - **Kiến trúc:** Modular Monolith
 - **Cơ sở dữ liệu:** MySQL 8
 - **Cache & Queue:** Redis
 - **Media Processing:** FFmpeg
 - **Storage:** MinIO (S3 API)
-- **Authentication:** Laravel Sanctum SPA (HttpOnly Cookie bảo mật chống XSS)
+- **Authentication:** Laravel Sanctum SPA (HttpOnly Cookie bảo mật)
 
 ### Frontend
 - **Framework:** Vue 3 (Composition API)
 - **State Management:** Pinia
 - **Styling:** CSS / TailwindCSS
-- **HTTP Client:** Axios (Interceptors configured)
+- **HTTP Client:** Axios
 
 ---
 
@@ -51,14 +51,24 @@ app/Modules/
 
 ## 📚 Hệ thống Tài liệu (Documentation)
 
-Dự án được đặc tả cực kỳ chi tiết từ Database đến API. Toàn bộ tài liệu được lưu trong thư mục `docs/`:
+Dự án được đặc tả kỹ thuật toàn diện ở mức Production-ready. Toàn bộ tài liệu kiến trúc, Database, API và UI/UX Specs được lưu trữ trong thư mục `docs/`:
 
+### Kiến trúc & Nghiệp vụ (System & Business)
 1. `01-functional-specification.md` - Đặc tả Yêu cầu & Business Rules.
 2. `02-database-design.md` - Thiết kế CSDL (3NF) & Ràng buộc toàn vẹn.
 3. `03-system-architecture.md` - Sơ đồ Hệ thống, Event-driven & Caching.
-4. `04-api-documentation.md` - Chuẩn giao tiếp RESTful API & Error handling.
-5. `05-development-guidelines.md` - Bộ quy chuẩn Code, PSR-12, Git Flow & Security.
-6. `06-frontend-architecture.md` - Kiến trúc Frontend Vue 3 & Cơ chế Audio Player.
+4. `04-api-documentation.md` - Giao tiếp RESTful API & Error handling.
+5. `05-development-guidelines.md` - Quy chuẩn Code, PSR-12, Git Flow & Security.
+6. `06-frontend-architecture.md` - Kiến trúc Frontend Vue 3 & Global Audio Player.
+7. `07-api-registry.md` - **Single Source of Truth** về mã định danh API `[API-xxx]`.
+
+### UI/UX Screen Specs (Thiết kế giao diện)
+Thư mục `docs/screens/` chứa 27+ tài liệu đặc tả chi tiết cho từng màn hình (Screen Specs), được phân rã theo User Journey:
+- **`inventory.md`** - Bảng tổng hợp toàn bộ mã định danh màn hình (`[SCR-xxx]`).
+- `Auth/` & `Public/` - Các màn hình tĩnh, Đăng nhập, Đăng ký, Cài đặt bảo mật, Notification.
+- `Listener/` - Trải nghiệm nghe nhạc, Khám phá, Quản lý Thư viện.
+- `Artist/` - Bảng điều khiển của Nghệ sĩ, Upload file multipart.
+- `System/` - Các màn hình quản trị của Admin (Kiểm duyệt, Phân quyền RBAC, Thống kê).
 
 ---
 
@@ -73,4 +83,4 @@ Dự án tuân thủ nghiêm ngặt các nguyên tắc bảo mật:
 
 ---
 
-*Được kiến trúc và phát triển với các tiêu chuẩn Production-Ready.*
+*Được kiến trúc và phát triển với tiêu chuẩn System Design nghiêm ngặt của Senior Engineer.*

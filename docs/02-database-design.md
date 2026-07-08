@@ -98,6 +98,10 @@ Songs
 ├── Lyrics
 ├── Stream
 └── Comments
+
+System
+│
+└── Settings (Key-Value Config)
 ```
 
 ---
@@ -117,6 +121,7 @@ Lưu thông tin tài khoản.
 | role              | varchar(50)  | Guest / Listener / Artist / Admin |
 | avatar            | varchar      | Avatar                            |
 | status            | varchar(50)  | Active / Suspended / Banned       |
+| notification_prefs| json         | Cấu hình nhận thông báo (opt-out) |
 | email_verified_at | timestamp    | Email Verify                      |
 | created_at        | timestamp    |                                   |
 | updated_at        | timestamp    |                                   |
@@ -126,6 +131,21 @@ Lưu thông tin tài khoản.
 
 - `role` được quản lý bằng PHP Enum.
 - `status` được quản lý bằng PHP Enum.
+---
+
+## 4.1.2 [DB-password_reset_tokens]
+Lưu trữ các Token tạm thời dùng cho chức năng Khôi phục mật khẩu (Forgot Password) của Laravel.
+
+| Column | Type | Attributes | Constraints / Description |
+| :--- | :--- | :--- | :--- |
+| email | varchar(255) | Primary Key | Khóa chính theo chuẩn của Laravel |
+| token | varchar(255) | Not Null | Mã băm (hash) phục hồi |
+| created_at | timestamp | Nullable | Thời điểm gửi yêu cầu |
+
+### Business Rule
+- Bảng này không có trường `id` hay `updated_at`.
+- Khi người dùng reset mật khẩu thành công, bản ghi chứa email của họ sẽ lập tức bị Delete khỏi bảng này.
+
 ---
 
 ## 4.2 [DB-artist_profiles]
@@ -166,11 +186,19 @@ Artist Profile (1)
 
 Danh mục thể loại.
 
-| Column      | Type    |
-| ----------- | ------- |
-| id          | bigint  |
-| name        | varchar |
-| description | text    |
+| Column      | Type    | Attributes | Constraints |
+| ----------- | ------- | ---------- | ----------- |
+| id          | bigint  | PK         | Tự tăng     |
+| parent_id   | bigint  | FK, Null   | Tham chiếu về `genres.id` (Chứa danh mục cha) |
+| name        | varchar | Not Null   | Tên thể loại (VD: EDM, Pop) |
+| slug        | varchar | Unique     | Dùng cho URL (VD: edm, pop) |
+| icon        | varchar | Null       | URL icon/ảnh đại diện của danh mục |
+| description | text    | Null       | Mô tả |
+| is_active   | boolean | Default 1  | 1: Hiển thị, 0: Ẩn |
+
+**Business Rule:** 
+- Sử dụng mô hình **Adjacency List** (Cây liền kề) bằng cột `parent_id`. Ví dụ: Nhạc Âm Hưởng (Cha) -> Nhạc Quê Hương (Con) -> Nhạc Trữ Tình (Cháu).
+- Nếu `parent_id` là `null`, đó là danh mục gốc (Root Category).
 
 ---
 
@@ -178,15 +206,31 @@ Danh mục thể loại.
 
 Thông tin Album.
 
-| Column       | Type                    |
-| ------------ | ----------------------- |
-| id           | bigint                  |
-| artist_id    | FK                      |
-| title        | varchar                 |
-| cover_image  | varchar                 |
-| release_date | date                    |
-| type         | enum(Single, EP, Album) |
-| status       | enum                    |
+| Column       | Type                    | Description             |
+| ------------ | ----------------------- | ----------------------- |
+| id           | bigint                  | Primary Key             |
+| artist_id    | FK                      | Tham chiếu đến `artist_profiles.id` |
+| title        | varchar                 | Tên Album               |
+| cover_image  | varchar                 | Ảnh bìa Album           |
+| release_date | date                    | Ngày phát hành          |
+| type         | enum(Single, EP, Album) | Loại Album              |
+| status       | varchar(50)             | Draft / Published / Hidden |
+| description  | text (nullable)         | Mô tả album             |
+| created_at   | timestamp               |                         |
+| updated_at   | timestamp               |                         |
+| deleted_at   | timestamp (nullable)    | Soft Delete             |
+
+### Status Enum
+
+```
+Draft → Published ↔ Hidden
+```
+
+### Business Rule
+
+- `status` được quản lý bằng PHP Enum: `Draft`, `Published`, `Hidden`.
+- `album_id` trong `[DB-songs]` là **nullable** — bài hát có thể phát hành dạng Single mà không cần Album.
+- Album chỉ được Published khi có ít nhất một Song ở trạng thái `Approved`.
 
 ---
 
@@ -194,65 +238,82 @@ Thông tin Album.
 
 Thông tin bài hát.
 
-| Column       | Type       |
-| ------------ | ---------  |
-| id           | bigint     |
-| artist_id    | FK         |
-| album_id     | FK         |
-| genre_id     | FK         |
-| title        | varchar    |
-| lyrics       | longtext   |
-| duration     | integer    |
-| audio_path   | varchar    |
-| preview_path | varchar    |
-| mime_type    | varchar    |
-| file_size    | bigint     |
-| bitrate      | integer    |
-| sample_rate  | integer    |
-| channels     | tinyint    |
-| checksum     | varchar(64)|
-| cover_image  | varchar    |
-| status       | enum       |
-| play_count   | bigint     |
-| created_at   | timestamp  |
+| Column              | Type                 | Description                                |
+| ------------------- | -------------------- | ------------------------------------------ |
+| id                  | bigint               | Primary Key                                |
+| artist_id           | FK                   | Tham chiếu đến `artist_profiles.id` (Nghệ sĩ chính) |
+| album_id            | FK (nullable)        | Tham chiếu đến `albums.id` (nullable — bài hát có thể là Single) |
+| genre_id            | FK                   | Tham chiếu đến `genres.id`                 |
+| title               | varchar              | Tên bài hát                                |
+| lyrics              | longtext             | Lời bài hát                                |
+| duration            | integer              | Thời lượng (giây)                          |
+| original_file_path  | varchar (nullable)   | Đường dẫn file gốc trên MinIO (dùng để Retry) |
+| hls_path            | varchar              | Đường dẫn file HLS trên MinIO              |
+| original_size       | bigint               | Dung lượng file gốc (bytes)                |
+| bitrate             | integer              | Bitrate (kbps)                             |
+| sample_rate         | integer              | Sample rate (Hz)                           |
+| channels            | tinyint              | Số kênh âm thanh                           |
+| checksum            | varchar(64)          | Mã băm SHA-256 để phát hiện file trùng     |
+| cover_image         | varchar              | Ảnh bìa bài hát                            |
+| status              | varchar(50)          | Draft / Processing / Pending / Approved / Hidden / Rejected / Failed |
+| play_count          | bigint               | Tổng lượt nghe                             |
+| rejected_reason     | text (nullable)      | Lý do từ chối, hiển thị cho Artist         |
+| rejected_at         | timestamp (nullable) | Thời điểm từ chối                          |
+| approved_at         | timestamp (nullable) | Thời điểm phê duyệt                       |
+| processing_error    | text (nullable)      | Thông báo lỗi FFmpeg nếu transcoding thất bại |
+| processing_attempts | tinyint (default 0)  | Số lần thử transcoding                     |
+| created_at          | timestamp            |                                            |
+| updated_at          | timestamp            |                                            |
+| deleted_at          | timestamp (nullable) | Soft Delete                                |
 
-Status
+### Status Enum
 
 ```
-Draft
-
-↓
-
-Pending
-
-↓
-
-Approved
-
-↓
-
-Hidden
-
-↓
-
-Rejected
+Status: Draft → Processing → Pending → Approved ↔ Hidden
+                                         ↓
+                                      Rejected
+         Processing → Failed (retry possible)
 ```
+
 ### Business Rule
 - Metadata được sinh tự động sau khi Upload.
 - Checksum dùng để phát hiện file trùng lặp.
+- `album_id` là nullable — bài hát có thể phát hành dạng Single mà không cần Album.
+- Khi transcoding thất bại, `status` chuyển sang `Failed` và `processing_error` lưu thông báo lỗi. `original_file_path` bắt buộc phải tồn tại để thực hiện Retry.
+- `processing_attempts` được tăng sau mỗi lần thử transcoding, hỗ trợ retry logic.
+
+---
+
+## 4.5.1 [DB-song_artists] (Pivot)
+
+Bảng trung gian quản lý các nghệ sĩ hợp tác (Featured Artists). Hỗ trợ chia sẻ doanh thu và metadata chính xác.
+
+| Column      | Type    | Description                                      |
+| ----------- | ------- | ------------------------------------------------ |
+| song_id     | FK      | Tham chiếu `songs.id`                            |
+| artist_id   | FK      | Tham chiếu `artist_profiles.id`                  |
+| role        | varchar | `main` / `featured` / `producer`                 |
+
+**Business Rule:**
+- Primary Key (Composite): `(song_id, artist_id)`.
+- Nghệ sĩ upload mặc định được gán `role = main`.
 
 ---
 
 ## 4.6 [DB-playlists]
 
-| Column      | Type                  |
-| ----------- | --------------------- |
-| id          | bigint                |
-| user_id     | FK                    |
-| title       | varchar               |
-| description | text                  |
-| cover_image | varchar               |
-| privacy     | enum(Public, Private) |
+| Column      | Type                  | Description                                        |
+| ----------- | --------------------- | -------------------------------------------------- |
+| id          | bigint                | Primary Key                                        |
+| user_id     | FK                    | Tham chiếu đến `users.id`                          |
+| title       | varchar               | Tên playlist                                       |
+| description | text                  | Mô tả playlist                                     |
+| cover_image | varchar               | Ảnh bìa playlist                                   |
+| privacy     | enum(Public, Private) | Quyền riêng tư                                     |
+| type        | varchar (default 'user') | `user` hoặc `system` (Phân biệt playlist hệ thống vs cá nhân) |
+| created_at  | timestamp             |                                                    |
+| updated_at  | timestamp             |                                                    |
+| deleted_at  | timestamp (nullable)  | Soft Delete                                        |
 
 ---
 
@@ -260,11 +321,12 @@ Rejected
 
 Bảng trung gian.
 
-| Column      |
-| ----------- |
-| playlist_id |
-| song_id     |
-| position    |
+| Column      | Type      | Description                      |
+| ----------- | --------- | -------------------------------- |
+| playlist_id | FK        | Tham chiếu đến `playlists.id`    |
+| song_id     | FK        | Tham chiếu đến `songs.id`       |
+| position    | integer   | Thứ tự bài hát trong playlist    |
+| created_at  | timestamp | Thời điểm thêm bài vào playlist |
 
 Unique Index
 
@@ -645,6 +707,25 @@ Quản lý quyền động (Dynamic Roles & Permissions) dành riêng cho module
 - `role_has_permissions`: Bảng trung gian liên kết Role với Permissions.
 - `model_has_permissions`: Bảng trung gian gán quyền trực tiếp cho User.
 
+---
+
+## 4.21 [DB-settings]
+
+Bảng lưu trữ cấu hình hệ thống dạng Key-Value.
+
+| Column | Type | Attributes | Constraints / Description |
+| :--- | :--- | :--- | :--- |
+| id | bigint | Primary Key | |
+| key | varchar(255) | Unique | Khóa cấu hình (VD: `payout_rate_per_stream`, `max_upload_size`) |
+| value | text | Not Null | Giá trị cấu hình |
+| description | varchar(255) | Nullable | Mô tả ngắn cho Admin UI |
+| created_at | timestamp | | |
+| updated_at | timestamp | | |
+
+### Business Rule
+- Bảng này dùng cho cấu hình động (thay đổi runtime) mà không cần deploy lại.
+- Các giá trị nhạy cảm (secret key, API key) PHẢI lưu trong `.env`, KHÔNG lưu ở đây.
+
 # 5. Relationship Summary
 
 ```
@@ -700,7 +781,9 @@ Song
 | songs | artist_id |
 | songs | genre_id |
 | songs | status |
+| songs | (status, artist_id) COMPOSITE |
 | playlists | user_id |
+| playlists | type |
 | playlist_songs | playlist_id |
 | favorite_songs | (user_id, song_id) UNIQUE |
 | favorite_albums | (user_id, album_id) UNIQUE |
@@ -710,19 +793,20 @@ Song
 | streams | song_id |
 | streams | streamed_at |
 | listening_histories | (user_id, song_id) UNIQUE |
+| settings | key (UNIQUE) |
 ---
 
 ## 7. Foreign Key Strategy
 
-| Relationship | On Delete | On Update |
-|--------------|-----------|-----------|
-| User → Playlist | CASCADE | CASCADE |
-| User → Favorite | CASCADE | CASCADE |
-| User → Listening History | CASCADE | CASCADE |
-| Song → Comment | CASCADE | CASCADE |
-| Comment → Reply | SET NULL | CASCADE |
-| Album → Song | SET NULL | CASCADE |
-| Artist → Song | RESTRICT | CASCADE |
+| Relationship | On Delete | On Update | Note |
+|--------------|-----------|-----------|------|
+| User → Playlist | CASCADE | CASCADE | |
+| User → Favorite | CASCADE | CASCADE | |
+| User → Listening History | CASCADE | CASCADE | |
+| Song → Comment | CASCADE | CASCADE | |
+| Comment → Reply | SET NULL | CASCADE | |
+| Album → Song | SET NULL | CASCADE | `album_id` is NULLABLE |
+| Artist → Song | RESTRICT | CASCADE | |
 
 ## 8. Data Integrity Rules
 
@@ -736,7 +820,7 @@ Song
 - Song chỉ được Public khi `status = Approved`.
 - Album chỉ được Public khi có ít nhất một Song ở trạng thái `Approved`.
 - **Soft Delete Behavior:** Vì MySQL `ON DELETE CASCADE` không hoạt động với Soft Delete, tầng Application (Laravel) phải tự xử lý ẩn Song trong các bảng liên kết (`playlist_songs`, `favorite_songs`, `listening_histories`) thông qua Eloquent Global Scope hoặc Model Events khi Song bị soft delete.
-- **Rác dữ liệu MinIO (Garbage Collection):** Khi Soft Delete Song, file `.mp3` dung lượng lớn vẫn còn trên MinIO gây tốn kém lưu trữ. Yêu cầu thiết lập Cronjob hàng ngày để dò tìm và **Hard Delete** vật lý các file audio/cover trên MinIO của những bài hát đã bị soft delete quá 30 ngày.
+- **Rác dữ liệu MinIO (Garbage Collection):** Khi Soft Delete Song, folder chứa hàng trăm file HLS chunk (`.ts`) và playlist (`.m3u8`) vẫn còn trên MinIO gây tốn kém lưu trữ kinh khủng. Yêu cầu thiết lập Cronjob hàng ngày để dò tìm và **Hard Delete** vật lý toàn bộ thư mục HLS của những bài hát đã bị soft delete quá 30 ngày.
 ---
 
 # 9. Future Database Expansion

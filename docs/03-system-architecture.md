@@ -425,27 +425,27 @@ avatars/
 
 ---
 
-## 8.3 Upload Workflow (Direct-to-MinIO Strategy)
+## 8.3 Upload Workflow (Laravel Multipart Strategy)
 
-**Tối ưu hóa (Optimization):** Sử dụng cơ chế **Presigned URL Upload**. Frontend sẽ tải file trực tiếp lên MinIO, tránh việc đẩy file âm thanh dung lượng lớn qua Laravel API (gây ngốn RAM và thắt cổ chai băng thông Web Server).
+**Thiết kế (Architecture):** Trái ngược với việc đẩy thẳng lên MinIO, hệ thống lựa chọn kiến trúc tải file tập trung qua Laravel API để dễ dàng kiểm soát luồng xử lý, validate file (kích thước, định dạng MIME), và kích hoạt FFmpeg Transcoding ngay lập tức (theo [API-221]). Laravel Server đóng vai trò như một Proxy tin cậy giữa Frontend và MinIO.
 
 ```text
 Artist (Frontend)
        │
        ▼
-1. Xin cấp phép Upload (Request Presigned URL)
+1. Tải file âm thanh + metadata (multipart/form-data) lên Laravel API [API-221]
        │
        ▼
-2. Laravel xác thực quyền (Validate Policy) & Cấp Presigned URL
+2. Laravel xác thực file (Validate: MIME MP3/WAV, Max Size 20MB, Auth)
        │
        ▼
-3. Frontend đẩy trực tiếp file lên MinIO (Direct Upload) bằng URL vừa nhận
+3. Laravel truyền stream trực tiếp (PutObject) file gốc lên MinIO Bucket
        │
        ▼
-4. Frontend gọi API Laravel xác nhận Upload thành công (Webhook/Callback)
+4. Laravel ghi DB [DB-songs] với status `Processing`
        │
        ▼
-5. Laravel lưu Database & Dispatch Job xử lý Media
+5. Laravel Dispatch Job FFmpeg Transcoding vào Queue `media_processing`
 ```
 
 ---

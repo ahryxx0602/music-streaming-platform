@@ -11,25 +11,34 @@
     *   `Component1.vue` (Mô tả chức năng component)
     *   `Component2.vue` (Mô tả chức năng component)
 
-## 2. Liên kết dữ liệu & Logic (State & APIs)
+## 2. Thành phần giao diện (UI Elements)
+*Liệt kê các thành phần tương tác chính trên màn hình để Frontend dễ dàng thiết kế UI và kết nối Payload.*
+*   **Các ô nhập liệu (Inputs):**
+    *   `Input 1`: Loại (text/password/email), mô tả chức năng...
+    *   `Input 2`: ...
+*   **Các nút bấm (Buttons & Links):**
+    *   `Button Primary`: Nút chính (VD: Đăng nhập, Submit). Điều hướng hoặc gọi API nào.
+    *   `Text Link`: Chuyển hướng sang màn hình nào.
+
+## 3. Liên kết dữ liệu & Logic (State & APIs)
 Màn hình này tương tác với các thành phần dữ liệu sau:
 
 ### Tương tác API (Network)
 *   **Lấy dữ liệu (Fetch):**
-    *   `[API-XXX-01]` - `GET /api/duong-dan` (Lấy danh sách abc...)
+    *   `[API-XXX-01]` - `GET /api/v1/duong-dan` (Lấy danh sách abc...)
 *   **Gửi dữ liệu (Mutations):**
-    *   `[API-XXX-02]` - `POST /api/duong-dan` (Tạo mới abc...)
+    *   `[API-XXX-02]` - `POST /api/v1/duong-dan` (Tạo mới abc...)
 
 ### State Management (Pinia)
 *   **Store:** `tenStore.js`
 *   **Actions:** `actionName()`, `anotherAction()`
 
-## 3. Quy tắc nghiệp vụ (Business Rules)
-*   **[RULE-XXX-01]:** Liệt kê các quy tắc validate form. Nếu fail trả về mã lỗi nào (VD: `[ERR-XXX-422]`).
-*   **[RULE-XXX-02]:** Liệt kê luồng phân quyền và trạng thái. Trả về `[ERR-XXX-403]` nếu vi phạm.
+## 4. Quy tắc nghiệp vụ (Business Rules)
+*   Liệt kê các quy tắc validate form.
+*   Liệt kê luồng phân quyền (Ai được xem màn hình này).
 *   Ví dụ: Nếu chưa login, đẩy về `[SCR-AUTH-01]`.
 
-## 4. Tác động Cơ sở dữ liệu (Database Impact)
+## 5. Tác động Cơ sở dữ liệu (Database Impact)
 *(Chỉ mang tính chất tham khảo cho AI khi code Frontend & Backend chung)*
 *   Đọc từ: `[DB-table_name]`
 *   Ghi vào: `[DB-table_name]`

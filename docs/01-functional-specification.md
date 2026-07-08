@@ -182,7 +182,7 @@ Các chức năng chưa triển khai trong Phase 1:
 
 **[RULE-002]**
 
-Album chỉ được Public khi có ít nhất **01 bài hát Approved**.
+Album chỉ được Public khi có ít nhất **01 bài hát Approved**. Hệ thống (Observer) sẽ tự động kiểm đếm, nếu số lượng bài Approved còn lại trong Album `= 0` (do bị xóa hoặc Admin reject), trạng thái Album sẽ tự động chuyển về `Hidden` để tránh lỗi hiển thị rỗng.
 
 **[RULE-003]**
 
@@ -194,7 +194,7 @@ Chỉ Playlist Public mới xuất hiện trong kết quả Search.
 
 **[RULE-005]**
 
-Artist bị khóa sẽ mất toàn bộ quyền Upload, Edit và Release.
+Artist bị khóa (Banned) sẽ mất toàn bộ quyền truy cập Workspace. Đồng thời, một Job nền (Observer Event) sẽ lập tức quét và chuyển trạng thái toàn bộ `songs` của Artist này thành `Hidden`, đảm bảo `[RULE-001]` được thực thi triệt để.
 
 **[RULE-006]**
 
@@ -234,7 +234,30 @@ Chỉ Playlist có trạng thái `Public` mới được phép Favorite.
 
 **[RULE-015]**
 
-**Tiêu chuẩn Stream hợp lệ (Anti-cheat 30s):** Thời gian nghe `30 giây` phải là **thời gian nghe thực tế liên tục (Continuous playback)**. Việc user tua đi tua lại (scrubbing) một đoạn nhạc 5 giây nhiều lần sẽ không được cộng dồn (Not Accumulated) để tính là 1 lượt stream, nhằm chặn thủ thuật gian lận tiền bản quyền.
+**Tiêu chuẩn Stream hợp lệ (Anti-cheat Token + 30s):**
+- Khi Client xin link HLS, Backend sinh ra một `stream_token` (JWT chứa `song_id`, `iat`, thời hạn ngắn).
+- Để ghi nhận lượt nghe thành công, Client gọi API tracking bắt buộc phải đính kèm `stream_token` này.
+- Backend kiểm tra độ trễ (Time diff) từ lúc sinh token đến lúc nhận API phải `≥ 30s`. Ngăn chặn hoàn toàn bot cURL gọi trực tiếp vào API tracking mỗi giây.
+
+**[RULE-016]**
+
+Sau khi Artist upload file nhạc, bài hát tự động chuyển sang trạng thái `Processing`. Hệ thống đẩy Job FFmpeg Transcoding vào Queue. Khi hoàn tất, bài hát chuyển sang `Pending` để chờ Admin duyệt.
+
+**[RULE-017]**
+
+Nếu FFmpeg Transcoding thất bại (file corrupt, codec không hỗ trợ...), bài hát chuyển sang trạng thái `Failed`. Artist có thể chỉnh sửa và thử lại (Retry) tối đa 3 lần.
+
+**[RULE-018]**
+
+Bài hát ở trạng thái `Approved` có thể bị Admin chuyển sang `Hidden` (ẩn khỏi Public). Admin cũng có thể chuyển ngược từ `Hidden` về `Approved`.
+
+**[RULE-019]**
+
+Chỉ Playlist có trạng thái `Public` mới xuất hiện trong kết quả Search và cho phép Favorite.
+
+**[RULE-020]**
+
+OAuth2 lần đầu đăng nhập sẽ tự động tạo tài khoản Listener. Nếu email đã tồn tại trong hệ thống, tài khoản sẽ được merge (liên kết OAuth provider vào tài khoản hiện tại).
 
 ---
 
@@ -242,13 +265,15 @@ Chỉ Playlist có trạng thái `Public` mới được phép Favorite.
 
 ## 8.1 Notification Events
 
-| Event           | Receiver  |
-| --------------- | --------- |
-| Song Approved   | Artist    |
-| Song Rejected   | Artist    |
-| Song Processing Failed | Artist |
-| New Release     | Followers |
-| New Follower    | Artist    |
+| Event                  | Receiver  |
+| ---------------------- | --------- |
+| Song Approved          | Artist    |
+| Song Rejected          | Artist    |
+| Song Processing Failed | Artist    |
+| New Release            | Followers |
+| New Follower           | Artist    |
+| Artist Invitation Sent | Artist    |
+| Comment Reply          | Listener  |
 
 ---
 
@@ -293,6 +318,34 @@ Skip Queue
 Hiển thị:
 
 > Song no longer available
+
+---
+
+### FFmpeg Transcoding thất bại
+
+Artist Upload
+
+↓
+
+FFmpeg Processing
+
+↓
+
+Job Failed (File corrupt / Codec Error)
+
+↓
+
+Song Status = Failed
+
+↓
+
+Notification gửi cho Artist
+
+↓
+
+Hiển thị:
+
+> Xử lý bài hát thất bại. Vui lòng kiểm tra lại file và thử lại.
 
 ---
 
@@ -353,20 +406,21 @@ Update Analytics
 Draft
    │
    ▼
-Pending
-   │
-   ├────────► Rejected
-   │             │
-   │             ▼
-   │        Resubmit
-   │             │
-   └─────────────┘
+Processing  ──────► Failed
+   │                  │
+   ▼                  ▼
+Pending          (Edit & Retry)
+   │                  │
+   ├──────► Rejected  │
+   │           │      │
+   │           ▼      │
+   │     (Edit & Resubmit)
+   │           │
+   │           ▼
+   └─────► Processing
    │
    ▼
-Approved
-   │
-   ▼
-Hidden
+Approved ◄────► Hidden
 ```
 
 ---
