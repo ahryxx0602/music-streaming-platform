@@ -1,0 +1,37 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('albums', function (Blueprint $table) {
+
+            $table->id();
+            $table->foreignId('artist_id')->constrained('artist_profiles')->cascadeOnDelete();
+            $table->string('title');
+            $table->string('cover_image')->nullable();
+            $table->date('release_date')->nullable();
+            $table->enum('type', ['Single', 'EP', 'Album'])->default('Album');
+            $table->string('status', 50)->default('Draft');
+            $table->text('description')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
+    
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('albums');
+    }
+};

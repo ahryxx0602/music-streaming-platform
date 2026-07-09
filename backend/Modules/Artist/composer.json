@@ -1,0 +1,30 @@
+{
+    "name": "nwidart/artist",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Artist\\": "",
+            "Modules\\Artist\\Database\\Factories\\": "database/factories/",
+            "Modules\\Artist\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\Artist\\Tests\\": "tests/"
+        }
+    }
+}

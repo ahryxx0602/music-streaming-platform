@@ -24,7 +24,18 @@ Tài liệu này là **nguồn sự thật duy nhất (Single Source of Truth)**
 
 ---
 
-## 2. Guest APIs (Không yêu cầu Auth)
+## 2. Common & Guest APIs
+
+### 2.1 Common Protected APIs (Yêu cầu Auth, dùng chung mọi Role)
+
+Prefix: `/api/v1/auth`
+
+| API ID | Method | Endpoint | Mô tả | Screen Ref | DB Impact |
+|--------|--------|----------|--------|------------|-----------|
+| [API-050] | GET | `/auth/me` | Lấy thông tin tài khoản hiện tại (Eager load Profile theo Role) | — | Read: [DB-users], [DB-artist_profiles] |
+| [API-051] | POST | `/auth/logout` | Đăng xuất an toàn | — | Delete: Session |
+
+### 2.2 Guest APIs (Không yêu cầu Auth)
 
 Prefix: `/api/v1/guest`
 
@@ -65,8 +76,6 @@ Prefix: `/api/v1/listener` — Yêu cầu HttpOnly Cookie hợp lệ.
 
 | API ID | Method | Endpoint | Mô tả | Screen Ref | DB Impact |
 |--------|--------|----------|--------|------------|-----------|
-| [API-101] | GET | `/listener/auth/me` | Thông tin tài khoản cá nhân | — | Read: [DB-users] |
-| [API-102] | POST | `/listener/auth/logout` | Đăng xuất | — | Delete: Session |
 | [API-103] | POST | `/listener/auth/email/resend` | Gửi lại email xác thực | [SCR-SHR-03] | — |
 | [API-104] | PUT | `/listener/auth/password` | Đổi mật khẩu | [SCR-SHR-04] | Write: [DB-users].password |
 | [API-105] | GET | `/listener/auth/sessions` | DS sessions đang hoạt động | [SCR-SHR-04] | Read: Sessions |
@@ -150,8 +159,6 @@ Prefix: `/api/v1/artist` — Yêu cầu HttpOnly Cookie + Role = `artist`.
 
 | API ID | Method | Endpoint | Mô tả | Screen Ref | DB Impact |
 |--------|--------|----------|--------|------------|-----------|
-| [API-201] | GET | `/artist/auth/me` | Thông tin Artist Profile | — | Read: [DB-users], [DB-artist_profiles] |
-| [API-202] | POST | `/artist/auth/logout` | Đăng xuất | — | Delete: Session |
 | [API-203] | PUT | `/artist/auth/password` | Đổi mật khẩu | [SCR-SHR-04] | Write: [DB-users].password |
 
 ### 4.2 Profile Management
@@ -210,7 +217,6 @@ Prefix: `/api/v1/admin` — Phân quyền chi tiết qua Spatie RBAC.
 | API ID | Method | Endpoint | Mô tả | Screen Ref | DB Impact |
 |--------|--------|----------|--------|------------|-----------|
 | [API-301] | POST | `/admin/auth/login` | Đăng nhập Admin | — | Read: [DB-users] |
-| [API-302] | POST | `/admin/auth/logout` | Đăng xuất Admin | — | Delete: Session |
 | [API-303] | PUT | `/admin/auth/password` | Đổi mật khẩu | [SCR-SHR-04] | Write: [DB-users].password |
 
 ### 5.2 Dashboard & Analytics
