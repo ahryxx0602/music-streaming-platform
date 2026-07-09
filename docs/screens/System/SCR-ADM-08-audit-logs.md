@@ -31,7 +31,7 @@
     *   *Không có tương tác Ghi. Màn hình này là Read-only tuyệt đối.*
 
 ### State Management (Pinia)
-*   **Store:** `useAuditLogStore.js`
+*   **Store:** `useAuditLogStore.ts`
 *   **Actions:** `fetchLogs(filters)`
 
 ## 4. Quy tắc nghiệp vụ (Business Rules)

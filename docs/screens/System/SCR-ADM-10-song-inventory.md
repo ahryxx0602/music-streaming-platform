@@ -43,7 +43,7 @@
     *   `[API-ADM-27]` - `GET /api/v1/admin/search/artists?q={text}` (API phục vụ ô Autocomplete tìm Nghệ sĩ).
 
 ### State Management (Pinia)
-*   **Store:** `useInventoryStore.js`
+*   **Store:** `useInventoryStore.ts`
 *   **Actions:** `fetchSongs()`, `uploadSongByAdmin(payload)`.
 
 ## 4. Quy tắc nghiệp vụ (Business Rules)

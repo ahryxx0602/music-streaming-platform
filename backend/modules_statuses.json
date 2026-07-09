@@ -1,0 +1,10 @@
+{
+    "Authentication": true,
+    "Users": true,
+    "Music": true,
+    "Playlist": true,
+    "Artist": true,
+    "Analytics": true,
+    "Notification": true,
+    "Administration": true
+}

@@ -34,7 +34,7 @@
     *   `[API-213]` - `POST /api/v1/artist/profile/upload-cover` (Tách riêng API up ảnh bìa).
 
 ### State Management (Pinia)
-*   **Store:** `useAuthStore.js` (Vì Avatar và Stage name liên quan trực tiếp đến cục User Auth trên Header, nên update thẳng vào Global Auth Store).
+*   **Store:** `useAuthStore.ts` (Vì Avatar và Stage name liên quan trực tiếp đến cục User Auth trên Header, nên update thẳng vào Global Auth Store).
 
 ## 4. Quy tắc nghiệp vụ (Business Rules)
 *   **[RULE-ART-PRF-01] - Đồng bộ Cache Trang Chủ:** Tên và Avatar của Nghệ sĩ thường xuyên xuất hiện trên các màn hình Khám phá hoặc Chi tiết bài hát. Nếu Artist đổi Nghệ danh, Backend phải lập tức dọn dẹp các Cache liên quan đến họ (Ví dụ: `Redis::tags(['artist_'.$id])->flush()`) để Khán giả thấy ngay tên mới.

@@ -31,7 +31,7 @@
     *   `[API-403]` - `DELETE /api/v1/admin/roles/{id}` (Xóa Role).
 
 ### State Management (Pinia)
-*   **Store:** `useRbacStore.js`
+*   **Store:** `useRbacStore.ts`
 *   **Actions:** `fetchRoles()`, `saveRole(payload)`, `deleteRole(id)`.
 
 ## 4. Quy tắc nghiệp vụ (Business Rules)

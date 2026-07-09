@@ -31,7 +31,7 @@
     *   `[API-240]` - `GET /api/v1/artist/analytics/overview?range=30d` (Trả về cục Data gồm số tổng, mảng chart và mảng top 5 tracks).
 
 ### State Management (Pinia)
-*   **Store:** `useArtistAnalyticsStore.js`
+*   **Store:** `useArtistAnalyticsStore.ts`
 *   **Actions:** `fetchOverview(range)`
 
 ## 4. Quy tắc nghiệp vụ (Business Rules)

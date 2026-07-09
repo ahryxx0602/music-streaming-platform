@@ -36,7 +36,7 @@ Quá trình đăng nhập trải qua 2 bước bắt buộc của Laravel Sanctu
     *   `[API-010]` - `GET /api/v1/auth/callback/{provider}` (Backend xử lý Callback, tạo user nếu chưa có, và cấp Session cookie).
 
 ### State Management (Pinia)
-*   **Store:** `authStore.js`
+*   **Store:** `authStore.ts`
 *   **State:** `user`, `isAuthenticated`, `role`
 *   **Actions:** 
     *   `login(credentials)`: Gọi `[API-002]`, lưu State, và điều hướng.

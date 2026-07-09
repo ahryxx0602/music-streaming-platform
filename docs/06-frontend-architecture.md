@@ -38,19 +38,19 @@ src/
 │   └── AuthLayout.vue       # Dành cho trang Login/Register
 ├── router/            # Cấu hình Vue Router & Navigation Guards
 ├── services/          # Các API calls (gom nhóm theo REST API modules)
-│   ├── api.js         # Axios instance (cấu hình BaseURL, Interceptors)
-│   ├── musicService.js
-│   └── authService.js
+│   ├── api.ts         # Axios instance (cấu hình BaseURL, Interceptors)
+│   ├── musicService.ts
+│   └── authService.ts
 ├── stores/            # Pinia Global State
-│   ├── playerStore.js # Quản lý danh sách phát, trạng thái nhạc
-│   └── authStore.js   # Quản lý User info, Roles
+│   ├── playerStore.ts # Quản lý danh sách phát, trạng thái nhạc
+│   └── authStore.ts   # Quản lý User info, Roles
 ├── views/             # Trang độc lập (Smart Components)
 │   ├── Explore/
 │   ├── Library/
 │   ├── Artist/
 │   └── Admin/
 ├── App.vue            # Root Component
-└── main.js            # Entry point
+└── main.ts            # Entry point
 ```
 
 ---
@@ -97,7 +97,7 @@ Do file âm thanh được bảo vệ qua MinIO Signed URL có thời hạn (TTL
 
 Frontend sử dụng **Sanctum SPA (HttpOnly Cookie)**, vì vậy luồng Auth được thiết lập như sau:
 
-### 4.1 Axios Instance (`services/api.js`)
+### 4.1 Axios Instance (`services/api.ts`)
 
 **Khởi tạo CSRF (Đặc thù Sanctum SPA):** 
 Trước khi thực hiện các request làm thay đổi dữ liệu (POST, PUT, DELETE) lần đầu tiên, ứng dụng bắt buộc phải gọi `GET /sanctum/csrf-cookie` để khởi tạo CSRF Protection.

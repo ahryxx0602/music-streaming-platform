@@ -34,7 +34,7 @@
     *   `[API-420]` - `DELETE /api/v1/admin/comments/{id}` (Xóa bình luận vi phạm).
 
 ### State Management (Pinia)
-*   **Store:** `useDashboardStore.js`
+*   **Store:** `useDashboardStore.ts`
 *   **Actions:** `fetchOverview()`, `lookupArtist(id)`.
 
 ## 4. Quy tắc nghiệp vụ (Business Rules)

@@ -36,7 +36,7 @@
     *   Payload của Reject: `{ "reject_reason": "Văn bản lý do" }`
 
 ### State Management (Pinia)
-*   **Store:** `useModerationStore.js`
+*   **Store:** `useModerationStore.ts`
 *   **Actions:** `fetchPendingSongs()`, `approveSong(id)`, `rejectSong(id, reason)`. Khi duyệt/từ chối xong, tự động gỡ dòng đó khỏi Table UI.
 
 ## 4. Quy tắc nghiệp vụ (Business Rules)

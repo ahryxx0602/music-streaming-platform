@@ -31,7 +31,7 @@
     *   `[API-233]` - `PUT /api/v1/artist/albums/{id}` (Cập nhật).
 
 ### State Management (Pinia)
-*   **Store:** `useArtistAlbumStore.js`
+*   **Store:** `useArtistAlbumStore.ts`
 
 ## 4. Quy tắc nghiệp vụ (Business Rules)
 *   **[RULE-ART-ALB-01] - Điều kiện hiển thị Public (Áp dụng [RULE-002]):** Khác với bài hát, Album **Không có luồng chờ duyệt riêng**. Trạng thái hiển thị của Album hoàn toàn phụ thuộc vào trạng thái các bài hát bên trong nó. Một Album chỉ hiện ra trên trang chủ của Khán giả khi có **Ít nhất 1 bài hát bên trong nó mang trạng thái `Approved`**.

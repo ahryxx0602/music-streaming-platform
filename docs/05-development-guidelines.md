@@ -26,9 +26,9 @@ Dự án áp dụng mô hình **Modular Monolith** kết hợp với thư mục 
     *   `app/Traits/`: Lưu các Trait dùng chung (VD: `ApiResponseTrait.php`).
     *   `app/Exceptions/`: Custom Exceptions hệ thống.
     *   `app/Models/`: Model mặc định nếu không thuộc module nào (VD: `User.php`).
-*   **Modular (Nghiệp vụ chuyên biệt):**
-    *   Nằm tại `app/Modules/<Tên_Module>/`.
-    *   Mỗi Module có thể chứa: `Controllers`, `Services` (chứa Business Logic), `Repositories` (Truy vấn DB), `Events`, `Listeners`, `Observers` (Bắt sự kiện DB của Model), `Requests`, `Jobs`.
+*   **Modular (Nghiệp vụ chuyên biệt - nwidart/laravel-modules):**
+    *   Nằm tại `Modules/<Tên_Module>/` (Thư mục gốc, ngang hàng với `app/`).
+    *   Mỗi Module hoạt động như một micro-app độc lập chứa các thành phần cốt lõi: `Actions`, `Http/Controllers`, `Http/Requests`, `Http/Resources`, `Models`, `Repositories`, `Routes`, `Rules`, `Tests`.
 
 ### 2.3. Frontend (Vue 3 / JS)
 - **Component Vue**: PascalCase (VD: `GlobalPlayer.vue`, `SongCard.vue`).

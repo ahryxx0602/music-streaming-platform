@@ -24,7 +24,7 @@
 ## 3. Liên kết dữ liệu & Logic (State & APIs)
 
 ### State Management (Pinia) - Cực kỳ quan trọng
-Để nhạc không bị mất khi đổi trang, toàn bộ Logic phát nhạc phải nằm trong **`usePlayerStore.js`**.
+Để nhạc không bị mất khi đổi trang, toàn bộ Logic phát nhạc phải nằm trong **`usePlayerStore.ts`**.
 *   **State:**
     *   `currentTrack`: Object chứa data bài hát đang phát (title, artist, cover, `stream_url` - dẫn tới file `.m3u8`).
     *   `queue`: Mảng danh sách chờ (`[]`).

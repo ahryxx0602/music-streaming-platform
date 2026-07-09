@@ -30,7 +30,7 @@ Màn hình này tương tác với các thành phần dữ liệu sau:
     *   `[API-XXX-02]` - `POST /api/v1/duong-dan` (Tạo mới abc...)
 
 ### State Management (Pinia)
-*   **Store:** `tenStore.js`
+*   **Store:** `tenStore.ts`
 *   **Actions:** `actionName()`, `anotherAction()`
 
 ## 4. Quy tắc nghiệp vụ (Business Rules)

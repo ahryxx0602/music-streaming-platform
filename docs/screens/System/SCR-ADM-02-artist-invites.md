@@ -32,7 +32,7 @@
     *   Payload: `email` (Bắt buộc).
 
 ### State Management (Pinia)
-*   **Store:** `useAdminInvitationStore.js`
+*   **Store:** `useAdminInvitationStore.ts`
 *   **Actions:** 
     *   `fetchInvitations()`
     *   `generateAndSendInvite(email)`

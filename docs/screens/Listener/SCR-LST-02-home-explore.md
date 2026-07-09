@@ -33,7 +33,7 @@ Màn hình này tải dữ liệu (Read-heavy) nên ưu tiên gọi các API có
     *   `[API-LST-04]` - `GET /api/v1/explore/recommendations` (Gợi ý cá nhân hóa).
 
 ### State Management (Pinia)
-*   **Store:** `useExploreStore.js`
+*   **Store:** `useExploreStore.ts`
 *   **State:** `banners`, `trendingSongs`, `newReleases`, `isLoading`
 *   **Actions:** 
     *   `fetchExploreData()`: Gọi đồng thời (Promise.all) 3 API trên để nạp dữ liệu.

@@ -17,7 +17,7 @@ Một ứng dụng Web Streaming Âm nhạc hiệu năng cao được xây dựn
 ## 🛠 Công nghệ sử dụng (Tech Stack)
 
 ### Backend
-- **Framework:** Laravel 11.x (PHP 8.2+)
+- **Framework:** Laravel 13.x (PHP 8.2+)
 - **Kiến trúc:** Modular Monolith
 - **Cơ sở dữ liệu:** MySQL 8
 - **Cache & Queue:** Redis

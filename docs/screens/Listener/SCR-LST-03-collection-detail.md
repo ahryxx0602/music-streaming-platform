@@ -30,7 +30,7 @@
     *   `[API-124]` - `POST /api/v1/library/toggle-favorite` (Like/Unlike toàn bộ Album/Playlist).
 
 ### State Management (Pinia)
-*   **Store:** `useCollectionStore.js`
+*   **Store:** `useCollectionStore.ts`
 *   **Actions:** 
     *   `fetchCollectionDetails()`
     *   `loadMoreTracks()` (Gọi khi cuộn xuống đáy màn hình).

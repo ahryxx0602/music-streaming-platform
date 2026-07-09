@@ -34,7 +34,7 @@ Luồng xử lý bắt buộc đi qua 2 bước bảo mật:
     *   Payload gửi đi: `token`, `artist_name`, `email`, `password`, `password_confirmation`, `agreed_to_terms`.
 
 ### State Management (Pinia)
-*   **Store:** `authStore.js`
+*   **Store:** `authStore.ts`
 *   **Actions:** 
     *   `verifyArtistToken(token)`
     *   `registerArtist(payload)`: Gọi `[API-008]`. Xử lý thành công sẽ điều hướng.

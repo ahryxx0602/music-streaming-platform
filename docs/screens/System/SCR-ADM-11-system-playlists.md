@@ -33,7 +33,7 @@
     *   `[API-ADM-38]` - `DELETE /api/v1/admin/playlists/{id}` (Soft Delete).
 
 ### State Management (Pinia)
-*   **Store:** `useSystemPlaylistStore.js`
+*   **Store:** `useSystemPlaylistStore.ts`
 
 ## 4. Quy tắc nghiệp vụ (Business Rules)
 *   **[RULE-ADM-PL-01] - Quyền sở hữu (Ownership):** Các Playlist tạo ra từ màn hình này sẽ được lưu vào bảng `[DB-playlists]` với `user_id` là ID của tài khoản Admin đang thao tác (Hoặc gán cho một tài khoản ảo System Account). Ở phía Client (User App), các Playlist này sẽ được gắn badge "Official" hoặc logo của nền tảng thay vì tên user bình thường.

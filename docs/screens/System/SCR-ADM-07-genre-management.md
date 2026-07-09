@@ -34,7 +34,7 @@
     *   *(Không có API Xóa vật lý, chỉ dùng cập nhật is_active = false).*
 
 ### State Management (Pinia)
-*   **Store:** `useGenreStore.js`
+*   **Store:** `useGenreStore.ts`
 *   **Actions:** `fetchGenresTree()`, `saveGenre(payload)`.
 
 ## 4. Quy tắc nghiệp vụ (Business Rules)

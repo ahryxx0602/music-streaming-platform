@@ -32,7 +32,7 @@
     *   Sử dụng lại `[API-009]` và `[API-010]` (Backend tự động xử lý logic Create User nếu Email chưa tồn tại).
 
 ### State Management (Pinia)
-*   **Store:** `authStore.js`
+*   **Store:** `authStore.ts`
 *   **Actions:** 
     *   `register(payload)`: Gọi `[API-003]`. Nếu thành công, Backend Laravel Sanctum thường sẽ tự động đăng nhập luôn (cấp Cookie) và trả về thông tin User. Store nạp dữ liệu này vào State `user`.
 

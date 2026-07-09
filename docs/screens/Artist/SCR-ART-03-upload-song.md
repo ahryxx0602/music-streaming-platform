@@ -42,7 +42,7 @@ Luồng Upload được thiết kế theo mô hình Bất đồng bộ (Async Tr
     *   `[API-222]` - `PUT /api/v1/artist/songs/{id}` (Chỉnh sửa Metadata và nộp lại).
 
 ### State Management (Pinia)
-*   **Store:** `useStudioStore.js`
+*   **Store:** `useStudioStore.ts`
 *   **State:** `uploadProgress` (0 - 100%), `uploadStatus` ('idle', 'uploading', 'transcoding', 'completed', 'error').
 
 ## 4. Quy tắc nghiệp vụ (Business Rules)

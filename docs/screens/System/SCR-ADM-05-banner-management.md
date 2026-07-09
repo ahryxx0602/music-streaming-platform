@@ -33,7 +33,7 @@
     *   `[API-383]` - `PUT /api/v1/admin/banners/reorder` (Lưu lại vị trí sau khi kéo thả. Payload là mảng ID theo thứ tự mới `[3, 1, 2]`).
 
 ### State Management (Pinia)
-*   **Store:** `useBannerAdminStore.js`
+*   **Store:** `useBannerAdminStore.ts`
 *   **Actions:** `fetchBanners()`, `createBanner()`, `updateBanner()`, `reorderBanners(newArray)`.
 
 ## 4. Quy tắc nghiệp vụ (Business Rules)
