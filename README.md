@@ -17,7 +17,7 @@ Một ứng dụng Web Streaming Âm nhạc hiệu năng cao được xây dựn
 ## 🛠 Công nghệ sử dụng (Tech Stack)
 
 ### Backend
-- **Framework:** Laravel 13.x (PHP 8.2+)
+- **Framework:** Laravel 13.x (PHP 8.3+)
 - **Kiến trúc:** Modular Monolith
 - **Cơ sở dữ liệu:** MySQL 8
 - **Cache & Queue:** Redis
@@ -33,18 +33,33 @@ Một ứng dụng Web Streaming Âm nhạc hiệu năng cao được xây dựn
 
 ---
 
-## 📂 Cấu trúc dự án (Modular Monolith)
+## 📂 Cấu trúc dự án
 
-Thay vì thiết kế MVC truyền thống, backend được tổ chức thành các Domain độc lập (`app/Modules/`) để dễ bảo trì và hạn chế rủi ro scope creep:
+Thay vì gộp chung, dự án được tổ chức theo mô hình **Monorepo** với 2 hệ thống Frontend và Backend tách biệt độc lập. Đặc biệt, Backend sử dụng kiến trúc **Modular Monolith** (thông qua `nwidart/laravel-modules`) để gom nhóm logic theo Domain:
 
 ```text
-app/Modules/
- ├── Authentication/    # Xác thực, Quản lý Session & Cookie
- ├── User/              # Hồ sơ, Follow, Danh sách Yêu thích
- ├── Music/             # Quản lý Bài hát, Album, Luồng Streaming
- ├── Artist/            # Workspace, Upload, Phân tích dữ liệu Artist
- ├── Playlist/          # Quản lý Playlist cá nhân
- └── Admin/             # Bảng điều khiển quản trị, Kiểm duyệt nội dung
+music-streaming-platform/
+ ├── backend/                 # 🔥 API Server (Laravel 13)
+ │    ├── Modules/            # Kiến trúc Modular Monolith lõi:
+ │    │    ├── Authentication/  # Xác thực, Đăng nhập (Sanctum SPA)
+ │    │    ├── Users/           # Quản lý hồ sơ, Follow
+ │    │    ├── Music/           # Bài hát, Album, Xử lý Stream âm thanh
+ │    │    ├── Playlist/        # Quản lý Playlist & Yêu thích
+ │    │    ├── Artist/          # Workspace Nghệ sĩ, Upload nhạc
+ │    │    ├── Analytics/       # Thống kê lượt nghe, Trending
+ │    │    ├── Notification/    # Thông báo thời gian thực (Reverb)
+ │    │    └── Administration/  # CMS Quản trị hệ thống, Kiểm duyệt
+ │    └── ...
+ │
+ ├── frontend/                # 🎨 Web Application (Vue 3 SPA)
+ │    ├── src/
+ │    │    ├── components/      # UI Components dùng chung
+ │    │    ├── pages/           # Màn hình (Views)
+ │    │    ├── stores/          # State Management (Pinia)
+ │    │    └── services/        # Gọi API qua Axios
+ │    └── ...
+ │
+ └── docs/                    # 📚 Tài liệu kỹ thuật, API và UI Specs
 ```
 
 ---
@@ -57,10 +72,11 @@ Dự án được đặc tả kỹ thuật toàn diện ở mức Production-rea
 1. `01-functional-specification.md` - Đặc tả Yêu cầu & Business Rules.
 2. `02-database-design.md` - Thiết kế CSDL (3NF) & Ràng buộc toàn vẹn.
 3. `03-system-architecture.md` - Sơ đồ Hệ thống, Event-driven & Caching.
-4. `04-api-documentation.md` - Giao tiếp RESTful API & Error handling.
-5. `05-development-guidelines.md` - Quy chuẩn Code, PSR-12, Git Flow & Security.
+4. `04-api-documentation/` - Thư mục chứa tài liệu Giao tiếp RESTful API phân theo Domain.
+5. `05-development-guidelines.md` - Quy chuẩn Code, Cấu trúc thư mục Module.
 6. `06-frontend-architecture.md` - Kiến trúc Frontend Vue 3 & Global Audio Player.
 7. `07-api-registry.md` - **Single Source of Truth** về mã định danh API `[API-xxx]`.
+8. `08-developer-commands.md` - Danh sách các lệnh CLI để phát triển Backend và Frontend.
 
 ### UI/UX Screen Specs (Thiết kế giao diện)
 Thư mục `docs/screens/` chứa 27+ tài liệu đặc tả chi tiết cho từng màn hình (Screen Specs), được phân rã theo User Journey:
