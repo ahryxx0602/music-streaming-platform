@@ -27,10 +27,10 @@
 ### Tương tác API (Network)
 Luồng xử lý bắt buộc đi qua 2 bước bảo mật:
 1.  **Xác thực mã mời (Verification):**
-    *   `[API-007]` - `GET /api/v1/auth/invitation/verify?token={token}`
+    *   `[API-007]` - `GET /api/v1/guest/auth/artist-register/validate?token={token}`
     *   *Frontend tự động gọi khi vừa vào trang. Nếu Backend trả lỗi, ẩn Form và báo lỗi ngay.*
 2.  **Submit Form Đăng ký (Mutations):**
-    *   `[API-008]` - `POST /api/v1/auth/artist-register`
+    *   `[API-008]` - `POST /api/v1/guest/auth/artist-register`
     *   Payload gửi đi: `token`, `artist_name`, `email`, `password`, `password_confirmation`, `agreed_to_terms`.
 
 ### State Management (Pinia)

@@ -34,6 +34,19 @@
   --color-text: var(--vt-c-text-light-1);
 
   --section-gap: 160px;
+
+  /* Design System Tokens */
+  --color-primary: #8b5cf6;
+  --color-secondary: #ec4899;
+  --color-bg-dark: #0f172a;
+  --color-glass-bg: rgba(30, 41, 59, 0.4);
+  --color-glass-border: rgba(255, 255, 255, 0.1);
+  --color-glass-input: rgba(15, 23, 42, 0.6);
+  --color-glass-input-focus: rgba(15, 23, 42, 0.8);
+  --shadow-glass: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+
+  --radius-md: 12px;
+  --radius-lg: 24px;
 }
 
 @media (prefers-color-scheme: dark) {

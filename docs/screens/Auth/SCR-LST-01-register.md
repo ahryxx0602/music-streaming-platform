@@ -26,7 +26,7 @@
 
 ### Tương tác API (Network)
 1.  **Đăng ký qua Form truyền thống:**
-    *   `[API-003]` - `POST /api/v1/auth/register`
+    *   `[API-003]` - `POST /api/v1/guest/auth/register`
     *   Payload gửi đi: `name`, `email`, `password`, `password_confirmation`.
 2.  **Đăng ký qua Mạng xã hội (OAuth2):**
     *   Sử dụng lại `[API-009]` và `[API-010]` (Backend tự động xử lý logic Create User nếu Email chưa tồn tại).

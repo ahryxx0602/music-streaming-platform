@@ -25,10 +25,10 @@
 
 ### Tương tác API (Network)
 1.  **Xác thực Link (Verification):**
-    *   `[API-006]` - `GET /api/v1/auth/email/verify/{id}/{hash}`
+    *   `[API-006]` - `GET /api/v1/guest/auth/email/verify/{id}/{hash}`
     *   *(API sử dụng cơ chế URL Signed Route của Laravel để chống giả mạo).*
 2.  **Gửi lại Link (Resend):**
-    *   `[API-103]` - `POST /api/v1/auth/email/verification-notification`
+    *   `[API-103]` - `POST /api/v1/listener/auth/email/resend`
 
 ## 4. Quy tắc nghiệp vụ (Business Rules)
 

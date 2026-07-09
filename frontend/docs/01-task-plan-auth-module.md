@@ -26,9 +26,9 @@ Yêu cầu bạn hãy đọc kỹ kế hoạch dưới đây, phân tích sự l
 2. Khai báo State: `user` (nullable), `isAuthenticated` (boolean), `role` (string).
 3. Viết Action `login(email, password)`: 
    - Bắt buộc phải gọi khởi tạo `api.get('/sanctum/csrf-cookie')` trước.
-   - Gửi request tới `[API-002]`.
-   - Lấy thông tin user bằng cách gọi `[API-050]` (`/auth/me`) để lưu vào State (chỉ cần gọi 1 API chung, Backend tự xử lý load Profile theo Role).
-4. Viết Action `logout()`: Gọi `[API-051]` (`/auth/logout`), xóa State và đá người dùng ra trang Login.
+   - Gửi request tới `[API-002]` (Login). API này sẽ trả về cục data cơ bản chứa `user.role`.
+   - Đọc `role` từ response Login, dùng template string để tự động gọi đúng API Me: `api.get('/${role}/auth/me')` để lấy full profile (eager loading) và lưu vào State.
+4. Viết Action `logout()`: Đọc State `role` hiện tại, gọi API `api.post('/${role}/auth/logout')`, xóa State và đá người dùng ra trang Login.
 
 ---
 

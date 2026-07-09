@@ -27,10 +27,10 @@
 ### Tương tác API (Network)
 Luồng xử lý đi qua 2 Endpoint tách biệt:
 1.  **Gửi Link Khôi Phục (Giai đoạn 1):**
-    *   `[API-004]` - `POST /api/v1/auth/forgot-password`
+    *   `[API-004]` - `POST /api/v1/guest/auth/forgot-password`
     *   Payload: `email`.
 2.  **Đổi Mật Khẩu Mới (Giai đoạn 2):**
-    *   `[API-005]` - `POST /api/v1/auth/reset-password`
+    *   `[API-005]` - `POST /api/v1/guest/auth/reset-password`
     *   Payload: `token`, `email`, `password`, `password_confirmation`.
 
 ### State Management (Pinia)

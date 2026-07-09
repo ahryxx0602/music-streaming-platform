@@ -29,11 +29,11 @@ Quá trình đăng nhập trải qua 2 bước bắt buộc của Laravel Sanctu
 1.  **Lấy CSRF Token:**
     *   `[API-001]` - `GET /sanctum/csrf-cookie` (Được Axios tự động gọi).
 2.  **Gửi thông tin xác thực (Mutations):**
-    *   `[API-002]` - `POST /api/v1/auth/login` (Login bằng Email/Password truyền thống).
+    *   `[API-002]` - `POST /api/v1/guest/auth/login` (Login bằng Email/Password truyền thống).
     *   Payload gửi đi: `email`, `password`, `remember_me`.
 3.  **Đăng nhập Mạng xã hội (OAuth2 - Laravel Socialite):**
-    *   `[API-009]` - `GET /api/v1/auth/redirect/{provider}` (Ví dụ: `google`, `facebook`). API này trả về URL chuyển hướng sang trang OAuth.
-    *   `[API-010]` - `GET /api/v1/auth/callback/{provider}` (Backend xử lý Callback, tạo user nếu chưa có, và cấp Session cookie).
+    *   `[API-009]` - `GET /api/v1/guest/auth/redirect/{provider}` (Ví dụ: `google`, `facebook`). API này trả về URL chuyển hướng sang trang OAuth.
+    *   `[API-010]` - `GET /api/v1/guest/auth/callback/{provider}` (Backend xử lý Callback, tạo user nếu chưa có, và cấp Session cookie).
 
 ### State Management (Pinia)
 *   **Store:** `authStore.ts`

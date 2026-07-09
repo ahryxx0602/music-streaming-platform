@@ -41,16 +41,20 @@ Tạo các class Action độc lập trong thư mục `Modules/Authentication/Ac
 3. `RegisterArtistAction`:
    - Kiểm tra mã mời.
    - Bọc trong `DB::beginTransaction()`: Tạo User ➔ `$user->assignRole('Artist')` ➔ Tạo `ArtistProfile`.
+4. `ValidateArtistTokenAction`:
+   - Xác thực token mời Artist (`[API-007]`), kiểm tra hạn sử dụng và trả về thông tin `email` gốc để khóa form UI.
 
 ---
 
 ## 🎯 TASK 4: Xây dựng Public APIs (Guest Auth)
 
-**Tài liệu tham chiếu:** `[API-002]`, `[API-003]`, `[API-008]`
+**Tài liệu tham chiếu:** `[API-002]`, `[API-003]`, `[API-007]`, `[API-008]`
 
 **Hành động yêu cầu:**
 1. Tạo các Form Requests validation: `LoginRequest`, `RegisterListenerRequest`, `RegisterArtistRequest`.
+   - **Bảo mật [RULE-REG-01]:** Rule Password phải cực kỳ chặt chẽ (vd: `Password::min(8)->letters()->mixedCase()->numbers()->symbols()`).
 2. Xây dựng `AuthController`: 
+   - `validateArtistToken()`: Trả về email gốc theo `token` để khóa form Frontend.
    - Controller chỉ làm nhiệm vụ tiếp nhận Request, Dependency Injection (DI) các Action ở Task 3, và trả về JSend Response. Tuyệt đối không nhồi nhét Business Logic vào Controller.
 
 ---
