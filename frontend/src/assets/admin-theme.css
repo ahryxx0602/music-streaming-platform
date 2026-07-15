@@ -1,0 +1,23 @@
+/* Admin Design System Tokens */
+:root {
+  /* Spacing */
+  --admin-page-padding: 32px;
+  --admin-section-gap: 24px;
+  --admin-card-padding: 24px;
+
+  /* Border Radius */
+  --admin-radius-sm: 6px;
+  --admin-radius-btn: 10px;
+  --admin-radius-card: 12px;
+  --admin-radius-panel: 16px;
+
+  /* Typography */
+  --admin-font-sm: 13px;
+  --admin-font-md: 14px;
+}
+
+/* Base styles for Admin context to override any global leakage if needed */
+.admin-shell {
+  background-color: #F8FAFC; /* slate-50 */
+  color: #0F172A; /* slate-900 */
+}

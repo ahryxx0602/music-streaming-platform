@@ -1,0 +1,47 @@
+/* 
+  Aurora Admin Design System 
+  CSS Variable Mapping for Tailwind V4
+*/
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@theme {
+  /* Inject Tokens into Tailwind */
+  --font-admin: 'Inter', system-ui, sans-serif;
+  
+  --color-admin-slate-50: #F8FAFC;
+  --color-admin-slate-100: #F1F5F9;
+  --color-admin-slate-200: #E2E8F0;
+  --color-admin-slate-300: #CBD5E1;
+  --color-admin-slate-400: #94A3B8;
+  --color-admin-slate-500: #64748B;
+  --color-admin-slate-600: #475569;
+  --color-admin-slate-700: #334155;
+  --color-admin-slate-800: #1E293B;
+  --color-admin-slate-900: #0F172A;
+
+  --color-admin-primary: #3B82F6;
+  --color-admin-primary-hover: #2563EB;
+
+  --radius-admin-btn: 10px;
+  --radius-admin-card: 12px;
+  --radius-admin-drawer: 16px;
+
+  --spacing-admin-page: 32px;
+  --spacing-admin-gap: 24px;
+}
+
+/* Base styles only applied to Admin shell to avoid leaking to Client */
+.admin-shell {
+  font-family: var(--font-admin);
+  background-color: var(--color-admin-slate-50);
+  color: var(--color-admin-slate-800);
+}
+
+/* Global utility classes for Admin */
+.admin-card-hover {
+  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+.admin-card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}

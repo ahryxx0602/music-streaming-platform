@@ -35,15 +35,34 @@
 
   --section-gap: 160px;
 
-  /* Design System Tokens */
-  --color-primary: #8b5cf6;
-  --color-secondary: #ec4899;
-  --color-bg-dark: #0f172a;
-  --color-glass-bg: rgba(30, 41, 59, 0.4);
-  --color-glass-border: rgba(255, 255, 255, 0.1);
+  /* Design System Tokens (Aurora Blue Theme) */
+  --color-primary: #3B82F6;
+  --color-secondary: #06B6D4;
+  --color-accent: #38BDF8;
+  --color-bg-dark: #0A0F1F;
+  --color-surface: #131B2F;
+  --color-card: #1A2740;
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #CBD5E1;
+  --color-glass-bg: rgba(19, 27, 47, 0.9);
+  --color-glass-border: rgba(255, 255, 255, 0.08);
   --color-glass-input: rgba(15, 23, 42, 0.6);
   --color-glass-input-focus: rgba(15, 23, 42, 0.8);
   --shadow-glass: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+
+  /* Form UI Tokens (Aurora Blue) */
+  --color-input-bg: #131B2F;
+  --color-input-bg-hover: #1A2740;
+  --color-input-bg-focus: #131B2F;
+  --color-input-border: #2A3B57;
+  --color-input-border-hover: #3B82F6;
+  --color-input-border-focus: #60A5FA;
+  --color-input-text: #FFFFFF;
+  --color-input-placeholder: #7C8CA5;
+  --color-label: #CBD5E1;
+  
+  --shadow-input-focus: 0 0 18px rgba(59, 130, 246, 0.18);
+  --transition-smooth: all 150ms ease;
 
   --radius-md: 12px;
   --radius-lg: 24px;

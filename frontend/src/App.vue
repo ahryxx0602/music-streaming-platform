@@ -2,6 +2,7 @@
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 import AuthLayout from './layouts/AuthLayout.vue';
+import MainLayout from './layouts/MainLayout.vue';
 
 const route = useRoute();
 
@@ -10,15 +11,19 @@ const layoutComponent = computed(() => {
   if (route.meta.layout === 'AuthLayout') {
     return AuthLayout;
   }
-  // Mặc định bọc qua thẻ div nếu không có layout (chờ các module sau setup MainLayout)
-  return 'div'; 
+  // Admin tự xử lý layout độc lập qua Nested Routes (Vue Router)
+  if (route.path.startsWith('/admin')) {
+    return null;
+  }
+  return MainLayout; 
 });
 </script>
 
 <template>
-  <component :is="layoutComponent">
+  <component v-if="layoutComponent" :is="layoutComponent">
     <RouterView />
   </component>
+  <RouterView v-else />
 </template>
 
 <style>

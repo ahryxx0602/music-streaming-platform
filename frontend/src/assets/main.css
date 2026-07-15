@@ -1,3 +1,5 @@
+@import './base.css';
+@import '../theme/admin/admin.css';
 @import "tailwindcss";
 
 @theme {

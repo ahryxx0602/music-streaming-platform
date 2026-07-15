@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '../stores/authStore'
 import HomeView from '../views/HomeView.vue'
+import AdminLayout from '../views/admin/AdminLayout.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,6 +33,67 @@ const router = createRouter({
       name: 'artist-register',
       component: () => import('../views/auth/RegisterArtistView.vue'),
       meta: { layout: 'AuthLayout', requiresGuest: true },
+    },
+    {
+      path: '/forgot-password',
+      name: 'forgot-password',
+      component: () => import('../views/auth/ForgotPasswordView.vue'),
+      meta: { layout: 'AuthLayout', requiresGuest: true },
+    },
+    {
+      path: '/reset-password',
+      name: 'reset-password',
+      component: () => import('../views/auth/ResetPasswordView.vue'),
+      meta: { layout: 'AuthLayout', requiresGuest: true },
+    },
+    {
+      path: '/verify-email/:id/:hash',
+      name: 'verify-email-process',
+      component: () => import('../views/auth/VerifyEmailView.vue'),
+      meta: { layout: 'AuthLayout' },
+    },
+    {
+      path: '/awaiting-verification',
+      name: 'awaiting-verification',
+      component: () => import('../views/auth/AwaitingVerificationView.vue'),
+      meta: { layout: 'AuthLayout', requiresAuth: true },
+    },
+    {
+      path: '/settings',
+      name: 'settings',
+      component: () => import('../views/settings/SettingsLayout.vue'),
+      meta: { requiresAuth: true },
+      redirect: '/settings/profile',
+      children: [
+        {
+          path: 'profile',
+          name: 'settings-profile',
+          component: () => import('../views/settings/ProfileSettingsView.vue'),
+        },
+        {
+          path: 'security',
+          name: 'settings-security',
+          component: () => import('../views/settings/SecuritySettingsView.vue'),
+        }
+      ]
+    },
+    {
+      path: '/admin',
+      name: 'admin',
+      component: AdminLayout,
+      meta: { requiresAuth: true },
+      children: [
+        {
+          path: '',
+          name: 'admin-dashboard',
+          component: () => import('../views/admin/AdminDashboardView.vue'),
+        },
+        {
+          path: 'users',
+          name: 'admin-users',
+          component: () => import('../views/admin/users/UsersView.vue'),
+        }
+      ]
     }
   ],
 })
@@ -40,13 +102,16 @@ router.beforeEach((to, from, next) => {
   const authStore = useAuthStore();
   
   if (to.meta.requiresGuest && authStore.isAuthenticated) {
-    if (authStore.role === 'Admin') {
+    const role = authStore.role?.toLowerCase();
+    if (role === 'admin') {
       next('/admin');
-    } else if (authStore.role === 'Artist') {
+    } else if (role === 'artist') {
       next('/artist');
     } else {
       next('/');
     }
+  } else if (to.meta.requiresAuth && !authStore.isAuthenticated) {
+    next('/login');
   } else {
     next();
   }

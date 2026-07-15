@@ -11,7 +11,7 @@ export const useAuthStore = defineStore('auth', () => {
     try {
       // API Me: /api/v1/{role}/auth/me
       const response = await api.get(`/${currentRole.toLowerCase()}/auth/me`);
-      user.value = response.data.data; // JSend format
+      user.value = response.data.data.user; // JSend format
       isAuthenticated.value = true;
       role.value = currentRole;
     } catch (error) {
@@ -23,13 +23,21 @@ export const useAuthStore = defineStore('auth', () => {
   };
 
   const login = async (credentials: Record<string, string>) => {
-    // Khởi tạo CSRF (Dùng đường dẫn absolute để bỏ qua baseURL /api/v1)
     const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
     await api.get(`${backendUrl}/sanctum/csrf-cookie`);
 
-    // Gửi request tới [API-002]
-    const response = await api.post('/guest/auth/login', credentials);
-    const userRole = response.data.data.role;
+    // Trích xuất thủ công XSRF-TOKEN để đảm bảo Axios có token
+    let csrfToken = null;
+    const match = document.cookie.match(new RegExp('(^|;\\s*)(XSRF-TOKEN)=([^;]*)'));
+    if (match && match[3]) {
+        csrfToken = decodeURIComponent(match[3]);
+    }
+
+    // Gửi request tới [API-002] kèm header X-XSRF-TOKEN
+    const response = await api.post('/guest/auth/login', credentials, {
+        headers: csrfToken ? { 'X-XSRF-TOKEN': csrfToken } : {}
+    });
+    const userRole = response.data.data.user.role;
     
     // Gọi API Me tương ứng
     await fetchProfile(userRole);
