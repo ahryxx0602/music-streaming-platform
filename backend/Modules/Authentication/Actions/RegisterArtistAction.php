@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Modules\Artist\Models\ArtistInvitation;
+use Illuminate\Auth\Events\Registered;
 
 class RegisterArtistAction
 {
@@ -52,6 +53,8 @@ class RegisterArtistAction
             $invitation->update(['used_at' => now()]);
 
             DB::commit();
+
+            event(new Registered($user));
 
             return $user;
         } catch (\Exception $e) {

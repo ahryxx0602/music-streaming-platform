@@ -1,41 +1,31 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { useAuthStore } from '../../stores/authStore';
+import api from '../../services/api';
 import BaseInput from '../../components/base/BaseInput.vue';
 import BaseButton from '../../components/base/BaseButton.vue';
-import { IconMail, IconLock, IconLogin, IconPlayerPlay } from '@tabler/icons-vue';
-
-const router = useRouter();
-const authStore = useAuthStore();
+import { IconMail, IconSend, IconPlayerPlay, IconCheck } from '@tabler/icons-vue';
 
 const email = ref('');
-const password = ref('');
 const loading = ref(false);
 const error = ref('');
+const success = ref(false);
 
-const handleLogin = async () => {
-  if (!email.value || !password.value) {
-    error.value = 'Vui lòng nhập đầy đủ email và mật khẩu.';
+const handleForgotPassword = async () => {
+  if (!email.value) {
+    error.value = 'Vui lòng nhập địa chỉ email.';
     return;
   }
   
   error.value = '';
   loading.value = true;
+  success.value = false;
   
   try {
-    await authStore.login({ email: email.value, password: password.value });
-    
-    const role = authStore.role?.toLowerCase();
-    if (role === 'admin') {
-      router.push('/admin');
-    } else if (role === 'artist') {
-      router.push('/artist');
-    } else {
-      router.push('/'); 
-    }
+    // Gọi đúng end-point thiết kế API-004
+    await api.post('/guest/auth/password/forgot', { email: email.value });
+    success.value = true;
   } catch (err: any) {
-    error.value = err.response?.data?.message || 'Đăng nhập thất bại. Vui lòng thử lại.';
+    error.value = err.response?.data?.message || 'Có lỗi xảy ra, không thể gửi yêu cầu.';
   } finally {
     loading.value = false;
   }
@@ -53,13 +43,18 @@ const handleLogin = async () => {
     </div>
 
     <div class="text-center mb-8">
-      <h1 class="text-3xl font-bold mb-2">Đăng Nhập</h1>
-      <p class="subtitle-text">Chào mừng trở lại! Hãy trải nghiệm âm nhạc.</p>
+      <h1 class="text-3xl font-bold mb-2">Quên Mật Khẩu</h1>
+      <p class="subtitle-text">Nhập email của bạn để nhận liên kết khôi phục.</p>
     </div>
     
     <div v-if="error" class="error-alert">{{ error }}</div>
+    
+    <div v-if="success" class="success-alert flex items-center justify-center text-center">
+      <IconCheck class="mr-2 flex-shrink-0" size="20" />
+      <span>Email khôi phục đã được gửi! Vui lòng kiểm tra hộp thư của bạn.</span>
+    </div>
 
-    <form @submit.prevent="handleLogin" class="space-y-4" novalidate>
+    <form v-else @submit.prevent="handleForgotPassword" class="space-y-4" novalidate>
       <BaseInput 
         v-model="email" 
         type="email" 
@@ -70,31 +65,17 @@ const handleLogin = async () => {
         required 
       />
       
-      <BaseInput 
-        v-model="password" 
-        type="password" 
-        label="Mật khẩu" 
-        placeholder="Nhập mật khẩu" 
-        :icon="IconLock"
-        :error="!!error"
-        required 
-      />
-
-      <div class="flex justify-end mt-1 mb-2">
-        <router-link to="/forgot-password" class="cta-link text-sm font-normal">Quên mật khẩu?</router-link>
-      </div>
-      
       <div class="pt-2">
-        <BaseButton type="submit" variant="primary" :loading="loading" :icon="IconLogin">
-          Đăng Nhập
+        <BaseButton type="submit" variant="primary" :loading="loading" :icon="IconSend">
+          Gửi Liên Kết
         </BaseButton>
       </div>
     </form>
     
     <div class="mt-6 text-center text-sm">
       <p class="subtitle-text">
-        Chưa có tài khoản? 
-        <router-link to="/register" class="cta-link">Đăng ký ngay</router-link>
+        Trở lại 
+        <router-link to="/login" class="cta-link">Đăng nhập</router-link>
       </p>
     </div>
   </div>
@@ -103,12 +84,15 @@ const handleLogin = async () => {
 <style scoped>
 .auth-form-container { width: 100%; }
 .error-alert { background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); color: #EF4444; padding: 0.75rem 1rem; border-radius: 12px; margin-bottom: 1.5rem; font-size: 0.875rem; }
+.success-alert { background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.2); color: #22C55E; padding: 0.75rem 1rem; border-radius: 12px; margin-bottom: 1.5rem; font-size: 0.875rem; }
 
-/* Tailwind Utilities (custom fallback) */
+/* Tailwind Utilities */
 .flex { display: flex; }
 .flex-col { flex-direction: column; }
 .items-center { align-items: center; }
 .justify-center { justify-content: center; }
+.mr-2 { margin-right: 0.5rem; }
+.flex-shrink-0 { flex-shrink: 0; }
 .mb-2 { margin-bottom: 0.5rem; }
 .mb-6 { margin-bottom: 1.5rem; }
 .w-12 { width: 3rem; }
@@ -134,7 +118,6 @@ const handleLogin = async () => {
 .text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
 .text-sm { font-size: 0.875rem; }
 
-/* Nâng cấp Typography */
 .subtitle-text { color: var(--color-text-secondary, #CBD5E1); font-weight: 500; }
 .cta-link { color: var(--color-primary, #3B82F6); font-weight: 600; text-decoration: none; transition: var(--transition-smooth, all 150ms ease); }
 .cta-link:hover { text-decoration: underline; color: var(--color-input-border-focus, #60A5FA); }

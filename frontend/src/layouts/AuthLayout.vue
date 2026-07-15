@@ -1,82 +1,152 @@
 <script setup lang="ts">
-// Auth Layout - Dark mode & Glassmorphism
+import { IconHeadphones, IconDisc, IconMicrophone2 } from '@tabler/icons-vue';
 </script>
 
 <template>
-  <div class="auth-layout">
-    <div class="auth-container">
+  <div class="auth-layout relative min-h-screen flex items-center justify-center overflow-hidden">
+    
+    <!-- 1. Ambient Glow Lights -->
+    <div class="ambient-lights">
+      <div class="light light-1"></div>
+      <div class="light light-2"></div>
+    </div>
+
+    <!-- 2. Audio Wave Spectrum -->
+    <div class="audio-wave"></div>
+
+    <!-- 3. Hero Illustrations (Đồng bộ phong cách) -->
+    <div class="hero-illustrations">
+      <IconHeadphones class="hero-icon icon-1" size="240" stroke-width="1" />
+      <IconDisc class="hero-icon icon-2" size="200" stroke-width="1" />
+      <IconMicrophone2 class="hero-icon icon-3" size="220" stroke-width="1" />
+    </div>
+
+    <!-- 4. Realistic Vinyl Record -->
+    <div class="vinyl-record">
+      <div class="vinyl-grooves"></div>
+      <div class="vinyl-label">
+        <div class="vinyl-hole"></div>
+      </div>
+      <!-- Vinyl Highlight Highlight -->
+      <div class="vinyl-reflection"></div>
+    </div>
+
+    <!-- 5. Glassmorphism Form Container (Tăng chiều rộng form) -->
+    <div class="auth-container z-10 w-full max-w-lg entry-animation">
       <div class="auth-content">
         <slot />
       </div>
     </div>
-    
-    <!-- Background elements for visual flair -->
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
   </div>
 </template>
 
 <style scoped>
 .auth-layout {
   min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; align-items: center; justify-content: center;
   background-color: var(--color-bg-dark);
-  background-image: 
-    radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
-    radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
-    radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
-  position: relative;
-  overflow: hidden;
+  position: relative; overflow: hidden;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
-.blob {
-  position: absolute;
-  filter: blur(80px);
-  z-index: 0;
-  border-radius: 50%;
-  animation: float 10s infinite ease-in-out alternate;
+/* Audio Wave Background */
+.audio-wave {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 35%;
+  background: repeating-linear-gradient(90deg, transparent, transparent 10px, rgba(59, 130, 246, 0.05) 10px, rgba(59, 130, 246, 0.05) 14px);
+  mask-image: linear-gradient(to top, rgba(0,0,0,1), transparent);
+  -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1), transparent);
+  z-index: 0; opacity: 0.8;
 }
 
-.blob-1 {
-  width: 400px;
-  height: 400px;
-  background: rgba(139, 92, 246, 0.4);
-  top: -100px;
-  left: -100px;
+/* Hero Illustrations */
+.hero-illustrations { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+.hero-icon {
+  position: absolute; color: var(--color-primary); opacity: 0.12; filter: blur(1px);
+  animation: floatIcon 30s infinite alternate ease-in-out;
+}
+.icon-1 { top: 15%; right: 10%; transform: rotate(15deg); }
+.icon-2 { bottom: 20%; left: 8%; transform: rotate(-20deg); animation-delay: -10s; }
+.icon-3 { top: 40%; right: -5%; transform: rotate(45deg); animation-delay: -20s; }
+
+@keyframes floatIcon {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  100% { transform: translate(-30px, 30px) rotate(15deg); }
 }
 
-.blob-2 {
-  width: 500px;
-  height: 500px;
-  background: rgba(236, 72, 153, 0.3);
-  bottom: -150px;
-  right: -150px;
-  animation-delay: -5s;
-}
+/* Ambient Lights */
+.ambient-lights { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.light { position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.4; animation: floatLight 25s infinite alternate ease-in-out; }
+.light-1 { width: 700px; height: 700px; background: var(--color-primary); top: -20%; left: -10%; }
+.light-2 { width: 600px; height: 600px; background: var(--color-secondary); bottom: -20%; right: -10%; animation-delay: -5s; }
 
-@keyframes float {
+@keyframes floatLight {
   0% { transform: translate(0, 0) scale(1); }
-  100% { transform: translate(30px, 50px) scale(1.1); }
+  100% { transform: translate(80px, -80px) scale(1.1); }
 }
 
-.auth-container {
-  width: 100%;
-  max-width: 480px;
-  padding: 2rem;
-  z-index: 10;
+/* Realistic Vinyl Record */
+.vinyl-record {
+  position: absolute; top: 50%; left: 50%;
+  margin-top: -350px; margin-left: -350px;
+  width: 700px; height: 700px; border-radius: 50%;
+  background: #0B0E14; box-shadow: 0 15px 50px rgba(0, 0, 0, 0.9), inset 0 0 0 6px var(--color-card);
+  z-index: 2; display: flex; align-items: center; justify-content: center;
+  overflow: hidden; animation: spinRecord 18s linear infinite;
+}
+
+.vinyl-grooves {
+  position: absolute; inset: 6px; border-radius: 50%;
+  background: repeating-radial-gradient(circle at center, #05070a 0px, var(--color-surface) 3px, #05070a 6px);
+  z-index: 2;
+}
+
+.vinyl-label {
+  position: relative; width: 220px; height: 220px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  z-index: 4; display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 0 0 8px #0B0E14, inset 0 0 20px rgba(0,0,0,0.5);
+}
+
+.vinyl-hole {
+  width: 16px; height: 16px; border-radius: 50%;
+  background: var(--color-bg-dark); box-shadow: inset 0 2px 5px rgba(0,0,0,0.9);
+}
+
+/* Nâng cấp Reflection: Vệt sáng quét mạnh hơn qua đĩa than */
+.vinyl-reflection {
+  position: absolute; inset: 0; border-radius: 50%;
+  background: conic-gradient(
+    transparent 0deg, 
+    transparent 20deg, 
+    rgba(255, 255, 255, 0.03) 30deg, 
+    rgba(255, 255, 255, 0.25) 45deg, 
+    rgba(255, 255, 255, 0.03) 60deg, 
+    transparent 70deg, 
+    transparent 200deg, 
+    rgba(255, 255, 255, 0.03) 210deg, 
+    rgba(255, 255, 255, 0.25) 225deg, 
+    rgba(255, 255, 255, 0.03) 240deg, 
+    transparent 250deg,
+    transparent 360deg
+  );
+  z-index: 3;
+}
+
+@keyframes spinRecord { 100% { transform: rotate(360deg); } }
+
+/* Form Container & Entry Animation */
+.auth-container { width: 100%; max-width: 520px; padding: 1.5rem; z-index: 10; } /* Tăng chiều rộng lên 520px */
+
+.entry-animation { animation: formEntry 400ms ease-out forwards; }
+
+@keyframes formEntry {
+  0% { transform: scale(0.98); filter: blur(8px); opacity: 0; }
+  100% { transform: scale(1); filter: blur(0); opacity: 1; }
 }
 
 .auth-content {
-  background: var(--color-glass-bg);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--color-glass-border);
-  border-radius: var(--radius-lg);
-  padding: 2.5rem;
-  box-shadow: var(--shadow-glass);
-  color: #f8fafc;
+  background: var(--color-glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--color-glass-border); border-radius: var(--radius-lg, 24px); padding: 2.5rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); color: var(--color-text-primary);
 }
 </style>

@@ -4,6 +4,7 @@ namespace Modules\Authentication\Actions;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
 
 class RegisterListenerAction
 {
@@ -24,6 +25,8 @@ class RegisterListenerAction
         ]);
 
         $user->assignRole('listener');
+
+        event(new Registered($user));
 
         return $user;
     }
