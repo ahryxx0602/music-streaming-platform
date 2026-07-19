@@ -11,7 +11,8 @@ import {
   IconReportAnalytics,
   IconMessageReport,
   IconSettings,
-  IconShieldLock
+  IconShieldLock,
+  IconPhoto
 } from '@tabler/icons-vue';
 
 const route = useRoute();
@@ -40,6 +41,12 @@ const menuGroups = [
       { name: 'admin.menu.song_moderation', path: '/admin/moderation/songs', icon: IconMusic },
       { name: 'admin.menu.reports', path: '/admin/reports', icon: IconReportAnalytics },
       { name: 'admin.menu.reviews', path: '/admin/reviews', icon: IconMessageReport },
+    ]
+  },
+  {
+    title: 'admin.menu.ui',
+    items: [
+      { name: 'admin.menu.banners', path: '/admin/banners', icon: IconPhoto },
     ]
   },
   {

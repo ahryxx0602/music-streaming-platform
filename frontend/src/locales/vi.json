@@ -66,7 +66,9 @@
       "permissions": "Phân quyền",
       "overview": "Tổng quan",
       "inventory": "Kho Nhạc & Album",
-      "song_moderation": "Kiểm duyệt bài hát"
+      "song_moderation": "Kiểm duyệt bài hát",
+      "ui": "Giao diện",
+      "banners": "Quản lý Banner"
     },
     "header": {
       "search": "Tìm kiếm lệnh (Ctrl + K)"
@@ -166,6 +168,15 @@
       "added_songs": "Bài hát đã chọn",
       "empty_songs": "Chưa có bài hát nào được chọn.",
       "drag_hint": "Kéo thả để đổi thứ tự"
+    },
+    "banners": {
+      "title": "Quản lý Banner",
+      "subtitle": "Tùy chỉnh các banner quảng cáo trên trang chủ",
+      "create": "Thêm Banner mới",
+      "edit": "Sửa Banner",
+      "status_active": "Đang hiển thị",
+      "status_inactive": "Đang ẩn",
+      "image_req": "Khuyến nghị: 1920x600px"
     }
   },
   "common": {

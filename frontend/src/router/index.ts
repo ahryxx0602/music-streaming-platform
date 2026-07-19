@@ -117,6 +117,11 @@ const router = createRouter({
           path: 'moderation/songs',
           name: 'admin-song-moderation',
           component: () => import('../views/admin/moderation/ModerationView.vue'),
+        },
+        {
+          path: 'banners',
+          name: 'admin-banners',
+          component: () => import('../views/admin/banners/BannerView.vue'),
         }
       ]
     }
