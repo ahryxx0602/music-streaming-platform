@@ -126,4 +126,20 @@ class AdminModerationControllerTest extends TestCase
 
         $response->assertStatus(400); // Bad Request
     }
+
+    /** @test */
+    public function test_admin_can_show_song()
+    {
+        $song = Song::factory()->create([
+            'artist_id' => $this->artistProfile->id,
+            'genre_id' => $this->genre->id,
+            'status' => 'Pending',
+            'processing_status' => 'completed',
+        ]);
+
+        $response = $this->actingAs($this->admin)->getJson("/api/v1/admin/moderation/songs/{$song->id}");
+
+        $response->assertStatus(200)
+                 ->assertJsonPath('data.song.id', $song->id);
+    }
 }

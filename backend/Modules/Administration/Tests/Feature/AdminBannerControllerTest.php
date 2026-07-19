@@ -73,4 +73,36 @@ class AdminBannerControllerTest extends TestCase
         $this->assertDatabaseHas('banners', ['id' => $banner1->id, 'order' => 1]);
         $this->assertDatabaseHas('banners', ['id' => $banner2->id, 'order' => 2]);
     }
+
+    /** @test */
+    public function test_admin_can_get_banners()
+    {
+        Banner::factory()->create();
+        $response = $this->actingAs($this->admin)->getJson('/api/v1/admin/banners');
+        $response->assertStatus(200)->assertJsonStructure(['data' => []]);
+    }
+
+    /** @test */
+    public function test_admin_can_update_banner()
+    {
+        Cache::shouldReceive('forget')->once()->with('explore_banners');
+        $banner = Banner::factory()->create(['title' => 'Old Title']);
+        $response = $this->actingAs($this->admin)->postJson("/api/v1/admin/banners/{$banner->id}", [
+            'title' => 'New Title',
+            'is_active' => false,
+            '_method' => 'PUT'
+        ]);
+        $response->assertStatus(200);
+        $this->assertDatabaseHas('banners', ['id' => $banner->id, 'title' => 'New Title', 'is_active' => 0]);
+    }
+
+    /** @test */
+    public function test_admin_can_delete_banner()
+    {
+        Cache::shouldReceive('forget')->once()->with('explore_banners');
+        $banner = Banner::factory()->create();
+        $response = $this->actingAs($this->admin)->deleteJson("/api/v1/admin/banners/{$banner->id}");
+        $response->assertStatus(200);
+        $this->assertDatabaseMissing('banners', ['id' => $banner->id]);
+    }
 }

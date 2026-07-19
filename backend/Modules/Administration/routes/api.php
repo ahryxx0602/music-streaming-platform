@@ -10,7 +10,7 @@ Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
         Route::get('/', [\Modules\Administration\Http\Controllers\AdminBannerController::class, 'index']);
         Route::post('/', [\Modules\Administration\Http\Controllers\AdminBannerController::class, 'store']);
         Route::put('/reorder', [\Modules\Administration\Http\Controllers\AdminBannerController::class, 'reorder']);
-        Route::post('/{id}', [\Modules\Administration\Http\Controllers\AdminBannerController::class, 'update']);
+        Route::put('/{id}', [\Modules\Administration\Http\Controllers\AdminBannerController::class, 'update']);
         Route::delete('/{id}', [\Modules\Administration\Http\Controllers\AdminBannerController::class, 'destroy']);
     });
 });

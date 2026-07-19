@@ -115,4 +115,21 @@ class AdminPlaylistControllerTest extends TestCase
             'position' => 1
         ]);
     }
+
+    /** @test */
+    public function test_admin_can_get_playlists()
+    {
+        Playlist::factory()->create(['type' => 'system', 'user_id' => $this->admin->id]);
+        $response = $this->actingAs($this->admin)->getJson('/api/v1/admin/playlists');
+        $response->assertStatus(200)->assertJsonStructure(['data' => ['data']]);
+    }
+
+    /** @test */
+    public function test_admin_can_delete_playlist()
+    {
+        $playlist = Playlist::factory()->create(['type' => 'system', 'user_id' => $this->admin->id]);
+        $response = $this->actingAs($this->admin)->deleteJson("/api/v1/admin/playlists/{$playlist->id}");
+        $response->assertStatus(200);
+        $this->assertSoftDeleted('playlists', ['id' => $playlist->id]);
+    }
 }
