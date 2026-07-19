@@ -28,6 +28,23 @@ class UsersController extends Controller
     use ApiResponseTrait;
 
     /**
+     * Thống kê tổng số lượng Users theo Role
+     */
+    public function stats(): JsonResponse
+    {
+        $listenerCount = User::where('role', 'listener')->count();
+        $artistCount = User::where('role', 'artist')->count();
+        $adminCount = User::where('role', 'admin')->count();
+
+        return $this->successResponse([
+            'listener' => $listenerCount,
+            'artist' => $artistCount,
+            'staff' => $adminCount,
+            'total' => $listenerCount + $artistCount + $adminCount
+        ], 'Lấy thống kê thành công.');
+    }
+
+    /**
      * Lấy danh sách Users cho Admin CMS (API-320)
      */
     public function index(Request $request): JsonResponse

@@ -13,6 +13,7 @@ Route::prefix('v1')->group(function () {
     
     // Admin routes
     Route::prefix('admin')->group(function () {
+        Route::get('users/stats', [UsersController::class, 'stats']);
         Route::post('users/listener', [UsersController::class, 'storeListener']);
         Route::post('users/artist', [UsersController::class, 'storeArtist']);
         Route::post('users/staff', [UsersController::class, 'storeStaff']);
