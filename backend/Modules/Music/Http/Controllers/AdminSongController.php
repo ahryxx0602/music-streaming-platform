@@ -108,4 +108,23 @@ class AdminSongController extends Controller
             ]
         ], 201);
     }
+
+    /**
+     * [API-ADM-xx] Get unassigned songs for an artist
+     */
+    public function unassigned(Request $request): JsonResponse
+    {
+        $request->validate([
+            'artist_id' => 'required|exists:artist_profiles,id'
+        ]);
+
+        $songs = Song::where('artist_id', $request->artist_id)
+            ->whereNull('album_id')
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $songs
+        ]);
+    }
 }
