@@ -99,6 +99,16 @@ const router = createRouter({
           component: () => import('../views/admin/genres/GenresView.vue'),
         },
         {
+          path: 'albums',
+          name: 'admin-albums',
+          component: () => import('../views/admin/inventory/InventoryView.vue'), // Dùng chung view Inventory
+        },
+        {
+          path: 'playlists',
+          name: 'admin-playlists',
+          component: () => import('../views/admin/playlists/PlaylistView.vue'),
+        },
+        {
           path: 'inventory',
           name: 'admin-inventory',
           component: () => import('../views/admin/inventory/InventoryView.vue'),

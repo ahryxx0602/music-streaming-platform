@@ -156,6 +156,16 @@
       "reason": "Lý do từ chối",
       "reason_placeholder": "Nhập lý do từ chối bài hát này để gửi email thông báo cho nghệ sĩ...",
       "confirm_reject": "Xác nhận từ chối"
+    },
+    "playlists": {
+      "title": "Quản lý Danh sách phát",
+      "subtitle": "Quản lý các Playlist hệ thống (Trending, Top 100, Chủ đề...)",
+      "create": "Tạo Playlist mới",
+      "edit": "Sửa Playlist",
+      "search_songs": "Tìm kiếm bài hát...",
+      "added_songs": "Bài hát đã chọn",
+      "empty_songs": "Chưa có bài hát nào được chọn.",
+      "drag_hint": "Kéo thả để đổi thứ tự"
     }
   },
   "common": {
