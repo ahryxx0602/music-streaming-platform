@@ -55,7 +55,7 @@ defineProps<{
 .primary {
   /* Using Deep Blue (#2563EB), Primary (#3B82F6), Accent (#38BDF8) */
   background: linear-gradient(135deg, #2563EB 0%, var(--color-primary) 50%, var(--color-accent) 100%);
-  color: var(--color-text-primary);
+  color: #FFFFFF; /* Always white for good contrast on blue */
   box-shadow: 0 4px 14px 0 rgba(59, 130, 246, 0.2);
   z-index: 1;
 }
@@ -90,14 +90,14 @@ defineProps<{
 }
 
 .secondary:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--color-surface-hover);
 }
 
 .spinner {
   width: 1.25rem; height: 1.25rem;
-  border: 2px solid rgba(255,255,255,0.3);
+  border: 2px solid rgba(150,150,150,0.3);
   border-radius: 50%;
-  border-top-color: var(--color-text-primary);
+  border-top-color: currentColor;
   animation: spin 0.8s linear infinite;
 }
 

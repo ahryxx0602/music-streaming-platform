@@ -4,7 +4,7 @@ import AdminHeader from '@/components/admin/layout/AdminHeader.vue';
 </script>
 
 <template>
-  <div class="flex h-screen w-full bg-slate-50 admin-shell overflow-hidden text-slate-800 antialiased selection:bg-blue-100 selection:text-blue-900">
+  <div class="flex h-screen w-full bg-theme-bg admin-shell overflow-hidden text-theme-text antialiased selection:bg-theme-primary/20 selection:text-theme-primary">
     <!-- Nền móng Sidebar: Giao diện tối, 260px -->
     <AdminSidebar />
     

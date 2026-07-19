@@ -49,7 +49,7 @@ watch(() => props.modelValue, (isOpen) => {
     <transition name="slide-right">
       <!-- Drawer Panel Right -->
       <div v-if="modelValue" 
-        class="fixed inset-y-0 right-0 z-50 flex flex-col bg-white shadow-xl h-full transform transition-transform duration-300 ease-in-out border-l border-slate-200"
+        class="fixed inset-y-0 right-0 z-50 flex flex-col bg-theme-surface shadow-xl h-full transform transition-transform duration-300 ease-in-out border-l border-theme-border"
         :class="[
           size === 'sm' ? 'w-full max-w-sm' :
           size === 'lg' ? 'w-full max-w-2xl' :
@@ -58,23 +58,23 @@ watch(() => props.modelValue, (isOpen) => {
         ]"
       >
         <!-- Header -->
-        <div class="flex items-center justify-between px-6 py-4 border-b border-slate-200 bg-white shrink-0">
-          <h2 class="text-base font-semibold text-slate-800 flex items-center gap-2">
+        <div class="flex items-center justify-between px-6 py-4 border-b border-theme-border bg-theme-surface shrink-0">
+          <h2 class="text-base font-semibold text-theme-text flex items-center gap-2">
             <slot name="header-icon"></slot>
             {{ title }}
           </h2>
-          <button @click="close" class="text-slate-400 hover:text-slate-700 hover:bg-slate-100 p-1.5 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-slate-200">
+          <button @click="close" class="text-theme-text-sec hover:text-theme-text hover:bg-theme-surface-hover p-1.5 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-admin-primary/50">
             <IconX size="18" />
           </button>
         </div>
 
         <!-- Body Scrollable -->
-        <div class="flex-1 overflow-y-auto p-6 bg-slate-50">
+        <div class="flex-1 overflow-y-auto p-6 bg-theme-bg">
           <slot></slot>
         </div>
 
         <!-- Footer Fixed (Divider mỏng) -->
-        <div v-if="$slots.footer" class="px-6 py-4 border-t border-slate-200 bg-white shrink-0">
+        <div v-if="$slots.footer" class="px-6 py-4 border-t border-theme-border bg-theme-surface shrink-0">
           <slot name="footer"></slot>
         </div>
       </div>

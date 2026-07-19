@@ -53,7 +53,7 @@ defineExpose({ reset, validateAndSubmit });
 <template>
   <form id="artist-form" @submit.prevent="validateAndSubmit" class="space-y-3">
     
-    <div v-if="localError || serverError" class="mb-3 p-3 bg-rose-50 text-rose-700 border border-rose-200 rounded-lg text-sm font-medium flex items-start gap-2">
+    <div v-if="localError || serverError" class="mb-3 p-3 bg-rose-50 dark:bg-rose-500/15 text-rose-70 dark:text-rose-4000 border border-rose-200 rounded-lg text-sm font-medium flex items-start gap-2">
       <svg class="w-5 h-5 text-rose-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg>

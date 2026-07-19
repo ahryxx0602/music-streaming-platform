@@ -3,6 +3,15 @@
 @import "tailwindcss";
 
 @theme {
+  --color-theme-bg: var(--color-background);
+  --color-theme-surface: var(--color-surface);
+  --color-theme-surface-hover: var(--color-surface-hover);
+  --color-theme-primary: var(--color-primary);
+  --color-theme-text: var(--color-text-primary);
+  --color-theme-text-sec: var(--color-text-secondary);
+  --color-theme-border: var(--color-border);
+  --color-theme-danger: var(--color-danger);
+
   --color-primary-500: #8b5cf6;
   --color-primary-600: #7c3aed;
   --color-dark-900: #0f172a;
@@ -11,14 +20,60 @@
   --font-sans: 'Inter', 'Outfit', sans-serif;
 }
 
+:root {
+  --color-background: #F8FAFC;
+  --color-surface: #FFFFFF;
+  --color-surface-hover: #F1F5F9;
+  --color-primary: #2563EB;
+  --color-text-primary: #0F172A;
+  --color-text-secondary: #64748B;
+  --color-border: #E2E8F0;
+  --color-danger: #DC2626;
+
+  /* Form UI Tokens (Dynamic) */
+  --color-input-bg: var(--color-surface);
+  --color-input-bg-hover: var(--color-surface-hover);
+  --color-input-bg-focus: var(--color-background);
+  --color-input-border: var(--color-border);
+  --color-input-border-hover: var(--color-primary);
+  --color-input-border-focus: var(--color-primary);
+  --color-input-text: var(--color-text-primary);
+  --color-input-placeholder: var(--color-text-secondary);
+  --color-label: var(--color-text-secondary);
+}
+
+:root.dark {
+  --color-background: #0B0F19;
+  --color-surface: #161D2C;
+  --color-surface-hover: #1F2937;
+  --color-primary: #3B82F6;
+  --color-text-primary: #F9FAFB;
+  --color-text-secondary: #9CA3AF;
+  --color-border: #1F2937;
+  --color-danger: #EF4444;
+
+  /* Form UI Tokens (Dynamic Dark) */
+  --color-input-bg: #131B2F;
+  --color-input-bg-hover: #1A2740;
+  --color-input-bg-focus: #131B2F;
+  --color-input-border: #2A3B57;
+  --color-input-border-hover: #3B82F6;
+  --color-input-border-focus: #60A5FA;
+  --color-input-text: #FFFFFF;
+  --color-input-placeholder: #7C8CA5;
+  --color-label: #CBD5E1;
+}
+
 @layer base {
   body {
-    @apply bg-dark-900 text-white font-sans antialiased;
+    @apply bg-theme-bg text-theme-text font-sans antialiased;
   }
 }
 
 @layer utilities {
   .glass {
-    @apply bg-dark-800/60 backdrop-blur-md border border-white/10;
+    @apply bg-theme-surface/60 backdrop-blur-md border border-theme-border/50;
   }
 }
+
+@custom-variant dark (&:is(.dark *));

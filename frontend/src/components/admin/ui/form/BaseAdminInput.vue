@@ -30,12 +30,12 @@ const inputType = computed(() => {
 
 <template>
   <div class="flex flex-col mb-4">
-    <label v-if="label" class="mb-1.5 text-sm font-medium text-slate-700">
+    <label v-if="label" class="mb-1.5 text-sm font-medium text-theme-text">
       {{ label }} <span v-if="required" class="text-rose-500 font-bold">*</span>
     </label>
     
     <div class="relative">
-      <div v-if="icon" class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+      <div v-if="icon" class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-theme-text-sec">
         <component :is="icon" size="18" />
       </div>
       
@@ -45,14 +45,14 @@ const inputType = computed(() => {
         :placeholder="placeholder"
         :disabled="disabled"
         @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
-        class="w-full h-9 border border-slate-300 px-3 text-sm transition-all focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 disabled:bg-slate-50 disabled:text-slate-400 disabled:cursor-not-allowed text-slate-800 placeholder-slate-400 shadow-sm"
+        class="w-full h-9 border border-slate-300 px-3 text-sm transition-all focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 disabled:bg-theme-bg disabled:text-theme-text-sec disabled:cursor-not-allowed text-theme-text placeholder-slate-400 shadow-sm"
         style="border-radius: var(--admin-radius-sm, 6px);"
         :class="[
           icon ? 'pl-9' : '',
           type === 'password' ? 'pr-9' : '',
           error 
             ? 'border-rose-300 focus:border-rose-500 focus:ring-rose-500 bg-rose-50/30' 
-            : 'bg-white hover:border-slate-400'
+            : 'bg-theme-surface hover:border-slate-400'
         ]"
       />
       
@@ -60,7 +60,7 @@ const inputType = computed(() => {
         v-if="type === 'password'" 
         type="button"
         @click="showPassword = !showPassword"
-        class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600 transition-colors focus:outline-none"
+        class="absolute inset-y-0 right-0 pr-3 flex items-center text-theme-text-sec hover:text-theme-text-sec transition-colors focus:outline-none"
       >
         <IconEyeOff v-if="showPassword" size="18" />
         <IconEye v-else size="18" />

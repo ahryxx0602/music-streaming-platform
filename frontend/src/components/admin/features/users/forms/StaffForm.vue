@@ -74,9 +74,9 @@ defineExpose({ validateAndSubmit, reset });
     />
 
     <div class="space-y-2">
-      <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wide">Quyền hạn</label>
+      <label class="block text-xs font-semibold text-theme-text uppercase tracking-wide">Quyền hạn</label>
       <div class="space-y-2">
-        <label v-for="role in availableRoles" :key="role" class="flex items-center gap-2 text-sm text-slate-700 cursor-pointer">
+        <label v-for="role in availableRoles" :key="role" class="flex items-center gap-2 text-sm text-theme-text cursor-pointer">
           <input 
             type="checkbox" 
             :value="role" 

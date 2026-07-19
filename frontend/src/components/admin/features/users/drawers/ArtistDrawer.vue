@@ -57,18 +57,18 @@ const triggerSubmit = () => {
     :model-value="modelValue" 
     @update:model-value="$emit('update:modelValue', $event)"
     @close="handleClose"
-    :title="isUpdate ? 'Sửa thông tin Nghệ sĩ' : 'Thêm Nghệ sĩ'" 
+    :title="isUpdate ? $t('admin.drawers.edit_artist') : $t('admin.drawers.add_artist')" 
     size="md"
   >
     <template #header-icon>
-      <div class="w-8 h-8 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center border border-slate-200">
+      <div class="w-8 h-8 rounded-lg bg-slate-100 text-theme-text flex items-center justify-center border border-theme-border">
         <component :is="isUpdate ? IconUserEdit : IconUserPlus" size="18" />
       </div>
     </template>
 
-    <div class="mb-5 border-b border-slate-200 pb-5">
-      <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Thông tin chung</h3>
-      <p class="text-[13px] text-slate-500 mb-4">Cập nhật tài khoản Artist Portal.</p>
+    <div class="mb-5 border-b border-theme-border pb-5">
+      <h3 class="text-xs font-bold text-theme-text-sec uppercase tracking-wider mb-1">Thông tin chung</h3>
+      <p class="text-[13px] text-theme-text-sec mb-4">{{ $t('admin.drawers.update_artist_desc') }}</p>
       
       <ArtistForm 
         ref="formRef"
@@ -82,10 +82,10 @@ const triggerSubmit = () => {
     <template #footer>
       <div class="flex items-center justify-end gap-3 w-full">
         <BaseAdminButton variant="secondary" @click="handleClose" :disabled="loading">
-          Hủy bỏ
+          {{ $t('admin.drawers.cancel') }}
         </BaseAdminButton>
         <BaseAdminButton variant="primary" @click="triggerSubmit" :loading="loading">
-          {{ isUpdate ? 'Cập nhật' : 'Lưu thông tin' }}
+          {{ isUpdate ? $t('admin.drawers.update') : $t('admin.drawers.save_info') }}
         </BaseAdminButton>
       </div>
     </template>

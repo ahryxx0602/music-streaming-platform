@@ -62,36 +62,36 @@ const formatDate = (dateString: string) => {
     :model-value="modelValue" 
     @update:model-value="$emit('update:modelValue', $event)"
     @close="handleClose"
-    :title="isUpdate ? 'Thông tin Người nghe' : 'Thêm Người nghe'" 
+    :title="isUpdate ? $t('admin.drawers.edit_listener') : $t('admin.drawers.add_listener')" 
     size="md"
   >
     <template #header-icon>
-      <div class="w-8 h-8 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center border border-slate-200">
+      <div class="w-8 h-8 rounded-lg bg-slate-100 text-theme-text flex items-center justify-center border border-theme-border">
         <component :is="isUpdate ? IconUserEdit : IconUserPlus" size="18" />
       </div>
     </template>
 
     <!-- Subscription Status Card -->
     <div v-if="listenerData" class="mb-5 p-4 rounded-xl border flex items-start gap-4"
-         :class="listenerData.is_premium ? 'bg-amber-50 border-amber-200' : 'bg-slate-50 border-slate-200'">
+         :class="listenerData.is_premium ? 'bg-amber-50 border-amber-200' : 'bg-theme-bg border-theme-border'">
       <div class="w-10 h-10 rounded-full flex items-center justify-center shrink-0"
-           :class="listenerData.is_premium ? 'bg-amber-100 text-amber-600' : 'bg-slate-200 text-slate-500'">
+           :class="listenerData.is_premium ? 'bg-amber-100 dark:bg-amber-500/15 text-amber-600 dark:text-amber-400' : 'bg-slate-200 text-theme-text-sec'">
         <IconCrown size="20" />
       </div>
       <div>
-        <h4 class="text-sm font-bold" :class="listenerData.is_premium ? 'text-amber-800' : 'text-slate-700'">
+        <h4 class="text-sm font-bold" :class="listenerData.is_premium ? 'text-amber-800' : 'text-theme-text'">
           {{ listenerData.is_premium ? 'Premium Plan' : 'Free Plan' }}
         </h4>
-        <p class="text-xs mt-1" :class="listenerData.is_premium ? 'text-amber-700/80' : 'text-slate-500'">
+        <p class="text-xs mt-1" :class="listenerData.is_premium ? 'text-amber-700/80' : 'text-theme-text-sec'">
           Tham gia từ ngày {{ formatDate(listenerData.created_at) }}.
         </p>
       </div>
     </div>
 
     <!-- General Info Section -->
-    <div class="mb-5 border-b border-slate-200 pb-5">
-      <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">{{ isUpdate ? 'Cập nhật thông tin' : 'Thông tin chung' }}</h3>
-      <p class="text-[13px] text-slate-500 mb-4">{{ isUpdate ? 'Thay đổi tên hiển thị và email hệ thống.' : 'Khởi tạo tài khoản Người nghe mới.' }}</p>
+    <div class="mb-5 border-b border-theme-border pb-5">
+      <h3 class="text-xs font-bold text-theme-text-sec uppercase tracking-wider mb-1">{{ isUpdate ? $t('admin.drawers.update_info') : $t('admin.drawers.general_info') }}</h3>
+      <p class="text-[13px] text-theme-text-sec mb-4">{{ isUpdate ? 'Thay đổi tên hiển thị và email hệ thống.' : 'Khởi tạo tài khoản Người nghe mới.' }}</p>
       
       <ListenerForm 
         ref="formRef"
@@ -105,10 +105,10 @@ const formatDate = (dateString: string) => {
     <template #footer>
       <div class="flex items-center justify-end gap-3 w-full">
         <BaseAdminButton variant="secondary" @click="handleClose" :disabled="loading">
-          Hủy bỏ
+          {{ $t('admin.drawers.cancel') }}
         </BaseAdminButton>
         <BaseAdminButton variant="primary" @click="triggerSubmit" :loading="loading">
-          {{ isUpdate ? 'Cập nhật thông tin' : 'Thêm người nghe' }}
+          {{ isUpdate ? $t('admin.drawers.update_info') : $t('admin.drawers.add_listener') }}
         </BaseAdminButton>
       </div>
     </template>

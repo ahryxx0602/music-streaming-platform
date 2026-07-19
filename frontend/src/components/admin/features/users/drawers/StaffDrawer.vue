@@ -67,18 +67,18 @@ const triggerSubmit = () => {
     :model-value="modelValue" 
     @update:model-value="$emit('update:modelValue', $event)"
     @close="handleClose"
-    :title="isUpdate ? 'Sửa thông tin Nhân viên' : 'Thêm Nhân viên'" 
+    :title="isUpdate ? $t('admin.drawers.edit_staff') : $t('admin.drawers.add_staff')" 
     size="md"
   >
     <template #header-icon>
-      <div class="w-8 h-8 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center border border-slate-200">
+      <div class="w-8 h-8 rounded-lg bg-slate-100 text-theme-text flex items-center justify-center border border-theme-border">
         <IconShieldLock size="18" />
       </div>
     </template>
 
-    <div class="mb-5 border-b border-slate-200 pb-5">
-      <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Thông tin & Cấp quyền</h3>
-      <p class="text-[13px] text-slate-500 mb-4">Nhân viên sẽ dùng email này để đăng nhập vào Admin Portal.</p>
+    <div class="mb-5 border-b border-theme-border pb-5">
+      <h3 class="text-xs font-bold text-theme-text-sec uppercase tracking-wider mb-1">Thông tin & Cấp quyền</h3>
+      <p class="text-[13px] text-theme-text-sec mb-4">Nhân viên sẽ dùng email này để đăng nhập vào Admin Portal.</p>
       
       <StaffForm 
         ref="formRef"
@@ -92,10 +92,10 @@ const triggerSubmit = () => {
     <template #footer>
       <div class="flex items-center justify-end gap-3 w-full">
         <BaseAdminButton variant="secondary" @click="handleClose" :disabled="loading">
-          Hủy bỏ
+          {{ $t('admin.drawers.cancel') }}
         </BaseAdminButton>
         <BaseAdminButton variant="primary" @click="triggerSubmit" :loading="loading">
-          {{ isUpdate ? 'Cập nhật' : 'Mời nhân viên' }}
+          {{ isUpdate ? $t('admin.drawers.update') : $t('admin.drawers.invite_staff') }}
         </BaseAdminButton>
       </div>
     </template>

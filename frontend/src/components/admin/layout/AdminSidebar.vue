@@ -7,6 +7,7 @@ import {
   IconMicrophone2,
   IconDisc,
   IconPlaylist,
+  IconCategory,
   IconReportAnalytics,
   IconMessageReport,
   IconSettings,
@@ -17,33 +18,34 @@ const route = useRoute();
 
 const menuGroups = [
   {
-    title: 'General',
+    title: 'admin.menu.general',
     items: [
-      { name: 'Dashboard', path: '/admin/dashboard', icon: IconLayoutDashboard },
-      { name: 'User Management', path: '/admin/users', icon: IconUsers },
+      { name: 'admin.menu.dashboard', path: '/admin/dashboard', icon: IconLayoutDashboard },
+      { name: 'admin.menu.users', path: '/admin/users', icon: IconUsers },
     ]
   },
   {
-    title: 'Music',
+    title: 'admin.menu.music',
     items: [
-      { name: 'Music', path: '/admin/music', icon: IconMusic },
-      { name: 'Artist', path: '/admin/artists', icon: IconMicrophone2 },
-      { name: 'Albums', path: '/admin/albums', icon: IconDisc },
-      { name: 'Playlist', path: '/admin/playlists', icon: IconPlaylist },
+      { name: 'admin.menu.genres', path: '/admin/genres', icon: IconCategory },
+      { name: 'admin.menu.tracks', path: '/admin/music', icon: IconMusic },
+      { name: 'admin.menu.artists', path: '/admin/artists', icon: IconMicrophone2 },
+      { name: 'admin.menu.albums', path: '/admin/albums', icon: IconDisc },
+      { name: 'admin.menu.playlists', path: '/admin/playlists', icon: IconPlaylist },
     ]
   },
   {
-    title: 'Moderation',
+    title: 'admin.menu.moderation',
     items: [
-      { name: 'Reports', path: '/admin/reports', icon: IconReportAnalytics },
-      { name: 'Reviews', path: '/admin/reviews', icon: IconMessageReport },
+      { name: 'admin.menu.reports', path: '/admin/reports', icon: IconReportAnalytics },
+      { name: 'admin.menu.reviews', path: '/admin/reviews', icon: IconMessageReport },
     ]
   },
   {
-    title: 'System',
+    title: 'admin.menu.system',
     items: [
-      { name: 'Settings', path: '/admin/settings', icon: IconSettings },
-      { name: 'Permissions', path: '/admin/permissions', icon: IconShieldLock },
+      { name: 'admin.menu.settings', path: '/admin/settings', icon: IconSettings },
+      { name: 'admin.menu.permissions', path: '/admin/permissions', icon: IconShieldLock },
     ]
   }
 ];
@@ -54,8 +56,7 @@ const isActive = (path: string) => {
 </script>
 
 <template>
-  <aside class="w-[260px] flex-shrink-0 flex flex-col h-screen text-slate-300 z-20 transition-all duration-300" 
-         style="background: linear-gradient(180deg, #111827, #0F172A);">
+  <aside class="w-[260px] flex-shrink-0 flex flex-col h-screen text-slate-100 bg-[#0B0E14] border-r border-slate-800/50 z-20 transition-all duration-300">
     
     <!-- Logo -->
     <div class="h-[72px] px-6 flex items-center shrink-0">
@@ -72,8 +73,8 @@ const isActive = (path: string) => {
     <!-- Navigation -->
     <div class="flex-1 overflow-y-auto py-2 custom-scrollbar">
       <div v-for="(group, idx) in menuGroups" :key="idx" class="mb-6 px-4">
-        <h3 class="px-3 text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">
-          {{ group.title }}
+        <h3 class="px-3 text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">
+          {{ $t(group.title) }}
         </h3>
         <nav class="space-y-0.5 relative">
           <router-link
@@ -86,8 +87,8 @@ const isActive = (path: string) => {
             <!-- Left Indicator for Active state -->
             <div v-if="isActive(item.path)" class="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-4 bg-admin-primary rounded-r-full shadow-[0_0_8px_rgba(59,130,246,0.8)]"></div>
             
-            <component :is="item.icon" size="18" class="transition-colors duration-200" :class="isActive(item.path) ? 'text-admin-primary' : 'text-slate-500 group-hover:text-slate-400'" />
-            {{ item.name }}
+            <component :is="item.icon" size="18" class="transition-colors duration-200" :class="isActive(item.path) ? 'text-admin-primary' : 'text-slate-400 group-hover:text-slate-300'" />
+            {{ $t(item.name) }}
           </router-link>
         </nav>
       </div>
