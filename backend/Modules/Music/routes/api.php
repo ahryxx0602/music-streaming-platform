@@ -9,5 +9,8 @@ Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
     // Admin Routes
     Route::prefix('admin')->group(function () {
         Route::apiResource('genres', \Modules\Music\Http\Controllers\AdminGenreController::class)->names('admin.genres');
+        
+        Route::post('songs/presigned-url', [\Modules\Music\Http\Controllers\AdminSongController::class, 'generatePresignedUrl']);
+        Route::apiResource('songs', \Modules\Music\Http\Controllers\AdminSongController::class)->names('admin.songs');
     });
 });

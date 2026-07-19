@@ -9,7 +9,7 @@ class Song extends Model
 {
     use HasFactory, \Illuminate\Database\Eloquent\SoftDeletes;
 
-    protected $fillable = ['artist_id', 'album_id', 'genre_id', 'title', 'lyrics', 'duration', 'original_file_path', 'hls_path', 'original_size', 'bitrate', 'sample_rate', 'channels', 'checksum', 'cover_image', 'status', 'play_count', 'rejected_reason', 'rejected_at', 'approved_at', 'processing_error', 'processing_attempts'];
+    protected $fillable = ['artist_id', 'album_id', 'genre_id', 'title', 'lyrics', 'duration', 'original_file_path', 'hls_path', 'original_size', 'bitrate', 'sample_rate', 'channels', 'checksum', 'cover_image', 'status', 'play_count', 'rejected_reason', 'rejected_at', 'approved_at', 'processing_error', 'processing_attempts', 'uploader_id'];
     protected function casts(): array { return ['rejected_at' => 'datetime', 'approved_at' => 'datetime']; }
 
     public function artist() { return $this->belongsTo(\Modules\Artist\Models\ArtistProfile::class, 'artist_id'); }
