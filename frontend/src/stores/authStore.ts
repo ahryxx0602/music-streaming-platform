@@ -14,10 +14,12 @@ export const useAuthStore = defineStore('auth', () => {
       user.value = response.data.data.user; // JSend format
       isAuthenticated.value = true;
       role.value = currentRole;
+      localStorage.setItem('app-role', currentRole);
     } catch (error) {
       user.value = null;
       isAuthenticated.value = false;
       role.value = '';
+      localStorage.removeItem('app-role');
       throw error;
     }
   };
@@ -61,6 +63,7 @@ export const useAuthStore = defineStore('auth', () => {
     user.value = null;
     isAuthenticated.value = false;
     role.value = '';
+    localStorage.removeItem('app-role');
     window.location.href = '/login';
   };
 

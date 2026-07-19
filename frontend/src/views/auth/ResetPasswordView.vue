@@ -86,23 +86,23 @@ const handleResetPassword = async () => {
     </div>
 
     <div class="text-center mb-8">
-      <h1 class="text-3xl font-bold mb-2">Tạo Mật Khẩu Mới</h1>
-      <p class="subtitle-text">Nhập mật khẩu mới an toàn cho tài khoản của bạn.</p>
+      <h1 class="text-3xl font-bold mb-2">{{ $t('auth.create_new_password') }}</h1>
+      <p class="subtitle-text">{{ $t('auth.enter_new_password_safe') }}</p>
     </div>
     
     <div v-if="error" class="error-alert">{{ error }}</div>
     
     <div v-if="success" class="success-alert flex items-center justify-center text-center">
       <IconCheck class="mr-2 flex-shrink-0" size="20" />
-      <span>Khôi phục thành công! Đang chuyển hướng đến Đăng nhập...</span>
+      <span>{{ $t('auth.recovery_success_redirect') }}</span>
     </div>
 
     <form v-else @submit.prevent="handleResetPassword" class="space-y-4" novalidate>
       <BaseInput 
         v-model="password" 
         type="password" 
-        label="Mật khẩu mới" 
-        placeholder="Tối thiểu 8 ký tự, có ký tự đặc biệt" 
+        :label="$t('auth.new_password')" 
+        :placeholder="$t('auth.ph_new_password')" 
         :icon="IconLock"
         :error="!!error"
         required 
@@ -111,8 +111,8 @@ const handleResetPassword = async () => {
       <BaseInput 
         v-model="password_confirmation" 
         type="password" 
-        label="Xác nhận mật khẩu mới" 
-        placeholder="Nhập lại mật khẩu" 
+        :label="$t('auth.confirm_new_password')" 
+        :placeholder="$t('auth.ph_confirm_password')" 
         :icon="IconKey"
         :error="!!error"
         required 
@@ -120,7 +120,7 @@ const handleResetPassword = async () => {
       
       <div class="pt-2">
         <BaseButton type="submit" variant="primary" :loading="loading" :icon="IconLock">
-          Lưu Mật Khẩu
+          {{ $t('auth.save_password') }}
         </BaseButton>
       </div>
     </form>

@@ -104,25 +104,25 @@ const handleRegister = async () => {
     </div>
 
     <div class="text-center mb-8">
-      <h1 class="text-3xl font-bold mb-2">Tạo Tài Khoản</h1>
-      <p class="subtitle-text">Tham gia để nghe các bài hát yêu thích.</p>
+      <h1 class="text-3xl font-bold mb-2">{{ $t('auth.create_account') }}</h1>
+      <p class="subtitle-text">{{ $t('auth.join_us') }}</p>
     </div>
     
     <div v-if="globalError" class="error-alert">{{ globalError }}</div>
 
     <form @submit.prevent="handleRegister" class="space-y-4" novalidate>
-      <BaseInput v-model="form.name" label="Họ và tên" placeholder="Nhập tên của bạn" :icon="IconUser" :error="errors.name" required />
-      <BaseInput v-model="form.email" type="email" label="Email" placeholder="Nhập email" :icon="IconMail" :error="errors.email" required />
-      <BaseInput v-model="form.password" type="password" label="Mật khẩu" placeholder="Mật khẩu (Tối thiểu 8 ký tự)" :icon="IconLock" :error="errors.password" required />
-      <BaseInput v-model="form.password_confirmation" type="password" label="Xác nhận mật khẩu" placeholder="Nhập lại mật khẩu" :icon="IconLock" :error="errors.password_confirmation" required />
+      <BaseInput v-model="form.name" :label="$t('auth.name')" :placeholder="$t('auth.ph_name')" :icon="IconUser" :error="errors.name" required />
+      <BaseInput v-model="form.email" type="email" :label="$t('auth.email')" :placeholder="$t('auth.ph_email')" :icon="IconMail" :error="errors.email" required />
+      <BaseInput v-model="form.password" type="password" :label="$t('auth.password')" :placeholder="$t('auth.ph_password_min')" :icon="IconLock" :error="errors.password" required />
+      <BaseInput v-model="form.password_confirmation" type="password" :label="$t('auth.confirm_password')" :placeholder="$t('auth.ph_confirm_password')" :icon="IconLock" :error="errors.password_confirmation" required />
       
       <div class="pt-2">
-        <BaseButton type="submit" variant="primary" :loading="loading" :icon="IconUserPlus">Đăng Ký</BaseButton>
+        <BaseButton type="submit" variant="primary" :loading="loading" :icon="IconUserPlus">{{ $t('auth.register') }}</BaseButton>
       </div>
     </form>
     
     <div class="mt-6 text-center text-sm">
-      <p class="subtitle-text">Đã có tài khoản? <router-link to="/login" class="cta-link">Đăng nhập</router-link></p>
+      <p class="subtitle-text">{{ $t('auth.already_have_account') }} <router-link to="/login" class="cta-link">{{ $t('auth.login') }}</router-link></p>
     </div>
   </div>
 </template>

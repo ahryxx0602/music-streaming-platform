@@ -27,14 +27,14 @@ const newReleases = ref([
       <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
       <div class="absolute bottom-0 left-0 p-8 w-full">
         <span class="px-3 py-1 bg-blue-500 text-white text-xs font-bold uppercase rounded-full tracking-wider mb-3 inline-block">Trending Now</span>
-        <h2 class="text-4xl md:text-5xl font-black text-white mb-2">Aurora EDM Festival</h2>
-        <p class="text-slate-300 max-w-2xl text-sm md:text-base">Hòa mình vào không gian âm nhạc điện tử sôi động nhất hành tinh với hàng ngàn track nhạc bản quyền chất lượng cao.</p>
+        <h2 class="text-4xl md:text-5xl font-black text-theme-text mb-2">Aurora EDM Festival</h2>
+        <p class="text-theme-text-sec max-w-2xl text-sm md:text-base">Hòa mình vào không gian âm nhạc điện tử sôi động nhất hành tinh với hàng ngàn track nhạc bản quyền chất lượng cao.</p>
         <div class="mt-6 flex gap-4">
           <button class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-3 px-8 rounded-full shadow-lg shadow-blue-500/30 transition transform hover:scale-105 flex items-center gap-2">
             <IconPlayerPlayFilled size="20" />
             Phát ngay
           </button>
-          <button class="bg-slate-800/80 hover:bg-slate-700 backdrop-blur-md border border-slate-600 text-white font-bold py-3 px-8 rounded-full transition">Theo dõi</button>
+          <button class="bg-theme-surface hover:bg-theme-surface-hover backdrop-blur-md border border-theme-border text-theme-text font-bold py-3 px-8 rounded-full transition">Theo dõi</button>
         </div>
       </div>
     </div>
@@ -42,21 +42,21 @@ const newReleases = ref([
     <!-- Featured Playlists -->
     <section class="mb-12">
       <div class="flex items-end justify-between mb-6">
-        <h3 class="text-2xl font-bold text-white tracking-tight">Dành cho bạn</h3>
-        <a href="#" class="text-sm font-semibold text-slate-400 hover:text-white uppercase tracking-wider">Xem tất cả</a>
+        <h3 class="text-2xl font-bold text-theme-text tracking-tight">Dành cho bạn</h3>
+        <a href="#" class="text-sm font-semibold text-theme-text-sec hover:text-theme-text uppercase tracking-wider">Xem tất cả</a>
       </div>
       
       <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-        <div v-for="item in featuredPlaylists" :key="item.id" class="group bg-slate-900/50 hover:bg-slate-800 border border-transparent hover:border-slate-700 p-4 rounded-2xl transition duration-300 cursor-pointer relative">
+        <div v-for="item in featuredPlaylists" :key="item.id" class="group bg-theme-surface-hover hover:bg-theme-border border border-transparent hover:border-theme-primary p-4 rounded-2xl transition duration-300 cursor-pointer relative">
           <div class="relative w-full aspect-square rounded-xl overflow-hidden mb-4 shadow-lg">
             <img :src="item.image" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
             <!-- Play Button Overlay -->
             <div class="absolute bottom-2 right-2 w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 shadow-xl shadow-blue-500/40">
-              <IconPlayerPlayFilled class="text-white ml-1" size="24" />
+              <IconPlayerPlayFilled class="text-theme-text ml-1" size="24" />
             </div>
           </div>
-          <h4 class="text-white font-bold truncate mb-1">{{ item.title }}</h4>
-          <p class="text-slate-400 text-sm line-clamp-2">{{ item.desc }}</p>
+          <h4 class="text-theme-text font-bold truncate mb-1">{{ item.title }}</h4>
+          <p class="text-theme-text-sec text-sm line-clamp-2">{{ item.desc }}</p>
         </div>
       </div>
     </section>
@@ -64,7 +64,7 @@ const newReleases = ref([
     <!-- New Releases -->
     <section>
       <div class="flex items-end justify-between mb-6">
-        <h3 class="text-2xl font-bold text-white tracking-tight">Mới phát hành</h3>
+        <h3 class="text-2xl font-bold text-theme-text tracking-tight">Mới phát hành</h3>
       </div>
       
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
@@ -72,12 +72,12 @@ const newReleases = ref([
           <div class="relative w-full aspect-square rounded-full md:rounded-2xl overflow-hidden mb-3 shadow-lg">
             <img :src="item.image" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
             <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
-              <IconPlayerPlayFilled class="text-white w-10 h-10 drop-shadow-lg" />
+              <IconPlayerPlayFilled class="text-theme-text w-10 h-10 drop-shadow-lg" />
             </div>
           </div>
           <div class="text-center md:text-left px-1">
-            <h4 class="text-white font-bold truncate text-sm">{{ item.title }}</h4>
-            <p class="text-slate-400 text-xs truncate mt-0.5">{{ item.artist }}</p>
+            <h4 class="text-theme-text font-bold truncate text-sm">{{ item.title }}</h4>
+            <p class="text-theme-text-sec text-xs truncate mt-0.5">{{ item.artist }}</p>
           </div>
         </div>
       </div>

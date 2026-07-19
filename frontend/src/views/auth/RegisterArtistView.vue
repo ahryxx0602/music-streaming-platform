@@ -78,11 +78,11 @@ const handleRegister = async () => {
 
     <div class="text-center mb-8">
       <h1 class="text-3xl font-bold mb-2">Artist Portal</h1>
-      <p class="subtitle-text">Đăng ký tài khoản Nghệ sĩ</p>
+      <p class="subtitle-text">{{ $t('auth.register_artist_subtitle') }}</p>
     </div>
     
     <div v-if="tokenValidating" class="text-center py-8 subtitle-text">
-      Đang xác thực mã mời...
+      {{ $t('auth.verifying_invite') }}
     </div>
     <div v-else-if="error && !form.email" class="error-alert">{{ error }}</div>
     <div v-else>
@@ -91,19 +91,19 @@ const handleRegister = async () => {
       <form @submit.prevent="handleRegister" class="space-y-4" novalidate>
         <!-- disabled thay cho readonly trên UI -->
         <div class="readonly-field">
-          <label class="base-label">Email (Cố định)</label>
+          <label class="base-label">{{ $t('auth.email') }}</label>
           <div class="input-container">
             <div class="icon-wrapper"><IconMail size="20" stroke-width="1.5" /></div>
             <input class="base-input disabled has-icon" :value="form.email" disabled />
           </div>
         </div>
-        <BaseInput v-model="form.name" label="Họ tên thật" :icon="IconUser" :error="!!error" required />
-        <BaseInput v-model="form.stage_name" label="Nghệ danh (Stage Name)" :icon="IconMicrophone" :error="!!error" required />
-        <BaseInput v-model="form.password" type="password" label="Mật khẩu" :icon="IconLock" :error="!!error" required />
-        <BaseInput v-model="form.password_confirmation" type="password" label="Xác nhận mật khẩu" :icon="IconLock" :error="!!error" required />
+        <BaseInput v-model="form.name" :label="$t('auth.name')" :placeholder="$t('auth.ph_name')" :icon="IconUser" :error="!!error" required />
+        <BaseInput v-model="form.stage_name" :label="$t('auth.stage_name')" :placeholder="$t('auth.ph_name')" :icon="IconMicrophone" :error="!!error" required />
+        <BaseInput v-model="form.password" type="password" :label="$t('auth.password')" :placeholder="$t('auth.ph_password_min')" :icon="IconLock" :error="!!error" required />
+        <BaseInput v-model="form.password_confirmation" type="password" :label="$t('auth.confirm_password')" :placeholder="$t('auth.ph_confirm_password')" :icon="IconLock" :error="!!error" required />
         
         <div class="pt-2">
-          <BaseButton type="submit" variant="primary" :loading="loading" :icon="IconUserPlus">Đăng Ký Nghệ Sĩ</BaseButton>
+          <BaseButton type="submit" variant="primary" :loading="loading" :icon="IconUserPlus">{{ $t('auth.register') }}</BaseButton>
         </div>
       </form>
     </div>

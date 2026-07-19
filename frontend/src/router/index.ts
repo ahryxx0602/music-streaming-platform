@@ -92,15 +92,31 @@ const router = createRouter({
           path: 'users',
           name: 'admin-users',
           component: () => import('../views/admin/users/UsersView.vue'),
+        },
+        {
+          path: 'genres',
+          name: 'admin-genres',
+          component: () => import('../views/admin/genres/GenresView.vue'),
         }
       ]
     }
   ],
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore();
   
+  if (!authStore.isAuthenticated) {
+    const savedRole = localStorage.getItem('app-role');
+    if (savedRole) {
+      try {
+        await authStore.fetchProfile(savedRole);
+      } catch (e) {
+        // failed to restore session, clearAuth handles localStorage removal
+      }
+    }
+  }
+
   if (to.meta.requiresGuest && authStore.isAuthenticated) {
     const role = authStore.role?.toLowerCase();
     if (role === 'admin') {

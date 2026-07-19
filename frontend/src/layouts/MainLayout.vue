@@ -6,6 +6,8 @@ import {
   IconHome, IconSearch, IconLibrary, IconSettings, IconLogout, 
   IconPlayerPlay, IconPlayerSkipForward, IconPlayerSkipBack, IconVolume
 } from '@tabler/icons-vue';
+import LanguageSwitcher from '@/components/base/LanguageSwitcher.vue';
+import ThemeToggle from '@/components/base/ThemeToggle.vue';
 
 const authStore = useAuthStore();
 const router = useRouter();
@@ -18,67 +20,71 @@ const handleLogout = async () => {
 </script>
 
 <template>
-  <div class="h-screen w-full bg-black text-white flex flex-col overflow-hidden font-sans">
+  <div class="h-screen w-full bg-theme-bg text-theme-text flex flex-col overflow-hidden font-sans">
     
     <!-- Top & Main Section -->
     <div class="flex-1 flex overflow-hidden">
       
       <!-- Sidebar Navigation -->
-      <aside class="w-64 bg-slate-950 flex flex-col justify-between py-6 px-4 border-r border-slate-900 hidden md:flex">
+      <aside class="w-64 bg-theme-surface flex flex-col justify-between py-6 px-4 border-r border-theme-border hidden md:flex">
         
         <!-- Logo -->
         <div class="mb-8 px-2 flex items-center gap-3">
-          <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/30">
+          <div class="w-8 h-8 rounded-full bg-theme-primary flex items-center justify-center shadow-lg">
             <IconPlayerPlay class="text-white w-5 h-5 ml-1" />
           </div>
-          <h1 class="text-xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">Aurora<span class="text-white">Stream</span></h1>
+          <h1 class="text-xl font-black tracking-tight text-theme-text">Aurora<span class="text-theme-primary">Stream</span></h1>
         </div>
 
         <!-- Main Nav -->
         <nav class="space-y-2 flex-1">
-          <router-link to="/" class="flex items-center gap-4 px-3 py-3 text-slate-300 hover:text-white font-semibold rounded-lg hover:bg-slate-900 transition" active-class="text-white bg-slate-900">
+          <router-link to="/" class="flex items-center gap-4 px-3 py-3 text-theme-text-sec hover:text-theme-text font-semibold rounded-lg hover:bg-theme-surface-hover transition" active-class="text-theme-primary bg-theme-surface-hover">
             <IconHome size="24" stroke="2" />
-            Trang chủ
+            {{ $t('client.nav.home') }}
           </router-link>
-          <a href="#" class="flex items-center gap-4 px-3 py-3 text-slate-400 hover:text-white font-semibold rounded-lg hover:bg-slate-900 transition">
+          <a href="#" class="flex items-center gap-4 px-3 py-3 text-theme-text-sec hover:text-theme-text font-semibold rounded-lg hover:bg-theme-surface-hover transition">
             <IconSearch size="24" stroke="2" />
-            Khám phá
+            {{ $t('client.nav.explore') }}
           </a>
-          <a href="#" class="flex items-center gap-4 px-3 py-3 text-slate-400 hover:text-white font-semibold rounded-lg hover:bg-slate-900 transition">
+          <a href="#" class="flex items-center gap-4 px-3 py-3 text-theme-text-sec hover:text-theme-text font-semibold rounded-lg hover:bg-theme-surface-hover transition">
             <IconLibrary size="24" stroke="2" />
-            Thư viện
+            {{ $t('client.nav.library') }}
           </a>
         </nav>
 
         <!-- Bottom User Menu -->
-        <div class="mt-auto border-t border-slate-800 pt-4">
+        <div class="mt-auto border-t border-theme-border pt-4 flex flex-col gap-3">
+          <div class="flex items-center justify-between px-2">
+            <LanguageSwitcher />
+            <ThemeToggle />
+          </div>
           <template v-if="authStore.isAuthenticated">
-            <router-link to="/settings" class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-900 transition mb-2">
-              <img v-if="user?.avatar_url || user?.avatar" :src="user?.avatar_url || user?.avatar" class="w-10 h-10 rounded-full object-cover border border-slate-700" />
-              <div v-else class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center font-bold text-slate-400">
+            <router-link to="/settings" class="flex items-center gap-3 p-2 rounded-lg hover:bg-theme-surface-hover transition mb-2">
+              <img v-if="user?.avatar_url || user?.avatar" :src="user?.avatar_url || user?.avatar" class="w-10 h-10 rounded-full object-cover border border-theme-border" />
+              <div v-else class="w-10 h-10 rounded-full bg-theme-bg flex items-center justify-center font-bold text-theme-text-sec">
                 {{ user?.name?.charAt(0) }}
               </div>
               <div class="flex-1 truncate">
-                <p class="text-sm font-bold truncate">{{ user?.name }}</p>
-                <p class="text-xs text-slate-500 capitalize">{{ user?.role }}</p>
+                <p class="text-sm font-bold truncate text-theme-text">{{ user?.name }}</p>
+                <p class="text-xs text-theme-text-sec capitalize">{{ user?.role }}</p>
               </div>
             </router-link>
-            <button @click="handleLogout" class="w-full flex items-center gap-3 px-3 py-2 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg transition text-sm font-semibold">
+            <button @click="handleLogout" class="w-full flex items-center gap-3 px-3 py-2 text-theme-danger hover:opacity-80 hover:bg-theme-danger/10 rounded-lg transition text-sm font-semibold">
               <IconLogout size="20" />
-              Đăng xuất
+              {{ $t('client.user_menu.logout') }}
             </button>
           </template>
           <template v-else>
             <div class="space-y-3">
-              <router-link to="/login" class="block w-full text-center py-2 px-4 rounded-full bg-white text-black font-bold hover:scale-105 transition">Đăng nhập</router-link>
-              <router-link to="/register" class="block w-full text-center py-2 px-4 rounded-full bg-slate-800 text-white font-bold hover:bg-slate-700 hover:scale-105 transition">Đăng ký</router-link>
+              <router-link to="/login" class="block w-full text-center py-2 px-4 rounded-full bg-theme-primary text-white font-bold hover:opacity-90 hover:scale-105 transition">{{ $t('auth.login') }}</router-link>
+              <router-link to="/register" class="block w-full text-center py-2 px-4 rounded-full bg-theme-surface-hover text-theme-text font-bold hover:bg-theme-border hover:scale-105 transition">{{ $t('auth.register') }}</router-link>
             </div>
           </template>
         </div>
       </aside>
 
       <!-- Main Scrollable Area -->
-      <main class="flex-1 overflow-y-auto bg-gradient-to-b from-slate-900 to-black">
+      <main class="flex-1 overflow-y-auto bg-theme-bg">
         <div class="p-6 md:p-8">
           <slot></slot>
         </div>
@@ -86,29 +92,29 @@ const handleLogout = async () => {
     </div>
 
     <!-- Bottom Player Bar (Mock) -->
-    <div class="h-20 bg-slate-950 border-t border-slate-900 flex items-center justify-between px-4">
+    <div class="h-20 bg-theme-surface border-t border-theme-border flex items-center justify-between px-4">
       <div class="flex items-center gap-4 w-1/4 min-w-[200px]">
         <div class="w-14 h-14 bg-slate-800 rounded flex-shrink-0 shadow-lg overflow-hidden group">
           <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?q=80&w=200&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
         </div>
         <div>
-          <h4 class="text-sm font-bold text-white cursor-pointer hover:underline">Night Drive</h4>
-          <p class="text-xs text-slate-400 cursor-pointer hover:underline">Synthwave Artist</p>
+          <h4 class="text-sm font-bold text-theme-text cursor-pointer hover:underline">{{ $t('client.player.unknown_song') }}</h4>
+          <p class="text-xs text-theme-text-sec cursor-pointer hover:underline">{{ $t('client.player.unknown_artist') }}</p>
         </div>
       </div>
       
       <div class="flex flex-col items-center max-w-[40%] w-full">
         <div class="flex items-center gap-6 mb-1">
-          <button class="text-slate-400 hover:text-white transition"><IconPlayerSkipBack size="20" fill="currentColor" /></button>
-          <button class="w-8 h-8 flex items-center justify-center bg-white text-black rounded-full hover:scale-105 transition">
+          <button class="text-theme-text-sec hover:text-theme-text transition"><IconPlayerSkipBack size="20" fill="currentColor" /></button>
+          <button class="w-8 h-8 flex items-center justify-center bg-theme-text text-theme-bg rounded-full hover:scale-105 transition">
             <IconPlayerPlay size="18" fill="currentColor" class="ml-0.5" />
           </button>
-          <button class="text-slate-400 hover:text-white transition"><IconPlayerSkipForward size="20" fill="currentColor" /></button>
+          <button class="text-theme-text-sec hover:text-theme-text transition"><IconPlayerSkipForward size="20" fill="currentColor" /></button>
         </div>
-        <div class="w-full flex items-center gap-2 text-xs text-slate-400">
+        <div class="w-full flex items-center gap-2 text-xs text-theme-text-sec">
           <span>1:23</span>
-          <div class="flex-1 h-1 bg-slate-800 rounded-full cursor-pointer group">
-            <div class="w-1/3 h-full bg-white group-hover:bg-blue-500 rounded-full relative">
+          <div class="flex-1 h-1 bg-theme-surface-hover rounded-full cursor-pointer group">
+            <div class="w-1/3 h-full bg-theme-primary group-hover:brightness-110 rounded-full relative">
               <div class="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full opacity-0 group-hover:opacity-100 shadow"></div>
             </div>
           </div>
@@ -116,10 +122,10 @@ const handleLogout = async () => {
         </div>
       </div>
 
-      <div class="flex items-center justify-end gap-2 w-1/4 min-w-[150px] text-slate-400">
+      <div class="flex items-center justify-end gap-2 w-1/4 min-w-[150px] text-theme-text-sec">
         <IconVolume size="20" />
-        <div class="w-24 h-1 bg-slate-800 rounded-full cursor-pointer group">
-          <div class="w-2/3 h-full bg-white group-hover:bg-blue-500 rounded-full"></div>
+        <div class="w-24 h-1 bg-theme-surface-hover rounded-full cursor-pointer group">
+          <div class="w-2/3 h-full bg-theme-primary group-hover:brightness-110 rounded-full"></div>
         </div>
       </div>
     </div>

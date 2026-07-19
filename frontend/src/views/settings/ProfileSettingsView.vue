@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { useAuthStore } from '@/stores/authStore';
 import api from '@/services/api';
 import BaseInput from '@/components/base/BaseInput.vue';
 import BaseButton from '@/components/base/BaseButton.vue';
 import { IconUpload, IconDeviceFloppy } from '@tabler/icons-vue';
+const { t } = useI18n();
 
 const authStore = useAuthStore();
 const user = computed(() => authStore.user);
@@ -40,7 +42,7 @@ const handleFileChange = (event: Event) => {
 
     // Validate File Size (Max 2MB)
     if (file.size > 2 * 1024 * 1024) {
-      errorAvatar.value = 'Kích thước ảnh vượt quá 2MB. Vui lòng chọn ảnh nhẹ hơn.';
+      errorAvatar.value = t('settings.profile.avatar_too_large');
       return;
     }
     errorAvatar.value = '';
@@ -71,14 +73,14 @@ const uploadAvatar = async () => {
         'Content-Type': 'multipart/form-data'
       }
     });
-    messageAvatar.value = 'Cập nhật ảnh đại diện thành công!';
+    messageAvatar.value = t('settings.profile.avatar_success');
     // Update store
     if (authStore.user) {
       authStore.user.avatar = res.data.data.user.avatar;
       authStore.user.avatar_url = res.data.data.user.avatar_url;
     }
   } catch (err: any) {
-    errorAvatar.value = err.response?.data?.message || 'Có lỗi xảy ra khi upload ảnh.';
+    errorAvatar.value = err.response?.data?.message || t('settings.profile.avatar_error');
   } finally {
     loadingAvatar.value = false;
   }
@@ -91,7 +93,7 @@ const saveProfileInfo = async () => {
   
   try {
     const res = await api.put(`/${role.value}/profile`, form.value);
-    messageInfo.value = 'Lưu thông tin thành công!';
+    messageInfo.value = t('settings.profile.info_success');
     if (authStore.user) {
       authStore.user.name = res.data.data.user.name;
       if (res.data.data.user.artist_profile) {
@@ -99,7 +101,7 @@ const saveProfileInfo = async () => {
       }
     }
   } catch (err: any) {
-    errorInfo.value = err.response?.data?.message || 'Có lỗi xảy ra khi lưu thông tin.';
+    errorInfo.value = err.response?.data?.message || t('settings.profile.info_error');
   } finally {
     loadingInfo.value = false;
   }
@@ -108,15 +110,15 @@ const saveProfileInfo = async () => {
 
 <template>
   <div class="profile-settings">
-    <h2 class="text-2xl font-bold text-white mb-6">Hồ sơ cá nhân</h2>
+    <h2 class="text-2xl font-bold text-theme-text mb-6">Hồ sơ cá nhân</h2>
     
     <!-- Avatar Section -->
-    <section class="mb-10 pb-8 border-b theme-border">
-      <h3 class="text-lg font-medium text-secondary mb-4">Ảnh đại diện</h3>
+    <section class="mb-10 pb-8 border-b border-theme-border">
+      <h3 class="text-lg font-medium text-theme-text-sec mb-4">{{ $t('settings.profile.avatar_title') }}</h3>
       <div class="flex items-center gap-6">
-        <div class="relative w-24 h-24 rounded-full overflow-hidden theme-card border-2 theme-border flex-shrink-0">
+        <div class="relative w-24 h-24 rounded-full overflow-hidden bg-theme-bg border-2 border-theme-border flex-shrink-0">
           <img v-if="avatarPreview" :src="avatarPreview" alt="Avatar" class="w-full h-full object-cover" />
-          <div v-else class="w-full h-full flex items-center justify-center text-secondary font-bold text-2xl">
+          <div v-else class="w-full h-full flex items-center justify-center text-theme-text-sec font-bold text-2xl">
             {{ user?.name?.charAt(0).toUpperCase() }}
           </div>
         </div>
@@ -124,10 +126,10 @@ const saveProfileInfo = async () => {
         <div class="flex flex-col gap-2">
           <div class="flex gap-3">
             <input type="file" ref="fileInput" @change="handleFileChange" accept="image/jpeg, image/png, image/webp" class="hidden" />
-            <BaseButton @click="triggerFileInput" variant="outline" size="sm">Chọn ảnh mới</BaseButton>
+            <BaseButton @click="triggerFileInput" variant="outline" size="sm">{{ $t('settings.profile.choose_new_avatar') }}</BaseButton>
             <BaseButton v-if="selectedFile" @click="uploadAvatar" :loading="loadingAvatar" variant="primary" size="sm" :icon="IconUpload">Tải lên</BaseButton>
           </div>
-          <p class="text-xs text-slate-400">Định dạng JPG, PNG hoặc WebP. Tối đa 2MB.</p>
+          <p class="text-xs text-theme-text-sec">Định dạng JPG, PNG hoặc WebP. Tối đa 2MB.</p>
           <p v-if="messageAvatar" class="text-sm text-green-400 mt-1">{{ messageAvatar }}</p>
           <p v-if="errorAvatar" class="text-sm text-red-400 mt-1">{{ errorAvatar }}</p>
         </div>
@@ -136,15 +138,15 @@ const saveProfileInfo = async () => {
 
     <!-- Info Section -->
     <section>
-      <h3 class="text-lg font-medium text-secondary mb-4">Thông tin cơ bản</h3>
+      <h3 class="text-lg font-medium text-theme-text-sec mb-4">Thông tin cơ bản</h3>
       <form @submit.prevent="saveProfileInfo" class="space-y-4 max-w-xl">
         <BaseInput v-model="form.name" label="Tên hiển thị" required />
         
         <template v-if="role === 'artist'">
           <BaseInput v-model="form.stage_name" label="Nghệ danh (Stage Name)" required />
           <div class="flex flex-col">
-            <label class="text-sm font-medium text-secondary mb-1">Tiểu sử</label>
-            <textarea v-model="form.bio" rows="4" class="w-full theme-card border theme-border rounded-xl p-3 text-white focus:outline-none focus-border-primary resize-none" placeholder="Giới thiệu về bạn..."></textarea>
+            <label class="text-sm font-medium text-theme-text-sec mb-1">Tiểu sử</label>
+            <textarea v-model="form.bio" rows="4" class="w-full bg-theme-bg border border-theme-border rounded-xl p-3 text-theme-text focus:outline-none focus:border-theme-primary focus:ring-2 focus:ring-theme-primary/20 resize-none" placeholder="Giới thiệu về bạn..."></textarea>
           </div>
         </template>
         
@@ -152,7 +154,7 @@ const saveProfileInfo = async () => {
         <p v-if="errorInfo" class="text-sm text-red-400">{{ errorInfo }}</p>
         
         <div class="pt-4">
-          <BaseButton type="submit" variant="primary" :loading="loadingInfo" :icon="IconDeviceFloppy">Lưu thay đổi</BaseButton>
+          <BaseButton type="submit" variant="primary" :loading="loadingInfo" :icon="IconDeviceFloppy">{{ $t('common.save') }}</BaseButton>
         </div>
       </form>
     </section>
@@ -160,11 +162,5 @@ const saveProfileInfo = async () => {
 </template>
 
 <style scoped>
-.theme-card { background-color: var(--color-card, #1A2740); }
-.theme-border { border-color: var(--color-input-border, #2A3B57); }
-.text-secondary { color: var(--color-text-secondary, #CBD5E1); }
-.focus-border-primary:focus { 
-  border-color: var(--color-primary, #3B82F6); 
-  box-shadow: var(--shadow-input-focus, 0 0 18px rgba(59, 130, 246, 0.18)); 
-}
+/* Scoped overrides if needed */
 </style>

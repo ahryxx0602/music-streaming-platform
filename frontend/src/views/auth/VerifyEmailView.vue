@@ -1,15 +1,17 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 import api from '../../services/api';
 import BaseButton from '../../components/base/BaseButton.vue';
 import { IconCheck, IconX, IconLoader2, IconPlayerPlay, IconHome } from '@tabler/icons-vue';
+const { t } = useI18n();
 
 const route = useRoute();
 const router = useRouter();
 
 const status = ref<'loading' | 'success' | 'error'>('loading');
-const message = ref('Đang xác thực địa chỉ email của bạn, vui lòng đợi...');
+const message = ref(t('auth.verifying_email'));
 
 onMounted(async () => {
   const id = route.params.id;
@@ -19,7 +21,7 @@ onMounted(async () => {
   
   if (!id || !hash || !expires || !signature) {
     status.value = 'error';
-    message.value = 'Đường dẫn xác thực không hợp lệ hoặc thiếu chứng thực ký số.';
+    message.value = t('auth.verify_invalid_link');
     return;
   }
   
@@ -29,10 +31,10 @@ onMounted(async () => {
     const res = await api.get(verifyUrl);
     
     status.value = 'success';
-    message.value = res.data?.message || 'Xác thực email thành công! Tài khoản của bạn đã được kích hoạt.';
+    message.value = res.data?.message || t('auth.verify_success');
   } catch (err: any) {
     status.value = 'error';
-    message.value = err.response?.data?.message || 'Xác thực thất bại. Đường dẫn đã hết hạn hoặc tài khoản đã được xác thực trước đó.';
+    message.value = err.response?.data?.message || t('auth.verify_failed');
   }
 });
 </script>
@@ -48,7 +50,7 @@ onMounted(async () => {
     </div>
 
     <div class="mb-8">
-      <h1 class="text-3xl font-bold mb-2">Xác Thực Email</h1>
+      <h1 class="text-3xl font-bold mb-2">{{ $t('auth.verify_email_title') }}</h1>
     </div>
 
     <div class="verification-card flex flex-col items-center justify-center py-6 px-4">
@@ -72,7 +74,7 @@ onMounted(async () => {
 
       <div v-if="status !== 'loading'" class="w-full pt-4">
         <BaseButton @click="router.push('/')" variant="primary" :icon="IconHome">
-          Trở về Trang chủ
+          {{ $t('auth.back_to_home') }}
         </BaseButton>
       </div>
     </div>

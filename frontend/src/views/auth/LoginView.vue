@@ -53,8 +53,8 @@ const handleLogin = async () => {
     </div>
 
     <div class="text-center mb-8">
-      <h1 class="text-3xl font-bold mb-2">Đăng Nhập</h1>
-      <p class="subtitle-text">Chào mừng trở lại! Hãy trải nghiệm âm nhạc.</p>
+      <h1 class="text-3xl font-bold mb-2">{{ $t('auth.login') }}</h1>
+      <p class="subtitle-text">{{ $t('auth.welcome_back') }}</p>
     </div>
     
     <div v-if="error" class="error-alert">{{ error }}</div>
@@ -63,8 +63,8 @@ const handleLogin = async () => {
       <BaseInput 
         v-model="email" 
         type="email" 
-        label="Email" 
-        placeholder="Nhập email của bạn" 
+        :label="$t('auth.email')" 
+        :placeholder="$t('auth.ph_email')" 
         :icon="IconMail"
         :error="!!error"
         required 
@@ -73,28 +73,28 @@ const handleLogin = async () => {
       <BaseInput 
         v-model="password" 
         type="password" 
-        label="Mật khẩu" 
-        placeholder="Nhập mật khẩu" 
+        :label="$t('auth.password')" 
+        :placeholder="$t('auth.ph_password')" 
         :icon="IconLock"
         :error="!!error"
         required 
       />
 
       <div class="flex justify-end mt-1 mb-2">
-        <router-link to="/forgot-password" class="cta-link text-sm font-normal">Quên mật khẩu?</router-link>
+        <router-link to="/forgot-password" class="cta-link text-sm font-normal">{{ $t('auth.forgot_password') }}</router-link>
       </div>
       
       <div class="pt-2">
         <BaseButton type="submit" variant="primary" :loading="loading" :icon="IconLogin">
-          Đăng Nhập
+          {{ $t('auth.login') }}
         </BaseButton>
       </div>
     </form>
     
     <div class="mt-6 text-center text-sm">
       <p class="subtitle-text">
-        Chưa có tài khoản? 
-        <router-link to="/register" class="cta-link">Đăng ký ngay</router-link>
+        {{ $t('auth.no_account') }} 
+        <router-link to="/register" class="cta-link">{{ $t('auth.register_now') }}</router-link>
       </p>
     </div>
   </div>

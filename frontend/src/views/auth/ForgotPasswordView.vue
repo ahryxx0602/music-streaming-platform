@@ -43,23 +43,23 @@ const handleForgotPassword = async () => {
     </div>
 
     <div class="text-center mb-8">
-      <h1 class="text-3xl font-bold mb-2">Quên Mật Khẩu</h1>
-      <p class="subtitle-text">Nhập email của bạn để nhận liên kết khôi phục.</p>
+      <h1 class="text-3xl font-bold mb-2">{{ $t('auth.forgot_password') }}</h1>
+      <p class="subtitle-text">{{ $t('auth.enter_email_to_recover') }}</p>
     </div>
     
     <div v-if="error" class="error-alert">{{ error }}</div>
     
     <div v-if="success" class="success-alert flex items-center justify-center text-center">
       <IconCheck class="mr-2 flex-shrink-0" size="20" />
-      <span>Email khôi phục đã được gửi! Vui lòng kiểm tra hộp thư của bạn.</span>
+      <span>{{ $t('auth.recovery_email_sent') }}</span>
     </div>
 
     <form v-else @submit.prevent="handleForgotPassword" class="space-y-4" novalidate>
       <BaseInput 
         v-model="email" 
         type="email" 
-        label="Email" 
-        placeholder="Nhập email của bạn" 
+        :label="$t('auth.email')" 
+        :placeholder="$t('auth.ph_email')" 
         :icon="IconMail"
         :error="!!error"
         required 
@@ -67,15 +67,15 @@ const handleForgotPassword = async () => {
       
       <div class="pt-2">
         <BaseButton type="submit" variant="primary" :loading="loading" :icon="IconSend">
-          Gửi Liên Kết
+          {{ $t('auth.send_link') }}
         </BaseButton>
       </div>
     </form>
     
     <div class="mt-6 text-center text-sm">
       <p class="subtitle-text">
-        Trở lại 
-        <router-link to="/login" class="cta-link">Đăng nhập</router-link>
+        {{ $t('auth.back_to') }} 
+        <router-link to="/login" class="cta-link">{{ $t('auth.login') }}</router-link>
       </p>
     </div>
   </div>

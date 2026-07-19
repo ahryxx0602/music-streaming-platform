@@ -5,6 +5,12 @@ const api = axios.create({
     withCredentials: true,
 });
 
+api.interceptors.request.use((config) => {
+    const currentLocale = localStorage.getItem('app-locale') || 'vi';
+    config.headers['Accept-Language'] = currentLocale;
+    return config;
+});
+
 api.interceptors.response.use(
     (response) => response,
     async (error) => {

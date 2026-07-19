@@ -48,8 +48,8 @@ const handleLogout = () => {
     </div>
 
     <div class="mb-6">
-      <h1 class="text-3xl font-bold mb-2">Chờ Xác Thực Email</h1>
-      <p class="subtitle-text">Tài khoản của bạn cần được xác thực để tiếp tục.</p>
+      <h1 class="text-3xl font-bold mb-2">{{ $t('auth.awaiting_verification_title') }}</h1>
+      <p class="subtitle-text">{{ $t('auth.awaiting_verification_subtitle') }}</p>
     </div>
 
     <div class="verification-card flex flex-col items-center justify-center p-6 mb-6">
@@ -58,7 +58,7 @@ const handleLogout = () => {
       </div>
       
       <p class="text-gray-300 mb-4 text-sm leading-relaxed">
-        Chúng tôi đã gửi một liên kết xác thực đến địa chỉ email đăng ký của bạn. 
+        {{ $t('auth.verification_link_sent') }} 
         Vui lòng kiểm tra Hộp thư đến (hoặc Thư rác) và làm theo hướng dẫn.
       </p>
 
@@ -70,13 +70,13 @@ const handleLogout = () => {
 
       <div class="w-full pt-2">
         <BaseButton @click="handleResend" variant="primary" :loading="loading" :icon="IconSend">
-          Gửi lại Email Xác Thực
+          {{ $t('auth.resend_verification') }}
         </BaseButton>
       </div>
     </div>
 
     <div class="text-sm">
-      <p class="subtitle-text mb-3">Dùng tài khoản khác?</p>
+      <p class="subtitle-text mb-3">{{ $t('auth.use_different_account') }}</p>
       <BaseButton @click="handleLogout" variant="secondary" :icon="IconLogout">
         Đăng xuất
       </BaseButton>

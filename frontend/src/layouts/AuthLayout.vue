@@ -1,9 +1,16 @@
 <script setup lang="ts">
 import { IconHeadphones, IconDisc, IconMicrophone2 } from '@tabler/icons-vue';
+import LanguageSwitcher from '@/components/base/LanguageSwitcher.vue';
+import ThemeToggle from '@/components/base/ThemeToggle.vue';
 </script>
 
 <template>
-  <div class="auth-layout relative min-h-screen flex items-center justify-center overflow-hidden">
+  <div class="auth-layout relative min-h-screen flex items-center justify-center overflow-hidden bg-theme-bg text-theme-text transition-colors duration-500">
+    <!-- Utilities -->
+    <div class="absolute top-6 right-6 z-50 flex items-center gap-2">
+      <LanguageSwitcher />
+      <ThemeToggle />
+    </div>
     
     <!-- 1. Ambient Glow Lights -->
     <div class="ambient-lights">
@@ -33,7 +40,7 @@ import { IconHeadphones, IconDisc, IconMicrophone2 } from '@tabler/icons-vue';
 
     <!-- 5. Glassmorphism Form Container (Tăng chiều rộng form) -->
     <div class="auth-container z-10 w-full max-w-lg entry-animation">
-      <div class="auth-content">
+      <div class="auth-content glass rounded-[var(--radius-lg,24px)] p-10 shadow-2xl relative overflow-hidden">
         <slot />
       </div>
     </div>
@@ -42,9 +49,6 @@ import { IconHeadphones, IconDisc, IconMicrophone2 } from '@tabler/icons-vue';
 
 <style scoped>
 .auth-layout {
-  min-height: 100vh;
-  display: flex; align-items: center; justify-content: center;
-  background-color: var(--color-bg-dark);
   position: relative; overflow: hidden;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
@@ -89,14 +93,14 @@ import { IconHeadphones, IconDisc, IconMicrophone2 } from '@tabler/icons-vue';
   position: absolute; top: 50%; left: 50%;
   margin-top: -350px; margin-left: -350px;
   width: 700px; height: 700px; border-radius: 50%;
-  background: #0B0E14; box-shadow: 0 15px 50px rgba(0, 0, 0, 0.9), inset 0 0 0 6px var(--color-card);
+  background: #0B0E14; box-shadow: 0 15px 50px rgba(0, 0, 0, 0.9), inset 0 0 0 6px #1A2740;
   z-index: 2; display: flex; align-items: center; justify-content: center;
   overflow: hidden; animation: spinRecord 18s linear infinite;
 }
 
 .vinyl-grooves {
   position: absolute; inset: 6px; border-radius: 50%;
-  background: repeating-radial-gradient(circle at center, #05070a 0px, var(--color-surface) 3px, #05070a 6px);
+  background: repeating-radial-gradient(circle at center, #05070a 0px, #131B2F 3px, #05070a 6px);
   z-index: 2;
 }
 
@@ -109,7 +113,7 @@ import { IconHeadphones, IconDisc, IconMicrophone2 } from '@tabler/icons-vue';
 
 .vinyl-hole {
   width: 16px; height: 16px; border-radius: 50%;
-  background: var(--color-bg-dark); box-shadow: inset 0 2px 5px rgba(0,0,0,0.9);
+  background: #0A0F1F; box-shadow: inset 0 2px 5px rgba(0,0,0,0.9);
 }
 
 /* Nâng cấp Reflection: Vệt sáng quét mạnh hơn qua đĩa than */
@@ -145,8 +149,7 @@ import { IconHeadphones, IconDisc, IconMicrophone2 } from '@tabler/icons-vue';
 }
 
 .auth-content {
-  background: var(--color-glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--color-glass-border); border-radius: var(--radius-lg, 24px); padding: 2.5rem;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); color: var(--color-text-primary);
+  /* Using standard glass utility instead of hardcoded background */
+  z-index: 10;
 }
 </style>
