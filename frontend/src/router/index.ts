@@ -97,6 +97,11 @@ const router = createRouter({
           path: 'genres',
           name: 'admin-genres',
           component: () => import('../views/admin/genres/GenresView.vue'),
+        },
+        {
+          path: 'inventory',
+          name: 'admin-inventory',
+          component: () => import('../views/admin/inventory/InventoryView.vue'),
         }
       ]
     }

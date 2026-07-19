@@ -28,7 +28,7 @@ const menuGroups = [
     title: 'admin.menu.music',
     items: [
       { name: 'admin.menu.genres', path: '/admin/genres', icon: IconCategory },
-      { name: 'admin.menu.tracks', path: '/admin/music', icon: IconMusic },
+      { name: 'admin.menu.inventory', path: '/admin/inventory', icon: IconMusic },
       { name: 'admin.menu.artists', path: '/admin/artists', icon: IconMicrophone2 },
       { name: 'admin.menu.albums', path: '/admin/albums', icon: IconDisc },
       { name: 'admin.menu.playlists', path: '/admin/playlists', icon: IconPlaylist },

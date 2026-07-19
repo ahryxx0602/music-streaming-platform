@@ -64,7 +64,8 @@
       "system": "Hệ thống",
       "settings": "Cài đặt",
       "permissions": "Phân quyền",
-      "overview": "Tổng quan"
+      "overview": "Tổng quan",
+      "inventory": "Kho Nhạc & Album"
     },
     "header": {
       "search": "Tìm kiếm lệnh (Ctrl + K)"
@@ -133,7 +134,8 @@
       "save_info": "Lưu thông tin",
       "update": "Cập nhật",
       "cancel": "Hủy bỏ"
-    }
+    },
+    "inventory": "Kho Nhạc & Album"
   },
   "common": {
     "save": "Lưu thay đổi",
