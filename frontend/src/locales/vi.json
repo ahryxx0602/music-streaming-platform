@@ -135,7 +135,17 @@
       "update": "Cập nhật",
       "cancel": "Hủy bỏ"
     },
-    "inventory": "Kho Nhạc & Album"
+    "inventory": "Kho Nhạc & Album",
+    "albums": {
+      "add_new": "Tạo Album Mới",
+      "edit": "Sửa Album",
+      "type_single": "Single (Đĩa Đơn)",
+      "type_ep": "EP (Đĩa Mở Rộng)",
+      "type_album": "Album",
+      "unassigned_songs": "Nhạc lẻ chưa gán",
+      "album_songs": "Nhạc trong Album",
+      "select_artist_first": "Vui lòng chọn Nghệ sĩ trước để tải danh sách nhạc."
+    }
   },
   "common": {
     "save": "Lưu thay đổi",
