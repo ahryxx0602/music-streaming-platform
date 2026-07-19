@@ -65,7 +65,8 @@
       "settings": "Cài đặt",
       "permissions": "Phân quyền",
       "overview": "Tổng quan",
-      "inventory": "Kho Nhạc & Album"
+      "inventory": "Kho Nhạc & Album",
+      "song_moderation": "Kiểm duyệt bài hát"
     },
     "header": {
       "search": "Tìm kiếm lệnh (Ctrl + K)"
@@ -145,6 +146,16 @@
       "unassigned_songs": "Nhạc lẻ chưa gán",
       "album_songs": "Nhạc trong Album",
       "select_artist_first": "Vui lòng chọn Nghệ sĩ trước để tải danh sách nhạc."
+    },
+    "moderation": {
+      "title": "Kiểm duyệt bài hát",
+      "subtitle": "Xem xét và phê duyệt các bài hát do nghệ sĩ tải lên",
+      "preview": "Nghe thử & Kiểm duyệt",
+      "approve": "Phê duyệt",
+      "reject": "Từ chối",
+      "reason": "Lý do từ chối",
+      "reason_placeholder": "Nhập lý do từ chối bài hát này để gửi email thông báo cho nghệ sĩ...",
+      "confirm_reject": "Xác nhận từ chối"
     }
   },
   "common": {

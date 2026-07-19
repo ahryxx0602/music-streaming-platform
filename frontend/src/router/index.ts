@@ -102,6 +102,11 @@ const router = createRouter({
           path: 'inventory',
           name: 'admin-inventory',
           component: () => import('../views/admin/inventory/InventoryView.vue'),
+        },
+        {
+          path: 'moderation/songs',
+          name: 'admin-song-moderation',
+          component: () => import('../views/admin/moderation/ModerationView.vue'),
         }
       ]
     }
