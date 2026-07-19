@@ -11,4 +11,9 @@ class Banner extends Model
 
     protected $fillable = ['title', 'image_url', 'target_url', 'order', 'is_active'];
     protected function casts(): array { return ['is_active' => 'boolean']; }
+
+    protected static function newFactory()
+    {
+        return \Modules\Administration\Database\factories\BannerFactory::new();
+    }
 }

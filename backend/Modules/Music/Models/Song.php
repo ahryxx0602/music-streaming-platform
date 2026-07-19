@@ -25,4 +25,9 @@ class Song extends Model
     public function playlists() { return $this->belongsToMany(\Modules\Playlist\Models\Playlist::class, 'playlist_songs')->withPivot('position')->withTimestamps(); }
     public function comments() { return $this->hasMany(\Modules\Music\Models\Comment::class); }
     public function streams() { return $this->hasMany(\Modules\Analytics\Models\Stream::class); }
+
+    protected static function newFactory()
+    {
+        return \Modules\Music\Database\factories\SongFactory::new();
+    }
 }

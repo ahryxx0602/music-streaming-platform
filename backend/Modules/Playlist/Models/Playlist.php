@@ -13,4 +13,10 @@ class Playlist extends Model
 
     public function user() { return $this->belongsTo(\App\Models\User::class); }
     public function songs() { return $this->belongsToMany(\Modules\Music\Models\Song::class, 'playlist_songs')->withPivot('position')->withTimestamps(); }
+    public function getSongCountAttribute() { return collect($this->songs)->count(); }
+
+    protected static function newFactory()
+    {
+        return \Modules\Playlist\Database\factories\PlaylistFactory::new();
+    }
 }
