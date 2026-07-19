@@ -1,5 +1,9 @@
 # [SCR-ADM-04] Kiểm duyệt Bài hát (Song Content Moderation)
 
+> [!IMPORTANT]
+> **I18N REQUIREMENT:** Tất cả các đoạn Text, Label, Placeholder, Message hiển thị trong tài liệu Screen Specs này khi triển khai vào code thực tế đều **KHÔNG ĐƯỢC HARDCODE**. Bắt buộc phải sử dụng key đa ngôn ngữ qua hàm `$t()` của `vue-i18n`.
+
+
 > **Mô tả ngắn:** Màn hình quan trọng nhất dành cho nhân viên Content Moderator. Liệt kê và cung cấp công cụ để nghe thử, kiểm tra thông tin các bài hát đang ở trạng thái `Pending` do Artist tải lên, từ đó đưa ra quyết định Duyệt (Approve) hoặc Từ chối (Reject).
 
 ## 1. Thông tin chung (Meta)

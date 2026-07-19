@@ -1,5 +1,9 @@
 # [SCR-ADM-09] Dashboard Tổng quan & Thống kê (Analytics)
 
+> [!IMPORTANT]
+> **I18N REQUIREMENT:** Tất cả các đoạn Text, Label, Placeholder, Message hiển thị trong tài liệu Screen Specs này khi triển khai vào code thực tế đều **KHÔNG ĐƯỢC HARDCODE**. Bắt buộc phải sử dụng key đa ngôn ngữ qua hàm `$t()` của `vue-i18n`.
+
+
 > **Mô tả ngắn:** Màn hình đầu tiên mà Admin nhìn thấy khi đăng nhập. Cung cấp bức tranh toàn cảnh về sức khỏe của nền tảng (Lượt nghe, User mới, Doanh thu), đồng thời tích hợp công cụ tra cứu số liệu chi tiết của từng Artist.
 
 ## 1. Thông tin chung (Meta)

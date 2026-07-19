@@ -1,5 +1,9 @@
 # [SCR-ADM-05] Quản lý Banner & Khám phá (Banner & Explore Management)
 
+> [!IMPORTANT]
+> **I18N REQUIREMENT:** Tất cả các đoạn Text, Label, Placeholder, Message hiển thị trong tài liệu Screen Specs này khi triển khai vào code thực tế đều **KHÔNG ĐƯỢC HARDCODE**. Bắt buộc phải sử dụng key đa ngôn ngữ qua hàm `$t()` của `vue-i18n`.
+
+
 > **Mô tả ngắn:** Màn hình cấu hình giao diện Home Page cho người dùng. Cho phép Admin (hoặc Content Manager) tải lên các Banner sự kiện, chèn link điều hướng và sắp xếp thứ tự hiển thị của chúng trên trang chủ `[SCR-LST-02]`.
 
 ## 1. Thông tin chung (Meta)

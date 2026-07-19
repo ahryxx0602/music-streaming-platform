@@ -1,5 +1,9 @@
 # [SCR-LST-04] Trình phát nhạc toàn cầu (Global Audio Player)
 
+> [!IMPORTANT]
+> **I18N REQUIREMENT:** Tất cả các đoạn Text, Label, Placeholder, Message hiển thị trong tài liệu Screen Specs này khi triển khai vào code thực tế đều **KHÔNG ĐƯỢC HARDCODE**. Bắt buộc phải sử dụng key đa ngôn ngữ qua hàm `$t()` của `vue-i18n`.
+
+
 > **Mô tả ngắn:** Đây là trái tim của hệ thống Streaming. Nó không phải là một trang (page) riêng biệt, mà là một Component dùng chung (Global Component) luôn được ghim (Fixed) ở dưới cùng màn hình trong suốt quá trình người dùng lướt Web, giúp nhạc không bị ngắt quãng khi chuyển trang.
 
 ## 1. Thông tin chung (Meta)

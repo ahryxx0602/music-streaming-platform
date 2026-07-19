@@ -1,5 +1,9 @@
 # [SCR-MODULE-XX] Tên Màn Hình
 
+> [!IMPORTANT]
+> **I18N REQUIREMENT:** Tất cả các đoạn Text, Label, Placeholder, Message hiển thị trong tài liệu Screen Specs này khi triển khai vào code thực tế đều **KHÔNG ĐƯỢC HARDCODE**. Bắt buộc phải sử dụng key đa ngôn ngữ qua hàm `$t()` của `vue-i18n`.
+
+
 > **Mô tả ngắn:** Mô tả chức năng và mục đích của màn hình này.
 
 ## 1. Thông tin chung (Meta)

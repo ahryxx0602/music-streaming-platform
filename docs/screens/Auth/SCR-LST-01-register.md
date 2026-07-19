@@ -1,5 +1,9 @@
 # [SCR-LST-01] Màn hình Đăng ký (Register)
 
+> [!IMPORTANT]
+> **I18N REQUIREMENT:** Tất cả các đoạn Text, Label, Placeholder, Message hiển thị trong tài liệu Screen Specs này khi triển khai vào code thực tế đều **KHÔNG ĐƯỢC HARDCODE**. Bắt buộc phải sử dụng key đa ngôn ngữ qua hàm `$t()` của `vue-i18n`.
+
+
 > **Mô tả ngắn:** Màn hình cho phép người dùng đăng ký tài khoản mới. Mặc định tài khoản mới tạo sẽ mang Role là `Listener`. (Artist cần quy trình xác thực riêng).
 
 ## 1. Thông tin chung (Meta)

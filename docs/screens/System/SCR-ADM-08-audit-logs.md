@@ -1,5 +1,9 @@
 # [SCR-ADM-08] Nhật ký Hệ thống (Audit Logs)
 
+> [!IMPORTANT]
+> **I18N REQUIREMENT:** Tất cả các đoạn Text, Label, Placeholder, Message hiển thị trong tài liệu Screen Specs này khi triển khai vào code thực tế đều **KHÔNG ĐƯỢC HARDCODE**. Bắt buộc phải sử dụng key đa ngôn ngữ qua hàm `$t()` của `vue-i18n`.
+
+
 > **Mô tả ngắn:** Màn hình giám sát (Read-only) dành riêng cho Giám đốc / Super Admin. Giúp truy vết toàn bộ các thao tác quan trọng (Duyệt bài, Xóa User, Phân quyền) mà nhân viên Admin đã thực hiện trên hệ thống.
 
 ## 1. Thông tin chung (Meta)

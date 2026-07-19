@@ -1,5 +1,9 @@
 # [SCR-ART-03] Quản lý & Tải nhạc lên (Song Management & Upload)
 
+> [!IMPORTANT]
+> **I18N REQUIREMENT:** Tất cả các đoạn Text, Label, Placeholder, Message hiển thị trong tài liệu Screen Specs này khi triển khai vào code thực tế đều **KHÔNG ĐƯỢC HARDCODE**. Bắt buộc phải sử dụng key đa ngôn ngữ qua hàm `$t()` của `vue-i18n`.
+
+
 > **Mô tả ngắn:** Khu vực dành riêng cho Nghệ sĩ quản lý danh sách bài hát cá nhân, tải lên các tệp âm thanh, điền thông tin siêu dữ liệu (Metadata) và nộp bài hát chờ kiểm duyệt. 
 
 ## 1. Thông tin chung (Meta)

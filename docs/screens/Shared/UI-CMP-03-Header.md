@@ -1,5 +1,9 @@
 # [UI-CMP-03] Sticky Header (Thanh Công Cụ Trên)
 
+> [!IMPORTANT]
+> **I18N REQUIREMENT:** Tất cả các đoạn Text, Label, Placeholder, Message hiển thị trong tài liệu Screen Specs này khi triển khai vào code thực tế đều **KHÔNG ĐƯỢC HARDCODE**. Bắt buộc phải sử dụng key đa ngôn ngữ qua hàm `$t()` của `vue-i18n`.
+
+
 > **Mô tả ngắn:** Thanh điều hướng phụ nằm ở trên cùng của Content Area, tự động thu nhỏ/mờ đi khi người dùng cuộn trang. Chứa thanh tìm kiếm toàn cầu và thông tin hồ sơ (User Menu).
 
 ## 1. Thông tin chung

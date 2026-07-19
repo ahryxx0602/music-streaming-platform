@@ -1,5 +1,9 @@
 # [SCR-SHR-01] Màn hình Đăng nhập (Login)
 
+> [!IMPORTANT]
+> **I18N REQUIREMENT:** Tất cả các đoạn Text, Label, Placeholder, Message hiển thị trong tài liệu Screen Specs này khi triển khai vào code thực tế đều **KHÔNG ĐƯỢC HARDCODE**. Bắt buộc phải sử dụng key đa ngôn ngữ qua hàm `$t()` của `vue-i18n`.
+
+
 > **Mô tả ngắn:** Màn hình cho phép người dùng (Listeners, Artists, Admins) nhập thông tin tài khoản để truy cập vào hệ thống. Hỗ trợ xác thực qua hệ thống Sanctum Cookie-based.
 
 ## 1. Thông tin chung (Meta)

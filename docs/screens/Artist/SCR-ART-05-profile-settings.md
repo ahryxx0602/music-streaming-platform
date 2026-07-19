@@ -1,5 +1,9 @@
 # [SCR-ART-05] Cài đặt Hồ sơ Nghệ sĩ (Artist Profile Settings)
 
+> [!IMPORTANT]
+> **I18N REQUIREMENT:** Tất cả các đoạn Text, Label, Placeholder, Message hiển thị trong tài liệu Screen Specs này khi triển khai vào code thực tế đều **KHÔNG ĐƯỢC HARDCODE**. Bắt buộc phải sử dụng key đa ngôn ngữ qua hàm `$t()` của `vue-i18n`.
+
+
 > **Mô tả ngắn:** Cho phép Nghệ sĩ tùy chỉnh không gian hiển thị của mình trên ứng dụng (Phía Khán giả). Họ có thể cập nhật Nghệ danh, đổi ảnh đại diện (Avatar), ảnh bìa lớn (Cover), viết tiểu sử và chèn link mạng xã hội để tăng độ nhận diện.
 
 ## 1. Thông tin chung (Meta)

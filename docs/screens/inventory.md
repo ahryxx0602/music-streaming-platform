@@ -1,5 +1,9 @@
 # SCREEN INVENTORY (DANH MỤC MÀN HÌNH)
 
+> [!IMPORTANT]
+> **I18N REQUIREMENT:** Tất cả các đoạn Text, Label, Placeholder, Message hiển thị trong tài liệu Screen Specs này khi triển khai vào code thực tế đều **KHÔNG ĐƯỢC HARDCODE**. Bắt buộc phải sử dụng key đa ngôn ngữ qua hàm `$t()` của `vue-i18n`.
+
+
 Tài liệu này quản lý mã định danh (Screen ID) cho toàn bộ hệ thống Music Streaming Platform. Cấu trúc ID sử dụng chuẩn: `SCR-{ROLE}-{NUMBER}`.
 
 ## 📌 Nhóm Public & Shared (Khách & Tính năng chung)

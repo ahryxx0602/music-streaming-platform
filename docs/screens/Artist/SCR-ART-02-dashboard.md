@@ -1,5 +1,9 @@
 # [SCR-ART-02] Dashboard Phân tích Nghệ sĩ (Artist Analytics Dashboard)
 
+> [!IMPORTANT]
+> **I18N REQUIREMENT:** Tất cả các đoạn Text, Label, Placeholder, Message hiển thị trong tài liệu Screen Specs này khi triển khai vào code thực tế đều **KHÔNG ĐƯỢC HARDCODE**. Bắt buộc phải sử dụng key đa ngôn ngữ qua hàm `$t()` của `vue-i18n`.
+
+
 > **Mô tả ngắn:** Màn hình đầu tiên (Homepage) của phân hệ Artist Workspace. Cung cấp cái nhìn tổng quan về hiệu suất của nghệ sĩ thông qua các số liệu thống kê (Lượt nghe, Số người theo dõi mới, Doanh thu tạm tính).
 
 ## 1. Thông tin chung (Meta)

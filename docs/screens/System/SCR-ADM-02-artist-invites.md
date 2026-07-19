@@ -1,5 +1,9 @@
 # [SCR-ADM-02] Quản lý Mã mời Nghệ sĩ (Artist Invitations)
 
+> [!IMPORTANT]
+> **I18N REQUIREMENT:** Tất cả các đoạn Text, Label, Placeholder, Message hiển thị trong tài liệu Screen Specs này khi triển khai vào code thực tế đều **KHÔNG ĐƯỢC HARDCODE**. Bắt buộc phải sử dụng key đa ngôn ngữ qua hàm `$t()` của `vue-i18n`.
+
+
 > **Mô tả ngắn:** Màn hình dành riêng cho Admin để tạo mã Token độc quyền và gửi email mời các đối tác/ca sĩ tham gia nền tảng với tư cách Artist.
 
 ## 1. Thông tin chung (Meta)

@@ -1,5 +1,9 @@
 # [SCR-ADM-03] Quản lý Người dùng Đa vai trò (User Management Hub)
 
+> [!IMPORTANT]
+> **I18N REQUIREMENT:** Tất cả các đoạn Text, Label, Placeholder, Message hiển thị trong tài liệu Screen Specs này khi triển khai vào code thực tế đều **KHÔNG ĐƯỢC HARDCODE**. Bắt buộc phải sử dụng key đa ngôn ngữ qua hàm `$t()` của `vue-i18n`.
+
+
 > **Mô tả ngắn:** Phân hệ quản lý toàn bộ nhân sự và người dùng của nền tảng, được chia thành 3 Tab tách biệt tương ứng với 3 tệp người dùng: Listener, Artist và Admin Staff.
 
 ## 1. Thông tin chung (Meta)

@@ -150,3 +150,72 @@ Sử dụng hiệu ứng chuyển cảnh mềm mại tạo cảm giác mượt m
 - **Progress Bar:** `linear` (chạy mượt theo tiến trình)
 - **Đĩa than (Vinyl Record):** Quay `8–12s` mỗi vòng, kiểu `linear infinite`
 - **Audio Wave (Sóng nhạc):** Dao động nhẹ theo nhịp với biên độ nhỏ
+
+---
+
+## 🌓 11. Cấu hình Theme Sáng/Tối (Light/Dark Mode Mapping)
+Dự án sử dụng chiến lược **CSS Variables Mapping** để hỗ trợ mượt mà cả 2 giao diện. Toàn bộ mã HEX ở các phần trên mặc định mô tả cho **Dark Mode**. Đối với **Light Mode**, chúng ta cung cấp một bộ màu tương phản (Contrast) sạch sẽ, trắng/xám hiện đại.
+
+**Tuyệt đối không** sử dụng class `dark:bg-black` rải rác trên giao diện (làm dơ file `.vue`). Chỉ khai báo 2 bộ màu duy nhất tại `src/assets/main.css`:
+
+```css
+/* ----------------------------------- */
+/* 🌞 LIGHT MODE (Giao diện Sáng)       */
+/* ----------------------------------- */
+:root {
+  /* Background */
+  --bg-main: #F8FAFC;     /* Trắng xám nhạt */
+  --bg-sidebar: #FFFFFF;
+  --bg-surface: #F1F5F9;
+  --bg-card: #FFFFFF;
+  
+  /* Text */
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #94A3B8;
+
+  /* Border */
+  --border-default: #E2E8F0;
+  
+  /* Primary - Cần đậm hơn xíu để nổi trên nền trắng */
+  --color-primary: #2563EB; 
+}
+
+/* ----------------------------------- */
+/* 🌚 DARK MODE (Giao diện Tối - Aurora) */
+/* ----------------------------------- */
+.dark {
+  /* Background */
+  --bg-main: #0A0F1F;
+  --bg-sidebar: #101827;
+  --bg-surface: #131B2F;
+  --bg-card: #1A2740;
+
+  /* Text */
+  --text-primary: #FFFFFF;
+  --text-secondary: #CBD5E1;
+  --text-muted: #94A3B8;
+
+  /* Border */
+  --border-default: #2A3B57;
+  
+  /* Primary */
+  --color-primary: #3B82F6;
+}
+```
+
+**Cách code UI ở Vue Components:**
+Trong file config `tailwind.config.js`, chúng ta sẽ khai báo:
+```javascript
+theme: {
+  extend: {
+    colors: {
+      primary: 'var(--color-primary)',
+      background: 'var(--bg-main)',
+      card: 'var(--bg-card)',
+      // ...
+    }
+  }
+}
+```
+Khi Code template `.vue`, dev chỉ cần viết ngắn gọn: `<div class="bg-background text-primary">...</div>`. Hệ thống sẽ tự động chuyển màu 100% khi người dùng Switch Theme (chuyển đổi bằng `@vueuse/core` thay đổi thẻ HTML class).

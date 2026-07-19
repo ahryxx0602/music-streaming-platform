@@ -1,5 +1,9 @@
 # [SCR-SHR-05] Trung tâm thông báo (Notification Center)
 
+> [!IMPORTANT]
+> **I18N REQUIREMENT:** Tất cả các đoạn Text, Label, Placeholder, Message hiển thị trong tài liệu Screen Specs này khi triển khai vào code thực tế đều **KHÔNG ĐƯỢC HARDCODE**. Bắt buộc phải sử dụng key đa ngôn ngữ qua hàm `$t()` của `vue-i18n`.
+
+
 > **Mô tả ngắn:** Giao diện xem toàn bộ thông báo hệ thống dành cho Listener và Artist (cập nhật nhạc mới, kết quả duyệt bài hát, thông báo từ admin).
 
 ## 1. Thông tin chung (Meta)

@@ -1,5 +1,9 @@
 # [SCR-LST-03] Chi tiết Bộ sưu tập (Album / Playlist)
 
+> [!IMPORTANT]
+> **I18N REQUIREMENT:** Tất cả các đoạn Text, Label, Placeholder, Message hiển thị trong tài liệu Screen Specs này khi triển khai vào code thực tế đều **KHÔNG ĐƯỢC HARDCODE**. Bắt buộc phải sử dụng key đa ngôn ngữ qua hàm `$t()` của `vue-i18n`.
+
+
 > **Mô tả ngắn:** Màn hình dùng chung để hiển thị thông tin chi tiết và danh sách bài hát của một Album (của Nghệ sĩ) hoặc một Playlist (do User tạo). Áp dụng thiết kế DRY (Don't Repeat Yourself) để tái sử dụng Component.
 
 ## 1. Thông tin chung (Meta)

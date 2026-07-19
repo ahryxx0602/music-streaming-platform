@@ -1,5 +1,9 @@
 # [SCR-ADM-11] Quản lý Playlist Hệ thống (System / Curated Playlists)
 
+> [!IMPORTANT]
+> **I18N REQUIREMENT:** Tất cả các đoạn Text, Label, Placeholder, Message hiển thị trong tài liệu Screen Specs này khi triển khai vào code thực tế đều **KHÔNG ĐƯỢC HARDCODE**. Bắt buộc phải sử dụng key đa ngôn ngữ qua hàm `$t()` của `vue-i18n`.
+
+
 > **Mô tả ngắn:** Phân hệ dành cho Biên tập viên Nội dung (Curators / Admins) tạo ra các Playlist chính thức của nền tảng (Ví dụ: "Top 50 V-Pop", "Nhạc Xuân 2026", "Lofi Cực Chill"). Đây là nguồn nội dung cực kỳ quan trọng để hiển thị ở Trang chủ hoặc chèn vào Banner quảng cáo.
 
 ## 1. Thông tin chung (Meta)

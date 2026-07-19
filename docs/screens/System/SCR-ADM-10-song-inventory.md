@@ -1,5 +1,9 @@
 # [SCR-ADM-10] Quản lý Kho Nhạc & Album (Audio Inventory & Albums)
 
+> [!IMPORTANT]
+> **I18N REQUIREMENT:** Tất cả các đoạn Text, Label, Placeholder, Message hiển thị trong tài liệu Screen Specs này khi triển khai vào code thực tế đều **KHÔNG ĐƯỢC HARDCODE**. Bắt buộc phải sử dụng key đa ngôn ngữ qua hàm `$t()` của `vue-i18n`.
+
+
 > **Mô tả ngắn:** Phân hệ lưu trữ và quản lý toàn bộ bài hát, album trên hệ thống. Khác với màn hình Kiểm duyệt (`SCR-ADM-04`) chỉ xem các bài chờ duyệt, màn hình này cho phép Admin xem toàn bộ kho nhạc, cung cấp tính năng **Upload Nhạc & Tạo Album trực tiếp** (thường dùng cho nhạc mua bản quyền từ Hãng đĩa) mà không cần thông qua tài khoản Artist.
 
 ## 1. Thông tin chung (Meta)

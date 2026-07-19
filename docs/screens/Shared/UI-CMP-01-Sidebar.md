@@ -1,5 +1,9 @@
 # [UI-CMP-01] Sidebar (Thanh Điều Hướng Trái)
 
+> [!IMPORTANT]
+> **I18N REQUIREMENT:** Tất cả các đoạn Text, Label, Placeholder, Message hiển thị trong tài liệu Screen Specs này khi triển khai vào code thực tế đều **KHÔNG ĐƯỢC HARDCODE**. Bắt buộc phải sử dụng key đa ngôn ngữ qua hàm `$t()` của `vue-i18n`.
+
+
 > **Mô tả ngắn:** Thanh điều hướng chính của ứng dụng, nằm bên trái màn hình. Menu sẽ thay đổi linh hoạt (Dynamic Rendering) tùy thuộc vào `role` của người dùng (Guest, Listener, Artist).
 
 ## 1. Thông tin chung

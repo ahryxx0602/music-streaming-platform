@@ -1,5 +1,9 @@
 # [SCR-ADM-06] Phân quyền Quản trị (Roles & Permissions)
 
+> [!IMPORTANT]
+> **I18N REQUIREMENT:** Tất cả các đoạn Text, Label, Placeholder, Message hiển thị trong tài liệu Screen Specs này khi triển khai vào code thực tế đều **KHÔNG ĐƯỢC HARDCODE**. Bắt buộc phải sử dụng key đa ngôn ngữ qua hàm `$t()` của `vue-i18n`.
+
+
 > **Mô tả ngắn:** Màn hình cấu hình phân quyền động (RBAC - Role Based Access Control) dành riêng cho Super Admin. Cho phép tạo các Nhóm quyền (Roles) và gán các Chức năng (Permissions) tương ứng cho từng nhóm.
 
 ## 1. Thông tin chung (Meta)

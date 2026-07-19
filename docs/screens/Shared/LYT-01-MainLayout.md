@@ -1,5 +1,9 @@
 # [LYT-01] Main Layout (Bố Cục Cốt Lõi)
 
+> [!IMPORTANT]
+> **I18N REQUIREMENT:** Tất cả các đoạn Text, Label, Placeholder, Message hiển thị trong tài liệu Screen Specs này khi triển khai vào code thực tế đều **KHÔNG ĐƯỢC HARDCODE**. Bắt buộc phải sử dụng key đa ngôn ngữ qua hàm `$t()` của `vue-i18n`.
+
+
 > **Mô tả ngắn:** Khung giao diện chính (Master Layout) được sử dụng cho hơn 90% các trang trong ứng dụng dành cho Listener và Artist. Nó bao bọc `<router-view>` bằng các thành phần tĩnh không bị re-render khi chuyển trang.
 
 ## 1. Cấu trúc Hình học (Geometry)

@@ -1,5 +1,9 @@
 # [SCR-ART-01] Màn hình Đăng ký Nghệ sĩ (Artist Registration - Invite Only)
 
+> [!IMPORTANT]
+> **I18N REQUIREMENT:** Tất cả các đoạn Text, Label, Placeholder, Message hiển thị trong tài liệu Screen Specs này khi triển khai vào code thực tế đều **KHÔNG ĐƯỢC HARDCODE**. Bắt buộc phải sử dụng key đa ngôn ngữ qua hàm `$t()` của `vue-i18n`.
+
+
 > **Mô tả ngắn:** Màn hình đăng ký đặc biệt chỉ dành cho các đối tác/nghệ sĩ đã nhận được Link mời (có mã Token) từ Admin. Tuyệt đối không cho phép truy cập tự do.
 
 ## 1. Thông tin chung (Meta)

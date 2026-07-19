@@ -1,5 +1,9 @@
 # [SCR-SHR-03] Luồng Xác minh Định danh (Email Verification)
 
+> [!IMPORTANT]
+> **I18N REQUIREMENT:** Tất cả các đoạn Text, Label, Placeholder, Message hiển thị trong tài liệu Screen Specs này khi triển khai vào code thực tế đều **KHÔNG ĐƯỢC HARDCODE**. Bắt buộc phải sử dụng key đa ngôn ngữ qua hàm `$t()` của `vue-i18n`.
+
+
 > **Mô tả ngắn:** Màn hình và luồng xử lý yêu cầu người dùng xác thực địa chỉ Email thông qua một đường link gửi vào hòm thư.
 
 ## 1. Thông tin chung (Meta)

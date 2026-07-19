@@ -1,5 +1,9 @@
 # [SCR-SHR-02] Luồng Khôi phục Mật khẩu (Password Recovery)
 
+> [!IMPORTANT]
+> **I18N REQUIREMENT:** Tất cả các đoạn Text, Label, Placeholder, Message hiển thị trong tài liệu Screen Specs này khi triển khai vào code thực tế đều **KHÔNG ĐƯỢC HARDCODE**. Bắt buộc phải sử dụng key đa ngôn ngữ qua hàm `$t()` của `vue-i18n`.
+
+
 > **Mô tả ngắn:** Luồng xử lý cho phép người dùng (cả 3 Role: Listener, Artist, Admin) lấy lại quyền truy cập tài khoản khi quên mật khẩu thông qua Email xác thực. Gồm 2 màn hình nối tiếp nhau.
 
 ## 1. Thông tin chung (Meta)

@@ -1,5 +1,9 @@
 # [UI-CMP-02] Bottom Player (Trình Phát Nhạc)
 
+> [!IMPORTANT]
+> **I18N REQUIREMENT:** Tất cả các đoạn Text, Label, Placeholder, Message hiển thị trong tài liệu Screen Specs này khi triển khai vào code thực tế đều **KHÔNG ĐƯỢC HARDCODE**. Bắt buộc phải sử dụng key đa ngôn ngữ qua hàm `$t()` của `vue-i18n`.
+
+
 > **Mô tả ngắn:** Thanh phát nhạc nằm ngang cố định ở mép dưới cùng của trình duyệt. Đây là trái tim của ứng dụng, cho phép nhạc tiếp tục phát khi user chuyển trang.
 
 ## 1. Thông tin chung

@@ -36,6 +36,7 @@ Dự án áp dụng mô hình **Modular Monolith** kết hợp với thư mục 
 - **CSS Class (Tailwind)**: kebab-case (VD: `text-red-500`, `btn-primary`).
 - **Store (Pinia)**: Đặt tên theo domain (VD: `useAuthStore`, `usePlayerStore`).
 - **Icons**: Bắt buộc import trực tiếp từ thư viện `@tabler/icons-vue` (VD: `import { IconUser } from '@tabler/icons-vue'`). Không lưu file `.svg` thô trong thư mục assets để dễ dàng kiểm soát kích thước và màu sắc.
+- **Đa ngôn ngữ (i18n)**: TUYỆT ĐỐI không hardcode văn bản tĩnh (Tiếng Việt/Tiếng Anh) trực tiếp vào file `.vue`. Tất cả UI Text phải được render qua hàm `$t('key')` và khai báo biến số vào file ngôn ngữ.
 
 ## 3. Hệ thống Mã định danh & Liên kết (ID Traceability)
 Để AI có thể hiểu được sự phụ thuộc giữa các file, mọi thành phần cốt lõi đều được gắn ID (Mã định danh).

@@ -1,5 +1,9 @@
 # [SCR-PUB-001] Landing Page
 
+> [!IMPORTANT]
+> **I18N REQUIREMENT:** Tất cả các đoạn Text, Label, Placeholder, Message hiển thị trong tài liệu Screen Specs này khi triển khai vào code thực tế đều **KHÔNG ĐƯỢC HARDCODE**. Bắt buộc phải sử dụng key đa ngôn ngữ qua hàm `$t()` của `vue-i18n`.
+
+
 > **Mô tả ngắn:** Trang chủ tĩnh giới thiệu về nền tảng Music Streaming Platform, thu hút người dùng đăng ký tài khoản (Listener hoặc Artist). Đây là trang đầu tiên khách vãng lai (Guest) nhìn thấy khi truy cập tên miền gốc mà chưa đăng nhập.
 
 ## 1. Thông tin chung (Meta)

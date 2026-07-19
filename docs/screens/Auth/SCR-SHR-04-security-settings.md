@@ -1,5 +1,9 @@
 # [SCR-SHR-04] Cài đặt Tài khoản (Account Settings)
 
+> [!IMPORTANT]
+> **I18N REQUIREMENT:** Tất cả các đoạn Text, Label, Placeholder, Message hiển thị trong tài liệu Screen Specs này khi triển khai vào code thực tế đều **KHÔNG ĐƯỢC HARDCODE**. Bắt buộc phải sử dụng key đa ngôn ngữ qua hàm `$t()` của `vue-i18n`.
+
+
 > **Mô tả ngắn:** Màn hình cài đặt tổng hợp cho người dùng đã đăng nhập (Listener/Artist). Giao diện dạng Tab (General Profile & Security) cho phép cập nhật thông tin cá nhân (tên, avatar) và thông tin bảo mật (mật khẩu, sessions).
 
 ## 1. Thông tin chung (Meta)

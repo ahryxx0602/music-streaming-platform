@@ -1,5 +1,9 @@
 # [SCR-ART-04] Quản lý & Tạo Album (Album & EP Management)
 
+> [!IMPORTANT]
+> **I18N REQUIREMENT:** Tất cả các đoạn Text, Label, Placeholder, Message hiển thị trong tài liệu Screen Specs này khi triển khai vào code thực tế đều **KHÔNG ĐƯỢC HARDCODE**. Bắt buộc phải sử dụng key đa ngôn ngữ qua hàm `$t()` của `vue-i18n`.
+
+
 > **Mô tả ngắn:** Cho phép Nghệ sĩ gộp các bài hát lẻ lại thành một Bộ sưu tập (Album hoặc EP) để phát hành ra công chúng, giúp người nghe dễ dàng theo dõi theo từng dự án âm nhạc.
 
 ## 1. Thông tin chung (Meta)

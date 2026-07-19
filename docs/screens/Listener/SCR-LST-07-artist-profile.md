@@ -1,5 +1,9 @@
 # [SCR-LST-07] Hồ sơ Nghệ sĩ (Artist Profile - Public View)
 
+> [!IMPORTANT]
+> **I18N REQUIREMENT:** Tất cả các đoạn Text, Label, Placeholder, Message hiển thị trong tài liệu Screen Specs này khi triển khai vào code thực tế đều **KHÔNG ĐƯỢC HARDCODE**. Bắt buộc phải sử dụng key đa ngôn ngữ qua hàm `$t()` của `vue-i18n`.
+
+
 > **Mô tả ngắn:** Giao diện hiển thị toàn bộ thông tin của một Nghệ sĩ cho Khán giả xem. Bao gồm Avatar, tiểu sử, số lượng người theo dõi, và phân nhóm các bản phát hành (Bài hát phổ biến, Album, Singles).
 
 ## 1. Thông tin chung (Meta)

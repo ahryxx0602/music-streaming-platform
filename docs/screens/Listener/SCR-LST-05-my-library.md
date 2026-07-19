@@ -1,5 +1,9 @@
 # [SCR-LST-05] Thư viện cá nhân (My Library)
 
+> [!IMPORTANT]
+> **I18N REQUIREMENT:** Tất cả các đoạn Text, Label, Placeholder, Message hiển thị trong tài liệu Screen Specs này khi triển khai vào code thực tế đều **KHÔNG ĐƯỢC HARDCODE**. Bắt buộc phải sử dụng key đa ngôn ngữ qua hàm `$t()` của `vue-i18n`.
+
+
 > **Mô tả ngắn:** Không gian lưu trữ cá nhân của mỗi Khán giả. Nơi chứa các bài hát họ đã thả tim (Favorites), danh sách Album/Playlist họ đã lưu lại và những Nghệ sĩ mà họ đang theo dõi (Following). 
 
 ## 1. Thông tin chung (Meta)
