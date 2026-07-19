@@ -15,5 +15,12 @@ Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
         Route::apiResource('songs', \Modules\Music\Http\Controllers\AdminSongController::class)->names('admin.songs');
 
         Route::apiResource('albums', \Modules\Music\Http\Controllers\AdminAlbumController::class)->names('admin.albums');
+
+        Route::prefix('moderation')->group(function () {
+            Route::get('songs', [\Modules\Music\Http\Controllers\AdminModerationController::class, 'index']);
+            Route::get('songs/{id}', [\Modules\Music\Http\Controllers\AdminModerationController::class, 'show']);
+            Route::put('songs/{id}/approve', [\Modules\Music\Http\Controllers\AdminModerationController::class, 'approve']);
+            Route::put('songs/{id}/reject', [\Modules\Music\Http\Controllers\AdminModerationController::class, 'reject']);
+        });
     });
 });
