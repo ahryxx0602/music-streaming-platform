@@ -97,12 +97,12 @@ class AdminSongController extends Controller
             'approved_at' => now(),
         ]);
 
-        // Note: FFmpeg Job dispatch is intentionally skipped in this phase.
-        // It will be implemented in the specialized FFmpeg/Queue phase.
+        // 2. Kích hoạt Job xử lý Audio FFmpeg ngầm
+        \Modules\Music\Jobs\ProcessAudioJob::dispatch($song);
 
         return response()->json([
             'success' => true,
-            'message' => 'Lưu thông tin bài hát thành công. Đã gán trạng thái Approved.',
+            'message' => 'Lưu thông tin bài hát thành công. Đã gán trạng thái Approved và bắt đầu xử lý Audio.',
             'data' => [
                 'song' => $song
             ]
