@@ -162,6 +162,21 @@ const router = createRouter({
           path: 'upload',
           name: 'artist-upload',
           component: () => import('../views/artist/upload/ArtistUploadView.vue'),
+        },
+        {
+          path: 'albums',
+          name: 'artist-albums',
+          component: () => import('../views/artist/album/AlbumListView.vue'),
+        },
+        {
+          path: 'albums/create',
+          name: 'artist-albums-create',
+          component: () => import('../views/artist/album/CreateAlbumView.vue'),
+        },
+        {
+          path: 'albums/:id',
+          name: 'artist-albums-detail',
+          component: () => import('../views/artist/album/AlbumDetailView.vue'),
         }
       ]
     }

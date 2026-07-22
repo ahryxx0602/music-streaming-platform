@@ -13,7 +13,7 @@ const route = useRoute();
 const menuItems = [
   { name: 'artist.menu.dashboard', path: '/artist/dashboard', icon: IconLayoutDashboard },
   { name: 'artist.menu.upload', path: '/artist/upload', icon: IconUpload },
-  { name: 'artist.menu.releases', path: '/artist/releases', icon: IconDisc },
+  { name: 'artist.menu.albums', path: '/artist/albums', icon: IconDisc },
   { name: 'artist.menu.stats', path: '/artist/stats', icon: IconChartBar },
   { name: 'artist.menu.profile', path: '/artist/profile', icon: IconUser },
 ];
