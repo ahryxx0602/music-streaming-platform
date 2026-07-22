@@ -5,9 +5,11 @@ namespace Modules\Artist\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+use App\Traits\Auditable;
+
 class ArtistProfile extends Model
 {
-    use HasFactory;
+    use HasFactory, Auditable;
 
     protected $fillable = ['user_id', 'stage_name', 'bio', 'cover_image', 'is_verified', 'verified_at', 'facebook', 'instagram', 'youtube', 'website', 'contact_email', 'avatar_url', 'banner_url', 'social_links'];
     protected function casts(): array { return ['is_verified' => 'boolean', 'verified_at' => 'datetime', 'social_links' => 'json']; }

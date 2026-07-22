@@ -4,7 +4,7 @@ namespace Modules\Administration\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Modules\Administration\Models\AuditLog;
+use App\Models\AuditLog;
 use Illuminate\Http\JsonResponse;
 
 class AdminAuditLogController extends Controller
@@ -26,9 +26,9 @@ class AdminAuditLogController extends Controller
             $query->where('action', $request->action);
         }
 
-        // Filter by module (entity_type)
+        // Filter by module (auditable_type)
         if ($request->filled('module')) {
-            $query->where('entity_type', 'like', '%' . $request->module . '%');
+            $query->where('auditable_type', 'like', '%' . $request->module . '%');
         }
 
         // Filter by date range
@@ -42,6 +42,7 @@ class AdminAuditLogController extends Controller
         $logs = $query->latest()->paginate($request->get('per_page', 15));
 
         return response()->json([
+            'success' => true,
             'message' => 'Lấy danh sách nhật ký hệ thống thành công',
             'data' => $logs
         ]);
@@ -58,6 +59,7 @@ class AdminAuditLogController extends Controller
             ->get();
 
         return response()->json([
+            'success' => true,
             'message' => 'Lấy hoạt động gần đây thành công',
             'data' => $logs
         ]);

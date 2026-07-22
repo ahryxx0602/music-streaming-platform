@@ -20,7 +20,7 @@ Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
         Route::delete('/{id}', [\Modules\Administration\Http\Controllers\AdminArtistInviteController::class, 'destroy']);
     });
 
-    Route::prefix('admin/audit-logs')->group(function () {
+    Route::prefix('admin/audit-logs')->middleware(['role:admin|super-admin'])->group(function () {
         Route::get('/', [\Modules\Administration\Http\Controllers\AdminAuditLogController::class, 'index']);
     });
     

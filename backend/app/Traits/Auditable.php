@@ -2,7 +2,7 @@
 
 namespace App\Traits;
 
-use Modules\Administration\Models\AuditLog;
+use App\Models\AuditLog;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 
@@ -30,21 +30,45 @@ trait Auditable
             return;
         }
 
-        $oldValues = $action === 'updated' ? $model->getOriginal() : null;
-        $newValues = $action !== 'deleted' ? $model->getAttributes() : null;
+        $oldValues = [];
+        $newValues = [];
+
+        if ($action === 'created') {
+            $newValues = $model->getAttributes();
+        } elseif ($action === 'updated') {
+            $changes = $model->getChanges();
+            $original = $model->getOriginal();
+            
+            foreach ($changes as $key => $value) {
+                // Ignore tracking updated_at changes if nothing else changed
+                if ($key === 'updated_at') continue;
+                
+                $oldValues[$key] = array_key_exists($key, $original) ? $original[$key] : null;
+                $newValues[$key] = $value;
+            }
+            
+            // If only updated_at changed, don't create an audit log
+            if (empty($newValues)) return;
+        } elseif ($action === 'deleted') {
+            $oldValues = $model->getAttributes();
+        }
 
         // Mask passwords or sensitive fields if necessary
-        if ($oldValues && isset($oldValues['password'])) unset($oldValues['password']);
-        if ($newValues && isset($newValues['password'])) unset($newValues['password']);
+        $sensitiveFields = ['password', 'remember_token'];
+        foreach ($sensitiveFields as $field) {
+            if (isset($oldValues[$field])) $oldValues[$field] = '********';
+            if (isset($newValues[$field])) $newValues[$field] = '********';
+        }
 
         AuditLog::create([
             'user_id' => Auth::id(),
             'action' => $action,
-            'entity_type' => get_class($model),
-            'entity_id' => $model->getKey(),
-            'old_values' => $oldValues ? json_encode($oldValues) : null,
-            'new_values' => $newValues ? json_encode($newValues) : null,
-            'ip_address' => Request::ip()
+            'auditable_type' => get_class($model),
+            'auditable_id' => $model->getKey(),
+            'old_values' => empty($oldValues) ? null : $oldValues,
+            'new_values' => empty($newValues) ? null : $newValues,
+            'ip_address' => Request::ip(),
+            'user_agent' => Request::userAgent()
         ]);
     }
 }
