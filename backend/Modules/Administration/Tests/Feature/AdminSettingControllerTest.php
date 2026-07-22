@@ -2,81 +2,119 @@
 
 namespace Modules\Administration\Tests\Feature;
 
-use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Cache;
-use Modules\Administration\Models\Setting;
-use Modules\Administration\Models\AuditLog;
-use Tests\TestCase;
+use App\Models\User;
+use App\Models\SystemSetting;
+use App\Helpers\Setting;
 use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
+use Tests\TestCase;
 
 class AdminSettingControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected $admin;
+    protected $superAdmin;
+    protected $regularAdmin;
 
     protected function setUp(): void
     {
         parent::setUp();
-        
-        // Setup Roles
-        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
-        $adminRole = Role::firstOrCreate(['name' => 'super-admin', 'guard_name' => 'web']);
-        $permission = Permission::firstOrCreate(['name' => 'manage_settings', 'guard_name' => 'web']);
-        $adminRole->givePermissionTo($permission);
 
-        $this->admin = User::factory()->create(['role' => 'Admin']);
-        $this->admin->assignRole($adminRole);
+        Role::firstOrCreate(['name' => 'super-admin', 'guard_name' => 'web']);
+        Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'web']);
+
+        $this->superAdmin = User::factory()->create(['role' => 'super-admin']);
+        $this->superAdmin->assignRole('super-admin');
+
+        $this->regularAdmin = User::factory()->create(['role' => 'admin']);
+        $this->regularAdmin->assignRole('admin');
+
+        // Seed basic settings
+        SystemSetting::insert([
+            ['key' => 'site_name', 'value' => 'MusicStream', 'type' => 'string', 'group' => 'general', 'created_at' => now(), 'updated_at' => now()],
+            ['key' => 'artist_revenue_share', 'value' => '70', 'type' => 'integer', 'group' => 'financial', 'created_at' => now(), 'updated_at' => now()],
+            ['key' => 'max_upload_size', 'value' => '52428800', 'type' => 'integer', 'group' => 'uploads', 'created_at' => now(), 'updated_at' => now()],
+        ]);
     }
 
-    /** @test */
-    public function test_can_get_system_settings()
+    public function test_super_admin_can_get_settings()
     {
-        Setting::create(['key' => 'site_name', 'value' => 'Harmonia Test', 'description' => 'Tên test']);
+        $response = $this->actingAs($this->superAdmin)->getJson('/api/v1/admin/settings');
 
-        $response = $this->actingAs($this->admin)->getJson('/api/v1/admin/settings');
-        
-        $response->assertStatus(200);
-        $response->assertJsonPath('data.site_name', 'Harmonia Test');
+        $response->assertStatus(200)
+            ->assertJsonPath('success', true)
+            ->assertJsonStructure(['data']);
     }
 
-    /** @test */
-    public function test_can_bulk_update_settings_and_clear_cache()
+    public function test_regular_admin_cannot_access_settings()
     {
-        Cache::shouldReceive('forget')->once()->with('system_settings');
-        Cache::shouldReceive('get')->once()->with('system_settings', [])->andReturn([]);
-        Cache::shouldReceive('rememberForever')->andReturn([]); // for index if needed, but not called here
+        $response = $this->actingAs($this->regularAdmin)->getJson('/api/v1/admin/settings');
 
-        $payload = [
+        $response->assertStatus(403);
+    }
+
+    public function test_super_admin_can_bulk_update_settings()
+    {
+        $response = $this->actingAs($this->superAdmin)->putJson('/api/v1/admin/settings', [
             'settings' => [
-                'site_name' => 'New Name',
-                'maintenance_mode' => true,
-                'payout_threshold' => 100
+                'site_name' => 'New Platform Name',
+                'artist_revenue_share' => '75',
             ]
-        ];
+        ]);
 
-        $response = $this->actingAs($this->admin)->putJson('/api/v1/admin/settings', $payload);
+        $response->assertStatus(200)
+            ->assertJsonPath('success', true);
 
-        $response->assertStatus(200);
-        
-        $this->assertDatabaseHas('settings', [
+        $this->assertDatabaseHas('system_settings', [
             'key' => 'site_name',
-            'value' => 'New Name'
+            'value' => 'New Platform Name',
         ]);
-        
-        $this->assertDatabaseHas('settings', [
-            'key' => 'maintenance_mode',
-            'value' => 'true'
+
+        $this->assertDatabaseHas('system_settings', [
+            'key' => 'artist_revenue_share',
+            'value' => '75',
         ]);
-        
-        // Assert audit log was created manually
+    }
+
+    public function test_cache_is_cleared_after_update()
+    {
+        // Warm up the cache first
+        Cache::put('system_settings', ['site_name' => 'OldCache'], 3600);
+
+        $this->actingAs($this->superAdmin)->putJson('/api/v1/admin/settings', [
+            'settings' => ['site_name' => 'AfterUpdate']
+        ]);
+
+        // Cache must be cleared
+        $this->assertFalse(Cache::has('system_settings'));
+    }
+
+    public function test_setting_helper_get_works()
+    {
+        // Helper phải đọc từ DB qua Cache
+        $value = Setting::get('site_name', 'default');
+
+        $this->assertEquals('MusicStream', $value);
+    }
+
+    public function test_setting_helper_returns_default_for_unknown_key()
+    {
+        $value = Setting::get('non_existent_key', 'fallback');
+
+        $this->assertEquals('fallback', $value);
+    }
+
+    public function test_audit_log_is_created_on_update()
+    {
+        $this->actingAs($this->superAdmin)->putJson('/api/v1/admin/settings', [
+            'settings' => ['site_name' => 'AuditTest']
+        ]);
+
         $this->assertDatabaseHas('audit_logs', [
-            'user_id' => $this->admin->id,
+            'user_id' => $this->superAdmin->id,
             'action' => 'updated',
-            'entity_type' => Setting::class,
-            'entity_id' => 0
+            'auditable_type' => SystemSetting::class,
         ]);
     }
 }

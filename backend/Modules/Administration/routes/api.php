@@ -24,7 +24,7 @@ Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
         Route::get('/', [\Modules\Administration\Http\Controllers\AdminAuditLogController::class, 'index']);
     });
     
-    Route::prefix('admin/settings')->group(function () {
+    Route::prefix('admin/settings')->middleware(['role:super-admin'])->group(function () {
         Route::get('/', [\Modules\Administration\Http\Controllers\AdminSettingController::class, 'index']);
         Route::put('/', [\Modules\Administration\Http\Controllers\AdminSettingController::class, 'update']);
     });
