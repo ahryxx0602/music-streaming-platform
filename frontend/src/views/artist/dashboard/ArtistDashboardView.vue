@@ -9,6 +9,7 @@ import {
   IconTrendingUp
 } from '@tabler/icons-vue';
 import { useAuthStore } from '@/stores/authStore';
+import { artistDashboardService, type TopTrack } from '@/services/artistDashboardService';
 import { Line } from 'vue-chartjs';
 import {
   Chart as ChartJS,
@@ -36,19 +37,13 @@ ChartJS.register(
 const authStore = useAuthStore();
 
 const stats = ref([
-  { title: 'Tổng lượt nghe', value: '1.2M', trend: '+12.5%', isUp: true, icon: IconHeadphones, color: 'text-theme-accent', bg: 'bg-theme-accent/10' },
-  { title: 'Người theo dõi', value: '45.2K', trend: '+5.2%', isUp: true, icon: IconUsers, color: 'text-theme-info', bg: 'bg-theme-info/10' },
-  { title: 'Doanh thu', value: '$3,420', trend: '+18.1%', isUp: true, icon: IconCoin, color: 'text-theme-warning', bg: 'bg-theme-warning/10' },
-  { title: 'Bài hát', value: '24', trend: '0%', isUp: true, icon: IconDisc, color: 'text-theme-primary', bg: 'bg-theme-primary/10' },
+  { id: 'streams', title: 'Tổng lượt nghe', value: '...', trend: '+0%', isUp: true, icon: IconHeadphones, color: 'text-theme-accent', bg: 'bg-theme-accent/10' },
+  { id: 'followers', title: 'Người theo dõi', value: '...', trend: '+0%', isUp: true, icon: IconUsers, color: 'text-theme-info', bg: 'bg-theme-info/10' },
+  { id: 'revenue', title: 'Doanh thu', value: '...', trend: '+0%', isUp: true, icon: IconCoin, color: 'text-theme-warning', bg: 'bg-theme-warning/10' },
+  { id: 'tracks', title: 'Bài hát', value: '...', trend: '0%', isUp: true, icon: IconDisc, color: 'text-theme-primary', bg: 'bg-theme-primary/10' },
 ]);
 
-const topTracks = ref([
-  { id: 1, title: 'Midnight City', streams: '450,230', cover: 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=100&q=80', trend: '+24%' },
-  { id: 2, title: 'Neon Lights', streams: '320,105', cover: 'https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=100&q=80', trend: '+15%' },
-  { id: 3, title: 'Synthwave Dreams', streams: '210,000', cover: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=100&q=80', trend: '+8%' },
-  { id: 4, title: 'Cyberpunk Run', streams: '185,420', cover: 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=100&q=80', trend: '-2%' },
-  { id: 5, title: 'Digital Love', streams: '150,000', cover: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=100&q=80', trend: '+5%' }
-]);
+const topTracks = ref<TopTrack[]>([]);
 
 // Chart Data
 const chartData = ref({
@@ -67,9 +62,34 @@ const chartData = ref({
       pointHoverRadius: 6,
       fill: true,
       tension: 0.4,
-      data: Array.from({length: 30}, () => Math.floor(Math.random() * (50000 - 10000 + 1) + 10000))
+      data: []
     }
   ]
+});
+
+const loadData = async () => {
+  try {
+    const [statsData, tracksData, chart] = await Promise.all([
+      artistDashboardService.getStats(),
+      artistDashboardService.getTopTracks(),
+      artistDashboardService.getStreamsChart()
+    ]);
+    
+    stats.value[0].value = statsData.total_streams.toLocaleString();
+    stats.value[1].value = statsData.total_followers.toLocaleString();
+    stats.value[2].value = '$' + statsData.balance_usd.toLocaleString();
+    stats.value[3].value = statsData.total_tracks.toString();
+    
+    topTracks.value = tracksData;
+    
+    chartData.value.datasets[0].data = chart;
+  } catch (error) {
+    console.error('Failed to load dashboard data', error);
+  }
+};
+
+onMounted(() => {
+  loadData();
 });
 
 const chartOptions = {
