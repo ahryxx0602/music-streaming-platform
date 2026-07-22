@@ -11,7 +11,7 @@ class Song extends Model
     use HasFactory, \Illuminate\Database\Eloquent\SoftDeletes, Auditable;
 
     protected $fillable = [
-        'artist_id', 'album_id', 'genre_id', 'title', 'lyrics', 'duration', 
+        'artist_id', 'album_id', 'track_number', 'genre_id', 'title', 'lyrics', 'duration', 
         'original_file_path', 'hls_path', 'original_size', 'bitrate', 
         'sample_rate', 'channels', 'checksum', 'cover_image', 'status', 
         'processing_status', 'play_count', 'rejected_reason', 'rejected_at', 

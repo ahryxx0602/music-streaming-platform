@@ -10,6 +10,9 @@ Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
     Route::prefix('artist')->middleware(['role:Artist|artist'])->group(function () {
         Route::post('songs/presigned-url', [\Modules\Music\Http\Controllers\ArtistSongController::class, 'generatePresignedUrl']);
         Route::post('songs', [\Modules\Music\Http\Controllers\ArtistSongController::class, 'store']);
+        
+        Route::apiResource('albums', \Modules\Music\Http\Controllers\ArtistAlbumController::class)->except(['create', 'edit']);
+        Route::put('albums/{id}/reorder-songs', [\Modules\Music\Http\Controllers\ArtistAlbumController::class, 'reorderSongs']);
     });
 
     // Admin Routes
