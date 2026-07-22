@@ -1,0 +1,32 @@
+/* CSS Variables for Artist Portal */
+.theme-artist {
+  /* Base OLED Dark Mode Theme */
+  --color-background: #0F0F23;
+  --color-surface: #17172E;
+  --color-surface-hover: #1E1E3B;
+  
+  --color-primary: #1E1B4B;
+  --color-on-primary: #FFFFFF;
+  
+  --color-secondary: #4338CA;
+  --color-on-secondary: #FFFFFF;
+  
+  --color-accent: #22C55E;
+  
+  --color-text-primary: #F8FAFC;
+  --color-text-secondary: #94A3B8;
+  
+  --color-border: #312E81;
+  --color-danger: #EF4444;
+  --color-success: #22C55E;
+  
+  /* Typography Overrides */
+  --font-sans: 'Poppins', sans-serif;
+  --font-heading: 'Righteous', display;
+  
+  /* Effects & Glow */
+  --shadow-glow: 0 0 15px rgba(34, 197, 94, 0.4);
+  --shadow-glow-purple: 0 0 15px rgba(67, 56, 202, 0.4);
+  
+  color-scheme: dark;
+}

@@ -1,5 +1,7 @@
 @import "tailwindcss";
-@import './base.css';
+@import "./base.css";
+@import "./admin-theme.css";
+@import "./artist-theme.css";
 @import '../theme/admin/admin.css';
 @import '../theme/app/app.css';
 
@@ -20,6 +22,7 @@
 
   --font-sans: 'Inter', sans-serif;
   --font-display: 'Plus Jakarta Sans', sans-serif;
+  --font-heading: var(--font-heading, 'Plus Jakarta Sans', sans-serif);
 }
 
 /* ☀️ LIGHT MODE (Default) */

@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '../stores/authStore'
 import HomeView from '../views/HomeView.vue'
 import AdminLayout from '../views/admin/AdminLayout.vue'
+import ArtistLayout from '../components/artist/layout/ArtistLayout.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -144,6 +145,20 @@ const router = createRouter({
           component: () => import('../views/admin/roles/RolesManagement.vue'),
         }
       ]
+    },
+    {
+      path: '/artist',
+      name: 'artist',
+      component: ArtistLayout,
+      meta: { requiresAuth: true },
+      redirect: '/artist/dashboard',
+      children: [
+        {
+          path: 'dashboard',
+          name: 'artist-dashboard',
+          component: () => import('../views/artist/dashboard/ArtistDashboardView.vue'),
+        }
+      ]
     }
   ],
 })
@@ -167,7 +182,7 @@ router.beforeEach(async (to, from, next) => {
     if (role === 'admin') {
       next('/admin');
     } else if (role === 'artist') {
-      next('/artist');
+      next('/artist/dashboard');
     } else {
       next('/');
     }
