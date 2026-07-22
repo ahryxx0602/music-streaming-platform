@@ -4,10 +4,11 @@ namespace Modules\Music\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\Auditable;
 
 class Song extends Model
 {
-    use HasFactory, \Illuminate\Database\Eloquent\SoftDeletes;
+    use HasFactory, \Illuminate\Database\Eloquent\SoftDeletes, Auditable;
 
     protected $fillable = [
         'artist_id', 'album_id', 'genre_id', 'title', 'lyrics', 'duration', 

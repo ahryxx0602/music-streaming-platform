@@ -13,7 +13,8 @@ import {
  IconSettings,
  IconShieldLock,
  IconPhoto,
- IconMailFast
+ IconMailFast,
+ IconHistory
 } from '@tabler/icons-vue';
 
 const route = useRoute();
@@ -56,6 +57,7 @@ const menuGroups = [
  items: [
  { name: 'admin.menu.settings', path: '/admin/settings', icon: IconSettings },
  { name: 'admin.menu.permissions', path: '/admin/permissions', icon: IconShieldLock },
+ { name: 'admin.menu.audit_logs', path: '/admin/audit-logs', icon: IconHistory },
  ]
  }
 ];

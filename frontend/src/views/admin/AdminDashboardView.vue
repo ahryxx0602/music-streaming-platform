@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
+import { useAuditLogStore } from '@/stores/auditLogStore';
 import { 
   IconUsers, IconMusic, IconMicrophone2, IconCoin, 
-  IconTrendingUp, IconHeadphones, IconArrowUpRight, IconArrowDownRight 
+  IconTrendingUp, IconHeadphones, IconArrowUpRight, IconArrowDownRight, IconEye
 } from '@tabler/icons-vue';
 import {
   Chart as ChartJS,
@@ -20,6 +21,8 @@ import {
 import { Line, Doughnut, Bar } from 'vue-chartjs';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, ArcElement, Title, Tooltip, Legend, Filler);
+
+const auditStore = useAuditLogStore();
 
 // Chart Data (Mock)
 const revenueData = ref({
@@ -108,6 +111,10 @@ const topArtists = ref([
   { id: 3, name: 'Drake', streams: '1.8M', trend: '-3%', avatar: 'https://i.pravatar.cc/150?u=3' },
   { id: 4, name: 'Dua Lipa', streams: '1.5M', trend: '+12%', avatar: 'https://i.pravatar.cc/150?u=4' },
 ]);
+
+onMounted(() => {
+  auditStore.fetchRecentLogs();
+});
 </script>
 
 <template>
@@ -299,20 +306,34 @@ const topArtists = ref([
         </div>
       </div>
 
-      <!-- Recent System Activity (Placeholder for Audit Log) -->
+      <!-- Recent System Activity -->
       <div class="bg-theme-surface rounded-2xl shadow-[var(--shadow-glow)] border border-theme-border overflow-hidden flex flex-col">
         <div class="p-6 border-b border-theme-border flex items-center justify-between">
           <h3 class="font-bold text-theme-text">Hoạt động gần đây</h3>
-          <button class="text-sm text-theme-primary hover:underline">Đến Nhật ký</button>
+          <router-link to="/admin/audit-logs" class="text-sm text-theme-primary hover:underline">Tất cả nhật ký</router-link>
         </div>
-        <div class="p-6 flex-1 flex flex-col justify-center items-center text-center">
-          <div class="w-16 h-16 rounded-full bg-theme-surface-hover flex items-center justify-center text-theme-text-sec mb-4">
-            <IconUsers size="32" />
+        <div class="p-0 flex-1 overflow-auto">
+          <div v-if="auditStore.loading" class="p-6 flex justify-center">
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-theme-primary"></div>
           </div>
-          <h4 class="text-lg font-bold text-theme-text mb-2">Nhật ký Hệ thống</h4>
-          <p class="text-theme-text-sec text-sm max-w-sm mb-6">
-            Màn hình Dashboard đã hoàn thiện. Hãy tiếp tục xây dựng phân hệ Audit Logs [SCR-ADM-08] để hiển thị các hoạt động ở đây.
-          </p>
+          <div v-else-if="auditStore.recentLogs.length === 0" class="p-6 text-center text-theme-text-sec">
+            Không có hoạt động nào gần đây
+          </div>
+          <div v-else class="divide-y divide-theme-border">
+            <div v-for="log in auditStore.recentLogs" :key="log.id" class="p-4 hover:bg-theme-surface-hover transition-colors flex items-start gap-4">
+              <div class="w-10 h-10 rounded-full bg-theme-bg flex items-center justify-center text-theme-text-sec shrink-0">
+                {{ log.user?.name?.charAt(0) || 'S' }}
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm text-theme-text">
+                  <span class="font-bold">{{ log.user?.name || 'Hệ thống' }}</span>
+                  đã <span class="font-medium text-theme-primary">{{ log.action }}</span> 
+                  một {{ log.entity_type?.split('\\').pop() }}
+                </p>
+                <p class="text-xs text-theme-text-sec mt-1">{{ new Date(log.created_at).toLocaleString('vi-VN') }}</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

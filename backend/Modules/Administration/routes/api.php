@@ -20,6 +20,12 @@ Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
         Route::delete('/{id}', [\Modules\Administration\Http\Controllers\AdminArtistInviteController::class, 'destroy']);
     });
 
+    Route::prefix('admin/audit-logs')->group(function () {
+        Route::get('/', [\Modules\Administration\Http\Controllers\AdminAuditLogController::class, 'index']);
+    });
+    
+    Route::get('admin/dashboard/recent-activities', [\Modules\Administration\Http\Controllers\AdminAuditLogController::class, 'recent']);
+
     Route::middleware(['role:super-admin'])->group(function () {
         Route::get('admin/permissions', [\Modules\Administration\Http\Controllers\AdminRoleController::class, 'permissions']);
         Route::prefix('admin/roles')->group(function () {

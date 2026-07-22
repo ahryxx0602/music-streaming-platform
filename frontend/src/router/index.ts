@@ -99,6 +99,11 @@ const router = createRouter({
           component: () => import('../views/admin/invites/ArtistInvitesManagement.vue'),
         },
         {
+          path: 'audit-logs',
+          name: 'admin.audit-logs',
+          component: () => import('../views/admin/audit/AuditLogsView.vue'),
+        },
+        {
           path: 'genres',
           name: 'admin-genres',
           component: () => import('../views/admin/genres/GenresView.vue'),

@@ -71,6 +71,7 @@
       "banners": "Banners Management",
       "users_group": "Users",
       "invites": "Artist Invites",
+      "audit_logs": "Audit Logs",
       "roles": "Roles",
       "genres": "Genres"
     },
