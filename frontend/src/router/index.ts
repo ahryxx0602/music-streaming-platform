@@ -157,6 +157,11 @@ const router = createRouter({
           path: 'dashboard',
           name: 'artist-dashboard',
           component: () => import('../views/artist/dashboard/ArtistDashboardView.vue'),
+        },
+        {
+          path: 'upload',
+          name: 'artist-upload',
+          component: () => import('../views/artist/upload/ArtistUploadView.vue'),
         }
       ]
     }

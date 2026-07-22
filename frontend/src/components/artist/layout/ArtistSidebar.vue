@@ -55,10 +55,10 @@ const isActive = (path: string) => {
     
     <!-- Bottom Upload CTA -->
     <div class="p-6 border-t border-theme-border/50">
-      <button class="w-full flex items-center justify-center gap-2 py-3.5 bg-gradient-to-r from-theme-secondary to-theme-accent rounded-xl text-white font-semibold tracking-wide hover:shadow-[var(--shadow-glow)] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]">
+      <router-link to="/artist/upload" class="w-full flex items-center justify-center gap-2 py-3.5 bg-gradient-to-r from-theme-secondary to-theme-accent rounded-xl text-white font-semibold tracking-wide hover:shadow-[var(--shadow-glow)] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]">
         <IconUpload size="20" stroke-width="2.5" />
         TẢI NHẠC LÊN
-      </button>
+      </router-link>
     </div>
   </aside>
 </template>
