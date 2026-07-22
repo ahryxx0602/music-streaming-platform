@@ -107,7 +107,7 @@ const router = createRouter({
         {
           path: 'settings',
           name: 'admin.settings',
-          component: () => import('../views/admin/settings/SystemSettingsView.vue'),
+          component: () => import('../views/admin/settings/AdminSettingsView.vue'),
         },
         {
           path: 'genres',
