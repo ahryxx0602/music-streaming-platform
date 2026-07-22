@@ -9,7 +9,8 @@ import {
   IconAlertCircle
 } from '@tabler/icons-vue';
 import { useAuthStore } from '@/stores/authStore';
-import api from '@/services/api'; // Or use artistDashboardService if you move upload there
+import api from '@/services/api';
+import { s3UploadService } from '@/services/s3UploadService';
 import axios, { type CancelTokenSource } from 'axios';
 import { useToast } from 'vue-toastification';
 
@@ -135,20 +136,23 @@ const submitUpload = async () => {
   uploadProgress.value = 0;
   errorMessage.value = '';
 
-  const data = new FormData();
-  data.append('title', formData.title);
-  data.append('genre_id', formData.genre_id);
-  data.append('audio_file', audioFile.value);
-  if (coverFile.value) data.append('cover_image', coverFile.value);
-  if (formData.lyrics) data.append('lyrics', formData.lyrics);
-  data.append('duration', audioDuration.value.toString());
-
   cancelTokenSource = axios.CancelToken.source();
 
   try {
-    const response = await api.post('/v1/artist/songs', data, {
+    // 1. Get Presigned URL
+    const { data: presignedData } = await api.post('/v1/artist/songs/presigned-url', {
+      file_name: audioFile.value.name,
+      content_type: audioFile.value.type
+    });
+    
+    const { url, path } = presignedData.data;
+
+    // 2. Upload directly to S3
+    // Note: We need to use raw axios here to avoid our API interceptors (like Bearer token) 
+    // which AWS S3 would reject. Also attaching the cancel token.
+    await axios.put(url, audioFile.value, {
       headers: {
-        'Content-Type': 'multipart/form-data'
+        'Content-Type': audioFile.value.type,
       },
       onUploadProgress: (progressEvent) => {
         if (progressEvent.total) {
@@ -158,8 +162,21 @@ const submitUpload = async () => {
       cancelToken: cancelTokenSource.token
     });
 
+    // 3. Submit Metadata to our Backend
+    const metaData = new FormData();
+    metaData.append('title', formData.title);
+    metaData.append('genre_id', formData.genre_id);
+    metaData.append('audio_path', path); // Pass the S3 path instead of the file
+    if (coverFile.value) metaData.append('cover_image', coverFile.value);
+    if (formData.lyrics) metaData.append('lyrics', formData.lyrics);
+    // Note: Backend handles duration now via FFmpeg Job, but we could still pass it if needed.
+
+    await api.post('/v1/artist/songs', metaData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    });
+
     uploadStatus.value = 'success';
-    toast.success('Đã tải nhạc lên thành công! Bài hát đang chờ duyệt.');
+    toast.success('Đã tải nhạc lên thành công! Backend đang xử lý âm thanh.');
     
     // Reset form after 3s
     setTimeout(() => {
@@ -370,7 +387,7 @@ onUnmounted(() => {
               <!-- Success state -->
               <div v-if="uploadStatus === 'success'" class="flex items-center gap-3 text-theme-success">
                 <IconCheck size="20" />
-                <span class="font-medium">Tải nhạc thành công! Đang chờ Admin duyệt.</span>
+                <span class="font-medium">Tải nhạc thành công! Đang xử lý âm thanh.</span>
               </div>
 
               <!-- Error state -->
