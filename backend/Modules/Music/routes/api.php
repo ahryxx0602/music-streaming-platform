@@ -6,6 +6,12 @@ use Modules\Music\Http\Controllers\MusicController;
 Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
     Route::apiResource('music', MusicController::class)->names('music');
     
+    // Artist Routes
+    Route::prefix('artist')->middleware(['role:Artist|artist'])->group(function () {
+        Route::post('songs/presigned-url', [\Modules\Music\Http\Controllers\ArtistSongController::class, 'generatePresignedUrl']);
+        Route::post('songs', [\Modules\Music\Http\Controllers\ArtistSongController::class, 'store']);
+    });
+
     // Admin Routes
     Route::prefix('admin')->group(function () {
         Route::apiResource('genres', \Modules\Music\Http\Controllers\AdminGenreController::class)->names('admin.genres');
