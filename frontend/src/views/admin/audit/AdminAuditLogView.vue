@@ -8,33 +8,27 @@ import {
   IconX
 } from '@tabler/icons-vue'
 
-// Mock Data cho Bảng
-const logs = ref([
-  {
-    id: 101,
-    user: 'Admin Nguyen (ID: 1)',
-    action: 'CREATE',
-    target: 'Song (ID: 45)',
-    ip: '192.168.1.5',
-    timestamp: '2026-07-22 14:30:00'
-  },
-  {
-    id: 102,
-    user: 'Moderator Le (ID: 4)',
-    action: 'UPDATE',
-    target: 'Album (ID: 12)',
-    ip: '14.232.12.99',
-    timestamp: '2026-07-22 15:45:12'
-  },
-  {
-    id: 103,
-    user: 'Admin Nguyen (ID: 1)',
-    action: 'DELETE',
-    target: 'User (ID: 89)',
-    ip: '192.168.1.5',
-    timestamp: '2026-07-22 16:10:05'
+import api from '@/services/api'
+import { useToast } from 'vue-toastification'
+
+const toast = useToast()
+const logs = ref<any[]>([])
+const isLoading = ref(true)
+
+const fetchLogs = async () => {
+  isLoading.value = true
+  try {
+    const { data } = await api.get('/v1/admin/audit-logs')
+    logs.value = data.data.data // Laravel paginated response
+  } catch (error) {
+    toast.error('Lỗi tải danh sách logs')
+  } finally {
+    isLoading.value = false
   }
-])
+}
+
+import { onMounted } from 'vue'
+onMounted(fetchLogs)
 
 const getActionColor = (action: string) => {
   switch(action) {
@@ -49,19 +43,16 @@ const getActionColor = (action: string) => {
 const showDetailModal = ref(false)
 const selectedLog = ref<any>(null)
 
-// Dữ liệu JSON Mock cho Modal (UPDATE Diff)
-const mockOldValues = {
-  "title": "Bản tình ca buồn",
-  "status": "draft",
-  "is_premium": false,
-  "genre_id": 4
-}
-
-const mockNewValues = {
-  "title": "Bản tình ca buồn (Remix)",
-  "status": "published",
-  "is_premium": true,
-  "genre_id": 4
+const formatJSON = (val: any) => {
+  if (!val) return '{}'
+  if (typeof val === 'string') {
+    try {
+      return JSON.stringify(JSON.parse(val), null, 2)
+    } catch {
+      return val
+    }
+  }
+  return JSON.stringify(val, null, 2)
 }
 
 const openDetail = (log: any) => {
@@ -134,18 +125,18 @@ const closeModal = () => {
               class="border-b border-white/5 hover:bg-white/5 transition-colors"
             >
               <td class="p-4 text-gray-500 font-mono">#{{ log.id }}</td>
-              <td class="p-4 text-gray-400 font-mono text-xs">{{ log.timestamp }}</td>
-              <td class="p-4">{{ log.user }}</td>
+              <td class="p-4 text-gray-400 font-mono text-xs">{{ log.created_at }}</td>
+              <td class="p-4">{{ log.user?.name || 'System' }} (ID: {{ log.user_id }})</td>
               <td class="p-4">
                 <span 
                   class="px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider border rounded-md"
-                  :class="getActionColor(log.action)"
+                  :class="getActionColor(log.action.toUpperCase())"
                 >
                   {{ log.action }}
                 </span>
               </td>
-              <td class="p-4 font-medium text-indigo-300">{{ log.target }}</td>
-              <td class="p-4 text-gray-500 font-mono text-xs">{{ log.ip }}</td>
+              <td class="p-4 font-medium text-indigo-300">{{ log.auditable_type.split('\\').pop() }} (ID: {{ log.auditable_id }})</td>
+              <td class="p-4 text-gray-500 font-mono text-xs">{{ log.ip_address }}</td>
               <td class="p-4 text-right">
                 <button 
                   @click="openDetail(log)"
@@ -183,25 +174,20 @@ const closeModal = () => {
         <!-- Modal Body (JSON Diff View) -->
         <div class="p-6 overflow-y-auto font-poppins space-y-6 flex-1">
           <div class="grid grid-cols-2 gap-4 text-sm bg-black/40 p-4 rounded-xl border border-white/5">
-            <div><span class="text-gray-500">Người thực hiện:</span> <span class="text-white ml-2">{{ selectedLog?.user }}</span></div>
-            <div><span class="text-gray-500">Đối tượng:</span> <span class="text-indigo-400 ml-2 font-medium">{{ selectedLog?.target }}</span></div>
-            <div><span class="text-gray-500">Thời gian:</span> <span class="text-white ml-2">{{ selectedLog?.timestamp }}</span></div>
-            <div><span class="text-gray-500">IP Address:</span> <span class="text-white ml-2">{{ selectedLog?.ip }}</span></div>
+            <div><span class="text-gray-500">Người thực hiện:</span> <span class="text-white ml-2">{{ selectedLog?.user?.name }}</span></div>
+            <div><span class="text-gray-500">Đối tượng:</span> <span class="text-indigo-400 ml-2 font-medium">{{ selectedLog?.auditable_type.split('\\').pop() }} #{{ selectedLog?.auditable_id }}</span></div>
+            <div><span class="text-gray-500">Thời gian:</span> <span class="text-white ml-2">{{ selectedLog?.created_at }}</span></div>
+            <div><span class="text-gray-500">IP Address:</span> <span class="text-white ml-2">{{ selectedLog?.ip_address }}</span></div>
           </div>
 
-          <div v-if="selectedLog?.action === 'UPDATE'" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div v-if="selectedLog?.action.toUpperCase() === 'UPDATED'" class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <!-- Old Values -->
             <div class="space-y-2">
               <h3 class="text-red-400 font-medium text-sm px-2 flex items-center">
                 <span class="w-2 h-2 rounded-full bg-red-500 mr-2"></span> Dữ liệu cũ (Old Values)
               </h3>
               <div class="bg-[#1e1111] border border-red-900/50 rounded-xl p-4 font-mono text-sm overflow-x-auto text-red-200/80 leading-relaxed shadow-inner">
-<pre><code>{
-  "title": "<span class="bg-red-900/40 px-1 rounded text-red-300">Bản tình ca buồn</span>",
-  "status": "<span class="bg-red-900/40 px-1 rounded text-red-300">draft</span>",
-  "is_premium": <span class="bg-red-900/40 px-1 rounded text-red-300">false</span>,
-  "genre_id": 4
-}</code></pre>
+<pre><code>{{ formatJSON(selectedLog?.old_values) }}</code></pre>
               </div>
             </div>
 
@@ -211,12 +197,7 @@ const closeModal = () => {
                 <span class="w-2 h-2 rounded-full bg-green-500 mr-2"></span> Dữ liệu mới (New Values)
               </h3>
               <div class="bg-[#111e15] border border-green-900/50 rounded-xl p-4 font-mono text-sm overflow-x-auto text-green-200/80 leading-relaxed shadow-inner">
-<pre><code>{
-  "title": "<span class="bg-green-900/40 px-1 rounded text-green-300">Bản tình ca buồn (Remix)</span>",
-  "status": "<span class="bg-green-900/40 px-1 rounded text-green-300">published</span>",
-  "is_premium": <span class="bg-green-900/40 px-1 rounded text-green-300">true</span>,
-  "genre_id": 4
-}</code></pre>
+<pre><code>{{ formatJSON(selectedLog?.new_values) }}</code></pre>
               </div>
             </div>
           </div>
@@ -225,10 +206,7 @@ const closeModal = () => {
           <div v-else class="space-y-2">
             <h3 class="text-gray-300 font-medium text-sm px-2">Dữ liệu Payload</h3>
             <div class="bg-black/60 border border-white/10 rounded-xl p-4 font-mono text-sm overflow-x-auto text-gray-300 shadow-inner">
-<pre><code>{
-  "name": "Admin Nguyen",
-  "role_id": 1
-}</code></pre>
+<pre><code>{{ formatJSON(selectedLog?.new_values || selectedLog?.old_values) }}</code></pre>
             </div>
           </div>
         </div>
