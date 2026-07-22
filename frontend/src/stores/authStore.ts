@@ -67,12 +67,25 @@ export const useAuthStore = defineStore('auth', () => {
     window.location.href = '/login';
   };
 
+  const hasPermission = (permission: string) => {
+    if (!user.value) return false;
+    // Super admin has all permissions
+    if (user.value.role === 'Admin' || user.value.role === 'super-admin') return true;
+    
+    // Check if user has specific permission in their permission array
+    if (user.value.permissions && Array.isArray(user.value.permissions)) {
+      return user.value.permissions.includes(permission);
+    }
+    return false;
+  };
+
   return {
     user,
     isAuthenticated,
     role,
     login,
     fetchProfile,
-    logout
+    logout,
+    hasPermission
   };
 });

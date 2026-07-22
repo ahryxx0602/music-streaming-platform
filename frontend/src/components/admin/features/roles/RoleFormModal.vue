@@ -7,9 +7,16 @@ import BaseAdminButton from '@/components/admin/ui/button/BaseAdminButton.vue';
 import { IconShieldCheck } from '@tabler/icons-vue';
 
 const props = defineProps<{
- isOpen: boolean;
- roleData?: any;
+  isOpen: boolean;
+  roleData?: any;
 }>();
+
+const permissionGroups = [
+  { name: 'Hệ thống (System)', keys: ['view_dashboard', 'view_audit_logs', 'manage_settings', 'manage_roles'] },
+  { name: 'Người dùng (Users)', keys: ['view_users', 'manage_users', 'delete_users', 'manage_invites'] },
+  { name: 'Kho nhạc (Music)', keys: ['view_inventory', 'manage_inventory', 'moderate_songs'] },
+  { name: 'Nội dung (Content)', keys: ['manage_genres', 'manage_playlists', 'manage_banners'] }
+];
 
 const emit = defineEmits(['update:isOpen', 'success']);
 const roleStore = useRoleStore();
@@ -111,26 +118,32 @@ const handleSubmit = async () => {
  </button>
  </div>
  
- <!-- Hiển thị Checkboxes dạng Grid 2 cột hoặc 3 cột -->
- <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
- <label 
- v-for="perm in roleStore.permissions" 
- :key="perm.id"
- class="flex items-start gap-3 p-3 rounded-xl border transition-colors cursor-pointer"
- :class="form.permission_ids.includes(perm.id) ? 'border-theme-primary bg-theme-primary/10' : 'border-[var(--color-input-border)] bg-[var(--color-input-bg)] hover:border-[var(--color-input-border-hover)]'"
- >
- <div class="flex items-center h-5">
- <input 
- type="checkbox" 
- v-model="form.permission_ids" 
- :value="perm.id"
- class="w-4 h-4 text-theme-primary border-theme-border rounded focus:ring-theme-primary cursor-pointer bg-[var(--color-input-bg)]"
- >
- </div>
- <div class="flex flex-col">
- <span class="text-sm font-semibold text-theme-text">{{ perm.name }}</span>
- </div>
- </label>
+ <!-- Hiển thị Checkboxes dạng Grid được Group -->
+ <div class="space-y-6">
+   <div v-for="group in permissionGroups" :key="group.name" class="p-4 rounded-xl border border-theme-border bg-theme-bg/50">
+     <h4 class="font-bold text-sm text-theme-text mb-3 border-b border-theme-border pb-2">{{ group.name }}</h4>
+     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+       <label 
+         v-for="permKey in group.keys" 
+         :key="permKey"
+         v-show="roleStore.permissions.find(p => p.name === permKey)"
+         class="flex items-start gap-3 p-3 rounded-xl border transition-colors cursor-pointer"
+         :class="form.permission_ids.includes(roleStore.permissions.find(p => p.name === permKey)?.id || 0) ? 'border-theme-primary bg-theme-primary/10' : 'border-[var(--color-input-border)] bg-[var(--color-input-bg)] hover:border-[var(--color-input-border-hover)]'"
+       >
+         <div class="flex items-center h-5">
+           <input 
+             type="checkbox" 
+             v-model="form.permission_ids" 
+             :value="roleStore.permissions.find(p => p.name === permKey)?.id"
+             class="w-4 h-4 text-theme-primary border-theme-border rounded focus:ring-theme-primary cursor-pointer bg-[var(--color-input-bg)]"
+           >
+         </div>
+         <div class="flex flex-col">
+           <span class="text-sm font-semibold text-theme-text">{{ permKey }}</span>
+         </div>
+       </label>
+     </div>
+   </div>
  </div>
  
  <div v-if="roleStore.permissions.length === 0" class="text-center py-4 text-sm text-theme-text-sec">

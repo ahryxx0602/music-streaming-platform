@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
+import { useAuthStore } from '@/stores/authStore';
 import { 
  IconLayoutDashboard, 
  IconUsers, 
@@ -18,46 +19,47 @@ import {
 } from '@tabler/icons-vue';
 
 const route = useRoute();
+const authStore = useAuthStore();
 
 const menuGroups = [
  {
  title: 'admin.menu.general',
  items: [
- { name: 'admin.menu.dashboard', path: '/admin/dashboard', icon: IconLayoutDashboard },
- { name: 'admin.menu.users', path: '/admin/users', icon: IconUsers },
- { name: 'admin.menu.invites', path: '/admin/invites', icon: IconMailFast },
+ { name: 'admin.menu.dashboard', path: '/admin/dashboard', icon: IconLayoutDashboard, requiredPermission: 'view_dashboard' },
+ { name: 'admin.menu.users', path: '/admin/users', icon: IconUsers, requiredPermission: 'view_users' },
+ { name: 'admin.menu.invites', path: '/admin/invites', icon: IconMailFast, requiredPermission: 'manage_invites' },
  ]
  },
  {
  title: 'admin.menu.music',
  items: [
- { name: 'admin.menu.genres', path: '/admin/genres', icon: IconCategory },
- { name: 'admin.menu.inventory', path: '/admin/inventory', icon: IconMusic },
- { name: 'admin.menu.artists', path: '/admin/artists', icon: IconMicrophone2 },
- { name: 'admin.menu.albums', path: '/admin/albums', icon: IconDisc },
- { name: 'admin.menu.playlists', path: '/admin/playlists', icon: IconPlaylist },
+ { name: 'admin.menu.genres', path: '/admin/genres', icon: IconCategory, requiredPermission: 'manage_genres' },
+ { name: 'admin.menu.inventory', path: '/admin/inventory', icon: IconMusic, requiredPermission: 'view_inventory' },
+ { name: 'admin.menu.artists', path: '/admin/artists', icon: IconMicrophone2, requiredPermission: 'manage_users' },
+ { name: 'admin.menu.albums', path: '/admin/albums', icon: IconDisc, requiredPermission: 'manage_inventory' },
+ { name: 'admin.menu.playlists', path: '/admin/playlists', icon: IconPlaylist, requiredPermission: 'manage_playlists' },
  ]
  },
  {
  title: 'admin.menu.moderation',
  items: [
- { name: 'admin.menu.song_moderation', path: '/admin/moderation/songs', icon: IconMusic },
- { name: 'admin.menu.reports', path: '/admin/reports', icon: IconReportAnalytics },
- { name: 'admin.menu.reviews', path: '/admin/reviews', icon: IconMessageReport },
+ { name: 'admin.menu.song_moderation', path: '/admin/moderation/songs', icon: IconMusic, requiredPermission: 'moderate_songs' },
+ { name: 'admin.menu.reports', path: '/admin/reports', icon: IconReportAnalytics, requiredPermission: 'view_dashboard' },
+ { name: 'admin.menu.reviews', path: '/admin/reviews', icon: IconMessageReport, requiredPermission: 'view_dashboard' },
  ]
  },
  {
  title: 'admin.menu.ui',
  items: [
- { name: 'admin.menu.banners', path: '/admin/banners', icon: IconPhoto },
+ { name: 'admin.menu.banners', path: '/admin/banners', icon: IconPhoto, requiredPermission: 'manage_banners' },
  ]
  },
  {
  title: 'admin.menu.system',
  items: [
- { name: 'admin.menu.settings', path: '/admin/settings', icon: IconSettings },
- { name: 'admin.menu.permissions', path: '/admin/permissions', icon: IconShieldLock },
- { name: 'admin.menu.audit_logs', path: '/admin/audit-logs', icon: IconHistory },
+ { name: 'admin.menu.settings', path: '/admin/settings', icon: IconSettings, requiredPermission: 'manage_settings' },
+ { name: 'admin.menu.permissions', path: '/admin/roles', icon: IconShieldLock, requiredPermission: 'manage_roles' },
+ { name: 'admin.menu.audit_logs', path: '/admin/audit-logs', icon: IconHistory, requiredPermission: 'view_audit_logs' },
  ]
  }
 ];
@@ -89,9 +91,9 @@ const isActive = (path: string) => {
  {{ $t(group.title) }}
  </h3>
  <nav class="space-y-0.5 relative">
+ <template v-for="item in group.items" :key="item.path">
  <router-link
- v-for="item in group.items"
- :key="item.path"
+ v-if="authStore.hasPermission(item.requiredPermission)"
  :to="item.path"
  class="group relative flex items-center gap-3 px-3 min-h-[44px] rounded-lg text-sm font-medium transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-theme-primary overflow-hidden"
  :class="isActive(item.path) ? 'text-theme-primary bg-theme-primary/10' : 'text-theme-text-sec hover:text-theme-text hover:bg-theme-surface-hover'"
@@ -102,6 +104,7 @@ const isActive = (path: string) => {
  <component :is="item.icon" size="20" class="transition-colors duration-200" :class="isActive(item.path) ? 'text-theme-primary' : 'text-theme-text-sec group-hover:text-theme-primary/70'" />
  {{ $t(item.name) }}
  </router-link>
+ </template>
  </nav>
  </div>
  </div>
