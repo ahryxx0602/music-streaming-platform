@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import { useRouter, onBeforeRouteLeave } from 'vue-router'
+import { useToast } from 'vue-toastification'
+import api from '@/services/api'
 import { 
   IconBrandInstagram, 
   IconBrandYoutube, 
@@ -12,28 +14,61 @@ import {
 } from '@tabler/icons-vue'
 
 const router = useRouter()
+const toast = useToast()
 
-// Mock data form
+// Real data form (mapped from API)
 const form = ref({
-  stage_name: 'Neon Horizon',
-  bio: 'Synthwave and electronic music producer from the future.',
-  contact_email: 'booking@neonhorizon.com',
-  social_instagram: 'neonhorizon',
-  social_youtube: 'neonhorizonmusic',
-  social_twitter: 'neonhorizon_ofc'
+  stage_name: '',
+  bio: '',
+  contact_email: '',
+  social_instagram: '',
+  social_youtube: '',
+  social_twitter: ''
 })
 
+const isLoadingData = ref(true)
+
 // Original state to detect changes
-const originalForm = JSON.stringify(form.value)
+let originalForm = JSON.stringify(form.value)
 const hasUnsavedChanges = ref(false)
 
 watch(form, (newVal) => {
+  if (isLoadingData.value) return // Don't trigger during initial load
   hasUnsavedChanges.value = JSON.stringify(newVal) !== originalForm
 }, { deep: true })
 
 const avatarPreview = ref('https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?q=80&w=200&auto=format&fit=crop')
 const bannerPreview = ref('https://images.unsplash.com/photo-1557672172-298e090bd0f1?q=80&w=1200&auto=format&fit=crop')
+const avatarFile = ref<File | null>(null)
+const bannerFile = ref<File | null>(null)
 const errorMsg = ref('')
+
+// Load data on mount
+onMounted(async () => {
+  try {
+    const { data } = await api.get('/v1/artist/profile')
+    const profile = data.data
+    if (profile) {
+      form.value.stage_name = profile.stage_name || ''
+      form.value.bio = profile.bio || ''
+      form.value.contact_email = profile.contact_email || ''
+      
+      const socials = profile.social_links || {}
+      form.value.social_instagram = socials.instagram || ''
+      form.value.social_youtube = socials.youtube || ''
+      form.value.social_twitter = socials.twitter || ''
+
+      if (profile.avatar_url) avatarPreview.value = profile.avatar_url
+      if (profile.banner_url) bannerPreview.value = profile.banner_url
+      
+      originalForm = JSON.stringify(form.value)
+    }
+  } catch (error) {
+    toast.error('Lỗi khi tải thông tin hồ sơ')
+  } finally {
+    isLoadingData.value = false
+  }
+})
 
 // Modal state
 const showLeaveWarning = ref(false)
@@ -55,8 +90,10 @@ const handleImageUpload = (event: Event, type: 'avatar' | 'banner') => {
   reader.onload = (e) => {
     if (type === 'avatar') {
       avatarPreview.value = e.target?.result as string
+      avatarFile.value = file
     } else {
       bannerPreview.value = e.target?.result as string
+      bannerFile.value = file
     }
     hasUnsavedChanges.value = true
   }
@@ -64,19 +101,45 @@ const handleImageUpload = (event: Event, type: 'avatar' | 'banner') => {
 }
 
 const isSaving = ref(false)
-const saveChanges = () => {
+const saveChanges = async () => {
   if (!form.value.stage_name) {
     errorMsg.value = 'Nghệ danh không được để trống.'
     return
   }
   
   isSaving.value = true
-  // Mock API call
-  setTimeout(() => {
-    isSaving.value = false
+  try {
+    const formData = new FormData()
+    formData.append('stage_name', form.value.stage_name)
+    formData.append('bio', form.value.bio)
+    formData.append('contact_email', form.value.contact_email)
+    
+    // Social links as JSON string
+    const socials = {
+      instagram: form.value.social_instagram,
+      youtube: form.value.social_youtube,
+      twitter: form.value.social_twitter
+    }
+    formData.append('social_links', JSON.stringify(socials))
+
+    if (avatarFile.value) formData.append('avatar', avatarFile.value)
+    if (bannerFile.value) formData.append('banner', bannerFile.value)
+
+    await api.post('/v1/artist/profile', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    })
+
+    originalForm = JSON.stringify(form.value)
     hasUnsavedChanges.value = false
-    // Toast success can be implemented here
-  }, 1000)
+    avatarFile.value = null
+    bannerFile.value = null
+    
+    toast.success('Lưu cấu hình thành công!')
+  } catch (error) {
+    toast.error('Có lỗi xảy ra khi lưu thay đổi.')
+  } finally {
+    isSaving.value = false
+  }
 }
 
 // Router Guard
