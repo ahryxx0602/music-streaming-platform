@@ -1,0 +1,7 @@
+Array
+(
+    [message] => Class name must be a valid object or a string
+    [file] => /home/vanthanh/Ind-Project/Laravel/music-streaming-platform/backend/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Concerns/HasRelationships.php
+    [line] => 1054
+    [trace] => #0 /home/vanthanh/Ind-Project/Laravel/music-streaming-platform/backend/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Concerns/HasRelationships.php(798): Illuminate\Database\Eloquent\Model->newRelatedInstance()
+)

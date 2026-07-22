@@ -17,6 +17,7 @@ Tài liệu này liệt kê toàn bộ các lệnh CLI (Command Line Interface) 
 | `php artisan migrate` | Cập nhật cấu trúc CSDL theo các file Migrations. |
 | `php artisan db:seed` | Bơm dữ liệu mẫu (Fake Data) vào Database. |
 | `php artisan tinker` | Mở giao diện dòng lệnh tương tác REPL của Laravel để test code/DB nhanh. |
+| `docker start aurorastream-minio` | Khởi động MinIO Server (Kho lưu trữ S3 giả lập) trên Docker (Cổng 9000 và 9001). |
 
 ---
 

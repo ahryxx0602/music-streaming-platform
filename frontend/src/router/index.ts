@@ -94,6 +94,11 @@ const router = createRouter({
           component: () => import('../views/admin/users/UsersView.vue'),
         },
         {
+          path: 'invites',
+          name: 'admin-invites',
+          component: () => import('../views/admin/invites/ArtistInvitesManagement.vue'),
+        },
+        {
           path: 'genres',
           name: 'admin-genres',
           component: () => import('../views/admin/genres/GenresView.vue'),
@@ -122,6 +127,11 @@ const router = createRouter({
           path: 'banners',
           name: 'admin-banners',
           component: () => import('../views/admin/banners/BannerView.vue'),
+        },
+        {
+          path: 'permissions',
+          name: 'admin-permissions',
+          component: () => import('../views/admin/roles/RolesManagement.vue'),
         }
       ]
     }

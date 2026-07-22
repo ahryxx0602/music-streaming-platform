@@ -90,7 +90,6 @@ class AdminBannerControllerTest extends TestCase
         $response = $this->actingAs($this->admin)->postJson("/api/v1/admin/banners/{$banner->id}", [
             'title' => 'New Title',
             'is_active' => false,
-            '_method' => 'PUT'
         ]);
         $response->assertStatus(200);
         $this->assertDatabaseHas('banners', ['id' => $banner->id, 'title' => 'New Title', 'is_active' => 0]);

@@ -51,4 +51,4 @@ jobs:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
         CACHE_STORE: array
-      run: php artisan test --parallel
+      run: php artisan test

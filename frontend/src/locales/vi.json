@@ -68,7 +68,11 @@
       "inventory": "Kho Nhạc & Album",
       "song_moderation": "Kiểm duyệt bài hát",
       "ui": "Giao diện",
-      "banners": "Quản lý Banner"
+      "banners": "Quản lý Banner",
+      "users_group": "Người dùng",
+      "invites": "Mã mời Nghệ sĩ",
+      "roles": "Phân quyền",
+      "genres": "Thể loại nhạc"
     },
     "header": {
       "search": "Tìm kiếm lệnh (Ctrl + K)"
@@ -121,7 +125,23 @@
       "action_activate": "Kích hoạt",
       "action_ban": "Cấm vĩnh viễn",
       "action_edit": "Sửa thông tin",
-      "action_delete": "Xóa tài khoản"
+      "action_delete": "Xóa tài khoản",
+      "form": {
+        "real_name": "Tên thật",
+        "real_name_ph": "Ví dụ: Nguyễn Văn A",
+        "stage_name": "Nghệ danh",
+        "stage_name_ph": "Ví dụ: Sơn Tùng M-TP",
+        "email": "Địa chỉ Email",
+        "email_ph": "artist@domain.com",
+        "password": "Mật khẩu",
+        "password_ph": "Tối thiểu 8 ký tự, có ký tự đặc biệt",
+        "password_conf": "Xác nhận mật khẩu",
+        "password_conf_ph": "Nhập lại mật khẩu để xác minh",
+        "role": "Vai trò (Role)",
+        "role_ph": "Chọn một vai trò...",
+        "plan": "Gói đăng ký",
+        "plan_ph": "Chọn gói..."
+      }
     },
     "drawers": {
       "edit_artist": "Sửa thông tin Nghệ sĩ",
@@ -177,6 +197,67 @@
       "status_active": "Đang hiển thị",
       "status_inactive": "Đang ẩn",
       "image_req": "Khuyến nghị: 1920x600px"
+    },
+    "invites": {
+      "title": "Mã mời Nghệ sĩ",
+      "subtitle": "Quản lý các mã đăng ký đặc quyền dành riêng cho Nghệ sĩ",
+      "create_new": "Tạo Mã Mới",
+      "search": "Tìm kiếm mã mời...",
+      "status": {
+        "valid": "Có hiệu lực",
+        "expired": "Hết hạn",
+        "used": "Đã sử dụng"
+      },
+      "messages": {
+        "copied_success": "Đã chép đường dẫn vào bộ nhớ tạm!",
+        "revoke_confirm": "Bạn có chắc chắn muốn thu hồi và xóa mã mời này? Hành động này không thể hoàn tác.",
+        "create_success": "Mã mời đã được tạo và chép link!"
+      },
+      "form": {
+        "email_label": "Email nhận mã (Tuỳ chọn)",
+        "email_placeholder": "artist@example.com",
+        "validity_label": "Thời hạn",
+        "days_1": "24 Giờ",
+        "days_7": "7 Ngày",
+        "days_30": "30 Ngày",
+        "submit": "Tạo mã & Copy Link"
+      },
+      "table": {
+        "email": "Email",
+        "link": "Registration Link",
+        "creator": "Người tạo",
+        "expires_at": "Hết hạn lúc",
+        "status": "Trạng thái",
+        "actions": "Thao tác"
+      }
+    },
+    "roles": {
+      "title": "Phân quyền Quản trị",
+      "subtitle": "Quản lý các Vai trò và Quyền truy cập hệ thống",
+      "create_new": "Thêm Vai trò",
+      "system_role_warning": "Đây là vai trò mặc định của hệ thống. Không thể chỉnh sửa hoặc xoá.",
+      "users_count": "{count} nhân sự",
+      "form": {
+        "name_label": "Tên Vai trò",
+        "name_placeholder": "Ví dụ: Content Moderator...",
+        "permissions_label": "Danh sách Quyền (Permissions)",
+        "submit": "Lưu Vai trò",
+        "select_all": "Chọn tất cả",
+        "deselect_all": "Bỏ chọn tất cả"
+      },
+      "messages": {
+        "delete_confirm": "Bạn có chắc chắn muốn xóa vai trò này? Người dùng thuộc vai trò này sẽ bị thu hồi quyền."
+      }
+    },
+    "genres": {
+      "title": "Quản lý Thể loại",
+      "subtitle": "Quản lý các thể loại nhạc trên hệ thống",
+      "add_new": "Thêm Thể loại Mới",
+      "edit": "Sửa thể loại",
+      "name": "Tên thể loại",
+      "description": "Mô tả",
+      "color": "Màu sắc",
+      "delete_confirm": "Bạn có chắc chắn muốn xóa thể loại này? Các bài hát/album thuộc thể loại này sẽ bị mất liên kết."
     }
   },
   "common": {

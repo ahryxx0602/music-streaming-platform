@@ -1,45 +1,117 @@
 /* 
   Aurora Admin Design System 
-  CSS Variable Mapping for Tailwind V4
+  3-Layer Architecture: Primitive -> Semantic -> Component
 */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 @theme {
-  /* Inject Tokens into Tailwind */
-  --font-admin: 'Inter', system-ui, sans-serif;
+  /* =========================================
+     LAYER 1: PRIMITIVE TOKENS
+     ========================================= */
   
-  --color-admin-slate-50: #F8FAFC;
-  --color-admin-slate-100: #F1F5F9;
-  --color-admin-slate-200: #E2E8F0;
-  --color-admin-slate-300: #CBD5E1;
-  --color-admin-slate-400: #94A3B8;
-  --color-admin-slate-500: #64748B;
-  --color-admin-slate-600: #475569;
-  --color-admin-slate-700: #334155;
-  --color-admin-slate-800: #1E293B;
-  --color-admin-slate-900: #0F172A;
+  --color-slate-50: #F8FAFC;
+  --color-slate-100: #F1F5F9;
+  --color-slate-200: #E2E8F0;
+  --color-slate-300: #CBD5E1;
+  --color-slate-400: #94A3B8;
+  --color-slate-500: #64748B;
+  --color-slate-600: #475569;
+  --color-slate-700: #334155;
+  --color-slate-800: #1E293B;
+  --color-slate-900: #0F172A;
+  --color-slate-950: #020617;
 
-  --color-admin-primary: #3B82F6;
-  --color-admin-primary-hover: #2563EB;
+  --color-indigo-400: #818CF8;
+  --color-indigo-500: #6366F1;
+  --color-indigo-600: #4F46E5;
 
-  --radius-admin-btn: 10px;
-  --radius-admin-card: 12px;
-  --radius-admin-drawer: 16px;
+  --color-cyan-400: #22D3EE;
+  --color-cyan-500: #06B6D4;
+  --color-cyan-600: #0891B2;
 
-  --spacing-admin-page: 32px;
-  --spacing-admin-gap: 24px;
+  --color-red-400: #F87171;
+  --color-red-500: #EF4444;
+  
+  --color-emerald-400: #34D399;
+  --color-emerald-500: #10B981;
+  
+  --color-amber-400: #FBBF24;
+  --color-amber-500: #F59E0B;
+  
+  --color-blue-400: #60A5FA;
+  --color-blue-500: #3B82F6;
+
+  --color-white: #FFFFFF;
+  --color-black: #000000;
+  
+  /* Primitive Typography & Spacing */
+  --font-inter: 'Inter', system-ui, sans-serif;
+  --font-jakarta: 'Plus Jakarta Sans', system-ui, sans-serif;
+  
+  --spacing-1: 4px; --spacing-2: 8px; --spacing-3: 12px; --spacing-4: 16px;
+  --spacing-5: 20px; --spacing-6: 24px; --spacing-8: 32px; --spacing-12: 48px;
+
+  --radius-sm: 4px; --radius-md: 8px; --radius-lg: 12px; --radius-xl: 16px; --radius-full: 9999px;
+
+  /* =========================================
+     LAYER 2: SEMANTIC TOKENS
+     ========================================= */
+  
+  --color-admin-bg: var(--color-slate-50);
+  --color-admin-surface: var(--color-white);
+  --color-admin-surface-hover: var(--color-slate-100);
+  
+  --color-admin-primary: var(--color-indigo-500);
+  --color-admin-accent: var(--color-cyan-500);
+  
+  /* Status / Feedback */
+  --color-admin-danger: var(--color-red-500);
+  --color-admin-success: var(--color-emerald-500);
+  --color-admin-warning: var(--color-amber-500);
+  --color-admin-info: var(--color-blue-500);
+  
+  /* Text */
+  --color-admin-text: var(--color-slate-900);
+  --color-admin-text-sec: var(--color-slate-500);
+  
+  /* Borders */
+  --color-admin-border: var(--color-slate-200);
+
+  /* Typography Semantics */
+  --font-admin-body: var(--font-inter);
+  --font-admin-heading: var(--font-jakarta);
+
+  /* =========================================
+     LAYER 3: COMPONENT TOKENS
+     ========================================= */
+  
+  --radius-admin-btn: var(--radius-full);
+  --radius-admin-card: var(--radius-lg);
+  --radius-admin-drawer: var(--radius-xl);
 }
 
-/* Base styles only applied to Admin shell to avoid leaking to Client */
+/* =========================================
+   DARK MODE OVERRIDES (SEMANTIC LAYER)
+   ========================================= */
+:root.dark {
+  --color-admin-bg: var(--color-slate-950);
+  --color-admin-surface: var(--color-slate-900);
+  --color-admin-surface-hover: var(--color-slate-800);
+  
+  --color-admin-primary: var(--color-indigo-400);
+  --color-admin-accent: var(--color-cyan-400);
+  
+  --color-admin-danger: var(--color-red-400);
+  --color-admin-success: var(--color-emerald-400);
+  --color-admin-warning: var(--color-amber-400);
+  --color-admin-info: var(--color-blue-400);
+  
+  --color-admin-text: var(--color-slate-50);
+  --color-admin-text-sec: var(--color-slate-400);
+  --color-admin-border: var(--color-slate-800);
+}
+
 .admin-shell {
-  font-family: var(--font-admin);
-}
-
-/* Global utility classes for Admin */
-.admin-card-hover {
-  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
-}
-.admin-card-hover:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  font-family: var(--font-admin-body);
+  background-color: var(--color-admin-bg);
+  color: var(--color-admin-text);
 }

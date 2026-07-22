@@ -1,4 +1,4 @@
-/* Admin Design System Tokens */
+/* Admin Design System Tokens - Music Streaming CMS */
 :root {
   /* Spacing */
   --admin-page-padding: 32px;
@@ -6,8 +6,8 @@
   --admin-card-padding: 24px;
 
   /* Border Radius */
-  --admin-radius-sm: 6px;
-  --admin-radius-btn: 10px;
+  --admin-radius-sm: 8px;
+  --admin-radius-btn: 8px;
   --admin-radius-card: 12px;
   --admin-radius-panel: 16px;
 
@@ -16,8 +16,8 @@
   --admin-font-md: 14px;
 }
 
-/* Base styles for Admin context to override any global leakage if needed */
+/* Base styles for Admin context */
 .admin-shell {
-  background-color: #F8FAFC; /* slate-50 */
-  color: #0F172A; /* slate-900 */
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
 }

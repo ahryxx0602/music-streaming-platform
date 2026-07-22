@@ -10,7 +10,23 @@ Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
         Route::get('/', [\Modules\Administration\Http\Controllers\AdminBannerController::class, 'index']);
         Route::post('/', [\Modules\Administration\Http\Controllers\AdminBannerController::class, 'store']);
         Route::put('/reorder', [\Modules\Administration\Http\Controllers\AdminBannerController::class, 'reorder']);
-        Route::put('/{id}', [\Modules\Administration\Http\Controllers\AdminBannerController::class, 'update']);
+        Route::post('/{id}', [\Modules\Administration\Http\Controllers\AdminBannerController::class, 'update']);
         Route::delete('/{id}', [\Modules\Administration\Http\Controllers\AdminBannerController::class, 'destroy']);
+    });
+
+    Route::prefix('admin/artist-invites')->group(function () {
+        Route::get('/', [\Modules\Administration\Http\Controllers\AdminArtistInviteController::class, 'index']);
+        Route::post('/', [\Modules\Administration\Http\Controllers\AdminArtistInviteController::class, 'store']);
+        Route::delete('/{id}', [\Modules\Administration\Http\Controllers\AdminArtistInviteController::class, 'destroy']);
+    });
+
+    Route::middleware(['role:super-admin'])->group(function () {
+        Route::get('admin/permissions', [\Modules\Administration\Http\Controllers\AdminRoleController::class, 'permissions']);
+        Route::prefix('admin/roles')->group(function () {
+            Route::get('/', [\Modules\Administration\Http\Controllers\AdminRoleController::class, 'index']);
+            Route::post('/', [\Modules\Administration\Http\Controllers\AdminRoleController::class, 'store']);
+            Route::put('/{id}', [\Modules\Administration\Http\Controllers\AdminRoleController::class, 'update']);
+            Route::delete('/{id}', [\Modules\Administration\Http\Controllers\AdminRoleController::class, 'destroy']);
+        });
     });
 });
