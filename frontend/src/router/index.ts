@@ -104,6 +104,11 @@ const router = createRouter({
           component: () => import('../views/admin/audit/AuditLogsView.vue'),
         },
         {
+          path: 'settings',
+          name: 'admin.settings',
+          component: () => import('../views/admin/settings/SystemSettingsView.vue'),
+        },
+        {
           path: 'genres',
           name: 'admin-genres',
           component: () => import('../views/admin/genres/GenresView.vue'),
