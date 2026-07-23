@@ -5,9 +5,13 @@ use Modules\Music\Http\Controllers\MusicController;
 
 Route::prefix('v1')->group(function () {
     // Listener Routes (Public for now)
-    Route::prefix('listener/songs')->group(function () {
-        Route::get('/{id}', [\Modules\Music\Http\Controllers\ListenerSongController::class, 'show']);
-        Route::post('/{id}/track-play', [\Modules\Music\Http\Controllers\ListenerSongController::class, 'trackPlay'])->middleware('throttle:1,60'); // 1 request per min
+    Route::prefix('listener')->group(function () {
+        Route::get('home-explore', [\Modules\Music\Http\Controllers\ListenerExploreController::class, 'index']);
+        
+        Route::prefix('songs')->group(function () {
+            Route::get('/{id}', [\Modules\Music\Http\Controllers\ListenerSongController::class, 'show']);
+            Route::post('/{id}/track-play', [\Modules\Music\Http\Controllers\ListenerSongController::class, 'trackPlay'])->middleware('throttle:1,60'); // 1 request per min
+        });
     });
 });
 
