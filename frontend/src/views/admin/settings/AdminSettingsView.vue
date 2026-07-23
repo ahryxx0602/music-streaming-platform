@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import { useRouter, onBeforeRouteLeave } from 'vue-router'
+import { useToast } from 'vue-toastification'
+import api from '@/services/api'
 import { 
   IconSettings, 
   IconDeviceFloppy,
@@ -11,6 +13,7 @@ import {
 } from '@tabler/icons-vue'
 
 const router = useRouter()
+const toast = useToast()
 
 // Tabs definition
 const tabs = [
@@ -20,30 +23,35 @@ const tabs = [
 ]
 const activeTab = ref('general')
 
-// Mock Settings Data
+const isLoadingData = ref(true)
+
+// Mock Settings Data (will be overwritten by API)
 const form = ref({
   // General
-  site_name: 'Ahryxx Music',
-  site_description: 'Nền tảng âm nhạc trực tuyến hàng đầu.',
-  support_email: 'support@ahryxx.com',
+  site_name: '',
+  site_description: '',
+  support_email: '',
   // Finance
-  artist_commission_rate: 70, // 70%
-  min_withdrawal_amount: 50, // $50
+  artist_revenue_share: 70, // mapped to backend key artist_revenue_share
+  min_withdrawal_amount: 50, 
   // System
   enable_registration: true,
   enable_uploads: true,
   maintenance_mode: false
 })
 
-const originalForm = JSON.stringify(form.value)
+let originalForm = JSON.stringify(form.value)
 const hasUnsavedChanges = ref(false)
 
 watch(form, (newVal) => {
+  if (isLoadingData.value) return
   hasUnsavedChanges.value = JSON.stringify(newVal) !== originalForm
 }, { deep: true })
 
 const logoPreview = ref('https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?q=80&w=200&auto=format&fit=crop')
 const errorMsg = ref('')
+
+const logoFile = ref<File | null>(null)
 
 const handleLogoUpload = (event: Event) => {
   const target = event.target as HTMLInputElement
@@ -59,29 +67,76 @@ const handleLogoUpload = (event: Event) => {
   const reader = new FileReader()
   reader.onload = (e) => {
     logoPreview.value = e.target?.result as string
+    logoFile.value = file
     hasUnsavedChanges.value = true
   }
   reader.readAsDataURL(file)
 }
+
+onMounted(async () => {
+  try {
+    const { data } = await api.get('/v1/admin/settings')
+    if (data.success && data.data) {
+      const settings = data.data
+      
+      // Chuyển đổi dữ liệu từ dạng mảng [{key: value}, ...] hoặc object
+      // Giả sử backend trả về data object format: { site_name: "Music", artist_revenue_share: "70", maintenance_mode: "0", ... }
+      form.value.site_name = settings.site_name || ''
+      form.value.site_description = settings.site_description || ''
+      form.value.support_email = settings.support_email || ''
+      
+      form.value.artist_revenue_share = Number(settings.artist_revenue_share || 70)
+      form.value.min_withdrawal_amount = Number(settings.min_withdrawal_amount || 50)
+      
+      form.value.enable_registration = settings.enable_registration == '1' || settings.enable_registration === 'true' || settings.enable_registration === true
+      form.value.enable_uploads = settings.enable_uploads == '1' || settings.enable_uploads === 'true' || settings.enable_uploads === true
+      form.value.maintenance_mode = settings.maintenance_mode == '1' || settings.maintenance_mode === 'true' || settings.maintenance_mode === true
+
+      originalForm = JSON.stringify(form.value)
+    }
+  } catch (error) {
+    toast.error('Lỗi khi tải cấu hình hệ thống')
+  } finally {
+    isLoadingData.value = false
+  }
+})
 
 // Modal State
 const showLeaveWarning = ref(false)
 let pendingRouteLeave: any = null
 
 const isSaving = ref(false)
-const saveChanges = () => {
+const saveChanges = async () => {
   if (!form.value.site_name) {
     errorMsg.value = 'Tên Website không được để trống.'
     return
   }
   
   isSaving.value = true
-  // Mock API call
-  setTimeout(() => {
-    isSaving.value = false
+  try {
+    const payload = {
+      settings: {
+        site_name: form.value.site_name,
+        site_description: form.value.site_description,
+        support_email: form.value.support_email,
+        artist_revenue_share: form.value.artist_revenue_share,
+        min_withdrawal_amount: form.value.min_withdrawal_amount,
+        enable_registration: form.value.enable_registration,
+        enable_uploads: form.value.enable_uploads,
+        maintenance_mode: form.value.maintenance_mode
+      }
+    }
+
+    await api.put('/v1/admin/settings', payload)
+    
+    originalForm = JSON.stringify(form.value)
     hasUnsavedChanges.value = false
-    // Toast success
-  }, 1000)
+    toast.success('Lưu cài đặt thành công!')
+  } catch (error) {
+    toast.error('Có lỗi xảy ra khi lưu cài đặt.')
+  } finally {
+    isSaving.value = false
+  }
 }
 
 // Router Guard
@@ -196,10 +251,10 @@ const cancelLeave = () => {
           <div class="space-y-4">
             <div class="flex justify-between">
               <label class="block text-sm font-medium text-gray-300 font-poppins">Tỷ lệ Hoa hồng Nghệ sĩ (%)</label>
-              <span class="text-indigo-400 font-bold font-mono">{{ form.artist_commission_rate }}%</span>
+              <span class="text-indigo-400 font-bold font-mono">{{ form.artist_revenue_share }}%</span>
             </div>
             <input 
-              v-model.number="form.artist_commission_rate" 
+              v-model.number="form.artist_revenue_share" 
               type="range" 
               min="0" max="100" step="1"
               class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-indigo-500"
