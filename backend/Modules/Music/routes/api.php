@@ -7,6 +7,7 @@ Route::prefix('v1')->group(function () {
     // Listener Routes (Public for now)
     Route::prefix('listener')->group(function () {
         Route::get('home-explore', [\Modules\Music\Http\Controllers\ListenerExploreController::class, 'index']);
+        Route::get('search', [\Modules\Music\Http\Controllers\ListenerSearchController::class, 'index']);
         
         Route::prefix('songs')->group(function () {
             Route::get('/{id}', [\Modules\Music\Http\Controllers\ListenerSongController::class, 'show']);
