@@ -189,7 +189,7 @@ const handleSubmit = async () => {
  <IconUpload size="24" />
  </div>
  <p class="text-sm font-medium text-theme-text mb-1">Nhấn để chọn file hoặc Kéo thả vào đây</p>
- <p class="text-xs text-theme-text-sec trợ định dạng MP3, WAV (Tối đa 50MB)</p>
+ <p class="text-xs text-theme-text-sec">Hỗ trợ định dạng MP3, WAV (Tối đa 50MB)</p>
  <input type="file" ref="fileInput" accept="audio/mpeg, audio/wav" class="hidden" @change="handleFileSelect" />
  </div>
 

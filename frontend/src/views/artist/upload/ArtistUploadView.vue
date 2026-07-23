@@ -71,15 +71,17 @@ const isFormValid = computed(() => {
 // Audio Validation & Duration Extraction
 const handleAudioDrop = (e: DragEvent) => {
   e.preventDefault();
-  if (e.dataTransfer?.files.length) {
-    processAudioFile(e.dataTransfer.files[0]);
+  const file = e.dataTransfer?.files?.[0];
+  if (file) {
+    processAudioFile(file);
   }
 };
 
 const handleAudioSelect = (e: Event) => {
   const target = e.target as HTMLInputElement;
-  if (target.files?.length) {
-    processAudioFile(target.files[0]);
+  const file = target.files?.[0];
+  if (file) {
+    processAudioFile(file);
   }
 };
 
@@ -111,8 +113,8 @@ const processAudioFile = (file: File) => {
 // Cover Validation & Preview
 const handleCoverSelect = (e: Event) => {
   const target = e.target as HTMLInputElement;
-  if (target.files?.length) {
-    const file = target.files[0];
+  const file = target.files?.[0];
+  if (file) {
     
     if (!ALLOWED_COVER_TYPES.includes(file.type)) {
       toast.error('Ảnh bìa phải là JPG hoặc PNG!');

@@ -65,7 +65,7 @@ const chartData = ref({
       data: []
     }
   ]
-});
+}) as any;
 
 const loadData = async () => {
   try {
@@ -75,10 +75,12 @@ const loadData = async () => {
       artistDashboardService.getStreamsChart()
     ]);
     
-    stats.value[0].value = statsData.total_streams.toLocaleString();
-    stats.value[1].value = statsData.total_followers.toLocaleString();
-    stats.value[2].value = '$' + statsData.balance_usd.toLocaleString();
-    stats.value[3].value = statsData.total_tracks.toString();
+    if (stats.value && stats.value.length >= 4) {
+      stats.value[0]!.value = statsData.total_streams.toLocaleString();
+      stats.value[1]!.value = statsData.total_followers.toLocaleString();
+      stats.value[2]!.value = '$' + statsData.balance_usd.toLocaleString();
+      stats.value[3]!.value = statsData.total_tracks.toString();
+    }
     
     topTracks.value = tracksData;
     
@@ -96,7 +98,7 @@ const chartOptions = {
   responsive: true,
   maintainAspectRatio: false,
   interaction: {
-    mode: 'index',
+    mode: 'index' as const,
     intersect: false,
   },
   plugins: {
@@ -127,7 +129,7 @@ const chartOptions = {
     },
     y: {
       display: true,
-      position: 'right',
+      position: 'right' as const,
       grid: {
         color: 'rgba(49, 46, 129, 0.3)',
         drawBorder: false,

@@ -46,7 +46,7 @@ const revenueOptions = {
   plugins: {
     legend: { display: false },
     tooltip: {
-      mode: 'index',
+      mode: 'index' as const,
       intersect: false,
       backgroundColor: '#1E293B',
       titleColor: '#F8FAFC',
@@ -94,7 +94,7 @@ const genreOptions = {
   cutout: '75%',
   plugins: {
     legend: {
-      position: 'right',
+      position: 'right' as const,
       labels: {
         color: '#64748B',
         usePointStyle: true,
