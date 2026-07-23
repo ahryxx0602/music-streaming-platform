@@ -96,19 +96,7 @@ export const usePlayerStore = defineStore('player', () => {
     }
   }
 
-  // Fetch API Mock và Phát nhạc từ Home
-  const fetchAndPlaySong = (id: number) => {
-    console.log(`Fetching song ID: ${id} from API...`)
-    // Giả lập lấy dữ liệu từ API
-    const fetchedSong: Song = {
-      id: id,
-      title: "Midnight Vibes (Selected)",
-      artist: "Neon Horizon",
-      cover_image: "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?q=80&w=200&auto=format&fit=crop",
-      audio_url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
-    }
-    playSong(fetchedSong)
-  }
+
   
   const next = () => {
     // Tạm thời mockup chức năng next. Trong thực tế sẽ lấy từ queue
