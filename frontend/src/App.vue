@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router';
 import { useThemeStore } from '@/stores/themeStore';
 import AuthLayout from './layouts/AuthLayout.vue';
 import MainLayout from './layouts/MainLayout.vue';
+import GlobalPlayer from './components/player/GlobalPlayer.vue';
 
 const route = useRoute();
 const themeStore = useThemeStore();
@@ -30,6 +31,9 @@ const layoutComponent = computed(() => {
     <RouterView />
   </component>
   <RouterView v-else />
+  
+  <!-- Render Global Player for Listeners & Artists -->
+  <GlobalPlayer v-if="!route.path.startsWith('/admin') && route.meta.layout !== 'AuthLayout'" />
 </template>
 
 <style>
