@@ -11,7 +11,7 @@ class ArtistProfile extends Model
 {
     use HasFactory, Auditable;
 
-    protected $fillable = ['user_id', 'stage_name', 'bio', 'cover_image', 'is_verified', 'verified_at', 'facebook', 'instagram', 'youtube', 'website', 'contact_email', 'avatar_url', 'banner_url', 'social_links'];
+    protected $fillable = ['user_id', 'stage_name', 'bio', 'cover_image', 'is_verified', 'verified_at', 'facebook', 'instagram', 'youtube', 'website', 'contact_email', 'avatar_url', 'banner_url', 'social_links', 'total_streams'];
     protected function casts(): array { return ['is_verified' => 'boolean', 'verified_at' => 'datetime', 'social_links' => 'json']; }
 
     public function user() { return $this->belongsTo(\App\Models\User::class); }

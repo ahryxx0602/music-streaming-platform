@@ -3,6 +3,14 @@
 use Illuminate\Support\Facades\Route;
 use Modules\Music\Http\Controllers\MusicController;
 
+Route::prefix('v1')->group(function () {
+    // Listener Routes (Public for now)
+    Route::prefix('listener/songs')->group(function () {
+        Route::get('/{id}', [\Modules\Music\Http\Controllers\ListenerSongController::class, 'show']);
+        Route::post('/{id}/track-play', [\Modules\Music\Http\Controllers\ListenerSongController::class, 'trackPlay'])->middleware('throttle:1,60'); // 1 request per min
+    });
+});
+
 Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
     Route::apiResource('music', MusicController::class)->names('music');
     
